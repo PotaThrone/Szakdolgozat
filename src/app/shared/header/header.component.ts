@@ -1,15 +1,11 @@
-import { Component } from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-
-  constructor() {
-
-  }
-
+  @Input()
+  loggedInUser?: firebase.default.User | null;
 }

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "szakdolgozat-31ad6": {
+      "hosting": {
+        "Szakdolgozat": [
+          "szakdolgozat-31ad6"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "szakdolgozat-31ad6"
+  }
+}

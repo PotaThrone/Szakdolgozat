@@ -1,6 +1,18 @@
-<mat-nav-list >
-  <a mat-list-item routerLink="/main" >
-    <mat-icon>home</mat-icon>
-    <span>Főoldal</span>
-  </a>
+<mat-nav-list>
+    <a mat-list-item routerLink="/main">
+      <mat-icon>home</mat-icon>
+      <span>Főoldal</span>
+    </a>
+    <a mat-list-item routerLink="/register" *ngIf="!loggedInUser">
+      <mat-icon>app_registration</mat-icon>
+      <span>Regisztráció</span>
+    </a>
+    <a mat-list-item routerLink="/login" *ngIf="!loggedInUser">
+      <mat-icon>login</mat-icon>
+      <span>Bejelentkezés</span>
+    </a>
+    <a mat-list-item routerLink="/logout" *ngIf="loggedInUser">
+      <mat-icon>logout</mat-icon>
+      <span>Kijelentkezés</span>
+    </a>
 </mat-nav-list>
