@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
-import {AuthService} from "./shared/services/auth.service";
+import {AuthService} from "./shared/auth/auth.service";
 
 @Component({
   selector: 'app-root',

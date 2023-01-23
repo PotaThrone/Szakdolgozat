@@ -27,7 +27,7 @@ import {AngularFireModule} from "@angular/fire/compat";
     MainComponent,
     MenuComponent,
     CategoriesComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

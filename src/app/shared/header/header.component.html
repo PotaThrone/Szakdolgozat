@@ -11,7 +11,7 @@
       <mat-icon>login</mat-icon>
       <span>Bejelentkezés</span>
     </a>
-    <a mat-list-item routerLink="/logout" *ngIf="loggedInUser">
+    <a mat-list-item routerLink="/login" (click)="logout()" *ngIf="loggedInUser">
       <mat-icon>logout</mat-icon>
       <span>Kijelentkezés</span>
     </a>
