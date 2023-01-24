@@ -3,4 +3,6 @@ export interface Hdd{
   brand: string;
   cableType: string;
   size: number;
+  price: number;
+  description: string;
 }

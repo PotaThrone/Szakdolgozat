@@ -4,4 +4,6 @@ export interface Gpu{
   clock: number;
   memory: number;
   slot: string;
+  price: number;
+  description: string;
 }

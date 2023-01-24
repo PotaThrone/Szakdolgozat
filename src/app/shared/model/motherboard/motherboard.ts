@@ -6,4 +6,6 @@ export interface Motherboard{
   hddCable: string;
   ramCount: number;
   ramSlots: string;
+  price: number;
+  description: string;
 }

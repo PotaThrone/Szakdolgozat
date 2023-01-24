@@ -19,6 +19,16 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'products',
+    loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '',
+    redirectTo: '/main',
+    pathMatch: 'full',
+  },
+  {
     path: '**',
     redirectTo: '/not-found'
   }

@@ -4,4 +4,6 @@ export interface Ram{
   memorySize: number;
   slot: string;
   speed: number;
+  price: number;
+  description: string;
 }

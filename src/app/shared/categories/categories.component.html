@@ -1,1 +1,8 @@
-<p>categories works!</p>
+<mat-form-field appearance="fill">
+  <mat-label>Kategóiák</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let category of categories" [value]="category">
+      {{category}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

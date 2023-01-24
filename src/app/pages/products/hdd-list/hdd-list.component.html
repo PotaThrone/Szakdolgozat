@@ -1,0 +1,25 @@
+<table mat-table [dataSource]="hdds">
+  <ng-container matColumnDef="brand">
+    <th mat-header-cell *matHeaderCellDef>Termék megnevezése</th>
+    <td mat-cell *matCellDef="let element">{{element.brand}}</td>
+  </ng-container>
+  <ng-container matColumnDef="cableType">
+    <th mat-header-cell *matHeaderCellDef>Kábel típus</th>
+    <td mat-cell *matCellDef="let element">{{element.cableType}}</td>
+  </ng-container>
+  <ng-container matColumnDef="size">
+    <th mat-header-cell *matHeaderCellDef>Méret</th>
+    <td mat-cell *matCellDef="let element">{{element.size}} GB</td>
+  </ng-container>
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef>Ár</th>
+    <td mat-cell *matCellDef="let element">{{element.price}} Ft</td>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef>Termék leírása</th>
+    <td mat-cell *matCellDef="let element">{{element.description}}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+

@@ -4,4 +4,6 @@ export interface Processor{
   chipset: string;
   clockSpeed: number;
   core: number;
+  price: number;
+  description: string;
 }

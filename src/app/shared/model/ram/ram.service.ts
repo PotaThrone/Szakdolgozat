@@ -7,7 +7,7 @@ import {Ram} from "./ram";
   providedIn: 'root'
 })
 export class RamService {
-  collectionName = 'Processor';
+  collectionName = 'RAM';
   constructor(private afs: AngularFirestore) {
   }
   create(ram: Ram) {

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+
 
 @Component({
   selector: 'app-categories',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent {
-
+  categories = ['RAM', 'Videókártya', 'Proesszor', 'Alaplap', 'Merevlemez']
 }
