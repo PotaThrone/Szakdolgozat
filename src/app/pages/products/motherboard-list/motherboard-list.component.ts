@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Observable} from "rxjs";
+import {tap} from "rxjs";
 import {Motherboard} from "../../../shared/model/motherboard/motherboard";
 import {MotherboardService} from "../../../shared/model/motherboard/motherboard.service";
 
@@ -9,10 +9,11 @@ import {MotherboardService} from "../../../shared/model/motherboard/motherboard.
   styleUrls: ['./motherboard-list.component.scss']
 })
 export class MotherboardListComponent {
-  displayedColumns: string[] = ['brand', 'chipset', 'gpuSlots', 'hddCable','ramCount', 'ramSlots', 'price', 'description'];
-  motherboards: Observable<Motherboard[]>;
+  motherboards: Motherboard[] = [];
 
   constructor(private motherboardService: MotherboardService) {
-    this.motherboards = motherboardService.getAll();
+   this.motherboardService.getAll().pipe(
+     tap(motherboards => this.motherboards = motherboards)
+   ).subscribe();
   }
 }

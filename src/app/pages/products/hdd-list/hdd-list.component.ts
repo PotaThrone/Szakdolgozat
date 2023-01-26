@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {Observable} from "rxjs";
+import {Component} from '@angular/core';
+import {tap} from "rxjs";
 import {HddService} from "../../../shared/model/hdd/hdd.service";
 import {Hdd} from "../../../shared/model/hdd/hdd";
 
@@ -9,10 +9,11 @@ import {Hdd} from "../../../shared/model/hdd/hdd";
   styleUrls: ['./hdd-list.component.scss']
 })
 export class HddListComponent {
-  displayedColumns: string[] = ['brand', 'cableType', 'size', 'price', 'description'];
-  hdds: Observable<Hdd[]>;
+  hdds: Hdd[] = [];
 
   constructor(private hddService: HddService) {
-    this.hdds = hddService.getAll();
+    this.hddService.getAll().pipe(
+      tap(hdds => this.hdds = hdds),
+    ).subscribe();
   }
 }

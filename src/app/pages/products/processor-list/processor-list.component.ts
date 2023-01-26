@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Observable} from "rxjs";
+import {tap} from "rxjs";
 import {ProcessorService} from "../../../shared/model/processor/processor.service";
 import {Processor} from "../../../shared/model/processor/processor";
 
@@ -9,10 +9,11 @@ import {Processor} from "../../../shared/model/processor/processor";
   styleUrls: ['./processor-list.component.scss']
 })
 export class ProcessorListComponent {
-  displayedColumns: string[] = ['brand', 'chipset', 'clockSpeed', 'core', 'price', 'description'];
-  processors: Observable<Processor[]>;
+  processors: Processor[] = [];
 
   constructor(private processorService: ProcessorService) {
-    this.processors = processorService.getAll();
+    this.processorService.getAll().pipe(
+      tap(processors => this.processors = processors),
+    ).subscribe();
   }
 }

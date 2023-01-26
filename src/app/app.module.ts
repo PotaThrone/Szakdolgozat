@@ -7,7 +7,6 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {RouterLink, RouterModule, RouterOutlet} from "@angular/router";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
-import {MenuComponent} from './shared/menu/menu.component';
 import {MatListModule} from "@angular/material/list";
 import {MatButtonModule} from "@angular/material/button";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -27,7 +26,6 @@ import {MatSelectModule} from "@angular/material/select";
   declarations: [
     AppComponent,
     MainComponent,
-    MenuComponent,
     CategoriesComponent,
     HeaderComponent,
   ],

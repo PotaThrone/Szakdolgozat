@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Observable} from "rxjs";
+import {tap} from "rxjs";
 import {Ram} from "../../../shared/model/ram/ram";
 import {RamService} from "../../../shared/model/ram/ram.service";
 
@@ -9,10 +9,11 @@ import {RamService} from "../../../shared/model/ram/ram.service";
   styleUrls: ['./ram-list.component.scss']
 })
 export class RamListComponent {
-  displayedColumns: string[] = ['brand', 'memorySize', 'slot', 'speed', 'price', 'description'];
-  rams: Observable<Ram[]>;
+  rams: Ram[] = [];
 
   constructor(private ramService: RamService) {
-    this.rams = ramService.getAll();
+    this.ramService.getAll().pipe(
+      tap(rams => this.rams = rams),
+    ).subscribe();
   }
 }

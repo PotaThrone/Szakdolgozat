@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Gpu} from "../../../shared/model/gpu/gpu";
 import {GpuService} from "../../../shared/model/gpu/gpu.service";
-import {Observable} from "rxjs";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-gpu-list',
@@ -9,10 +9,11 @@ import {Observable} from "rxjs";
   styleUrls: ['./gpu-list.component.scss']
 })
 export class GpuListComponent {
-   displayedColumns: string[] = ['brand', 'clock', 'memory', 'slot', 'price', 'description'];
-   gpus: Observable<Gpu[]>;
+  gpus: Gpu[] = [];
 
-   constructor(private gpuService: GpuService) {
-     this.gpus = gpuService.getAll();
-   }
+  constructor(private gpuService: GpuService) {
+    gpuService.getAll().pipe(
+      tap(gpus => this.gpus = gpus),
+    ).subscribe();
+  }
 }

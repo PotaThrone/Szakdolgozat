@@ -1,28 +1,16 @@
-<table mat-table [dataSource]="gpus">
-  <ng-container matColumnDef="brand">
-    <th mat-header-cell *matHeaderCellDef>Termék megnevezése</th>
-    <td mat-cell *matCellDef="let element">{{element.brand}}</td>
-  </ng-container>
-  <ng-container matColumnDef="clock">
-    <th mat-header-cell *matHeaderCellDef>Gyorsaság</th>
-    <td mat-cell *matCellDef="let element">{{element.clock}} GHz</td>
-  </ng-container>
-  <ng-container matColumnDef="memory">
-    <th mat-header-cell *matHeaderCellDef>Memória</th>
-    <td mat-cell *matCellDef="let element">{{element.memory}} MB</td>
-  </ng-container>
-  <ng-container matColumnDef="slot">
-    <th mat-header-cell *matHeaderCellDef>Foglalat</th>
-    <td mat-cell *matCellDef="let element">{{element.slot}}</td>
-  </ng-container>
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef>Ár</th>
-    <td mat-cell *matCellDef="let element">{{element.price}} Ft</td>
-  </ng-container>
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef>Termék leírása</th>
-    <td mat-cell *matCellDef="let element">{{element.description}}</td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<mat-card *ngFor="let gpu of gpus">
+  <mat-card-header>
+    <mat-card-title>{{gpu.brand}}</mat-card-title>
+    <mat-card-subtitle><strong>Ár: {{gpu.price}} Ft</strong></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    Foglalat: {{gpu.slot}} <br>
+    Gyorsaság: {{gpu.clock}} GHz <br>
+    Memória: {{gpu.memory}} MB <br>
+    Termék leírás: {{gpu.description}}
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>Kosárba</button>
+    <button mat-button>Kedvenc</button>
+  </mat-card-actions>
+</mat-card>

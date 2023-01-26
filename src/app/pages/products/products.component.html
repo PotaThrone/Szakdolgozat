@@ -1,5 +1,7 @@
-<app-gpu-list></app-gpu-list>
-<app-hdd-list></app-hdd-list>
-<app-motherboard-list></app-motherboard-list>
-<app-processor-list></app-processor-list>
-<app-ram-list></app-ram-list>
+<ng-container [ngSwitch]="category">
+  <app-gpu-list *ngSwitchCase="'gpu'"></app-gpu-list>
+  <app-hdd-list *ngSwitchCase="'hdd'"></app-hdd-list>
+  <app-motherboard-list *ngSwitchCase="'motherboard'"></app-motherboard-list>
+  <app-processor-list *ngSwitchCase="'processor'" ></app-processor-list>
+  <app-ram-list *ngSwitchCase="'ram'"></app-ram-list>
+</ng-container>

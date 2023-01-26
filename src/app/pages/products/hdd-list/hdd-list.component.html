@@ -1,25 +1,17 @@
-<table mat-table [dataSource]="hdds">
-  <ng-container matColumnDef="brand">
-    <th mat-header-cell *matHeaderCellDef>Termék megnevezése</th>
-    <td mat-cell *matCellDef="let element">{{element.brand}}</td>
-  </ng-container>
-  <ng-container matColumnDef="cableType">
-    <th mat-header-cell *matHeaderCellDef>Kábel típus</th>
-    <td mat-cell *matCellDef="let element">{{element.cableType}}</td>
-  </ng-container>
-  <ng-container matColumnDef="size">
-    <th mat-header-cell *matHeaderCellDef>Méret</th>
-    <td mat-cell *matCellDef="let element">{{element.size}} GB</td>
-  </ng-container>
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef>Ár</th>
-    <td mat-cell *matCellDef="let element">{{element.price}} Ft</td>
-  </ng-container>
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef>Termék leírása</th>
-    <td mat-cell *matCellDef="let element">{{element.description}}</td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<mat-card *ngFor="let hdd of hdds">
+  <mat-card-header>
+    <mat-card-title>{{hdd.brand}}</mat-card-title>
+    <mat-card-subtitle><strong>Ár: {{hdd.price}} Ft</strong></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    Kábel típus: {{hdd.cableType}} <br>
+    Méret: {{hdd.size}} GB <br>
+    Termék leírás: {{hdd.description}}
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>Kosárba</button>
+    <button mat-button>Kedvenc</button>
+  </mat-card-actions>
+</mat-card>
+
 
