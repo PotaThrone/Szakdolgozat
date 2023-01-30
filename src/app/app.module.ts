@@ -21,7 +21,6 @@ import {provideStorage, getStorage} from '@angular/fire/storage';
 import {AngularFireModule} from "@angular/fire/compat";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
-
 @NgModule({
   declarations: [
     AppComponent,

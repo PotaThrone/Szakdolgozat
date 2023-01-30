@@ -1,9 +1,8 @@
-export interface Ram{
+import {Product} from "../product/product";
+
+export interface Ram extends Product{
   id: string;
-  brand: string;
   memorySize: number;
   slot: string;
   speed: number;
-  price: number;
-  description: string;
 }

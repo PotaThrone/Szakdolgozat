@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Kosár</h4>
+</div>
+<div class="modal-body">
+  <div *ngIf="gpu != null">
+    <strong>{{gpu.brand}}</strong> hozzá lett adva a kosaradhoz!<br>
+    <p>Specifikáció: {{gpu.memory}} {{gpu.slot}} {{gpu.clock}} {{gpu.description}}</p>
+
+    <div class="buttonAndPrice">
+      <span style="color: red; margin: 20px;">{{gpu.price}} Ft</span>
+      <button mat-button (click)="redirectToCart()">Megnézem a kosár tartalmát</button>
+    </div>
+  </div>
+  <div *ngIf="hdd != null">
+    {{hdd.brand}}
+    {{hdd.description}}
+    {{hdd.price}}
+  </div>
+</div>
+<div>
+  <button mat-button type="button" class="mat-primary" (click)="bsModalRef.hide()">Vásárlás folytatása</button>
+</div>
+

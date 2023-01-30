@@ -9,6 +9,8 @@ import {MotherboardListComponent} from './motherboard-list/motherboard-list.comp
 import {ProcessorListComponent} from './processor-list/processor-list.component';
 import {RamListComponent} from './ram-list/ram-list.component';
 import {MatCardModule} from "@angular/material/card";
+import { CartPopupComponent } from './cart-popup/cart-popup.component';
+import {ModalModule} from "ngx-bootstrap/modal";
 
 const routes: Routes = [
   {path: '', component: ProductsComponent}
@@ -21,13 +23,15 @@ const routes: Routes = [
     HddListComponent,
     MotherboardListComponent,
     ProcessorListComponent,
-    RamListComponent
+    RamListComponent,
+    CartPopupComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     MatButtonModule,
     MatCardModule,
+    ModalModule.forRoot(),
   ],
   exports: [RouterModule],
 })

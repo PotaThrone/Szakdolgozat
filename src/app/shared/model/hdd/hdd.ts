@@ -1,8 +1,7 @@
-export interface Hdd{
+import {Product} from "../product/product";
+
+export interface Hdd extends Product{
   id: string;
-  brand: string;
   cableType: string;
   size: number;
-  price: number;
-  description: string;
 }

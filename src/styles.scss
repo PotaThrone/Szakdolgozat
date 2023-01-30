@@ -8,3 +8,13 @@ mat-card{
   margin: 80px 15px 0 15px;
   max-width: 300px;
 }
+
+.buttonAndPrice{
+  float: right;
+  position: relative;
+  bottom: 40px;
+
+  button{
+    background-color: #5555ff;
+  }
+}
