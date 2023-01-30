@@ -2,7 +2,8 @@ import {Component, TemplateRef} from '@angular/core';
 import {Product} from "../../shared/model/product/product";
 import {ProductService} from "../../shared/model/product/product.service";
 import {tap} from "rxjs";
-import {BsModalService} from "ngx-bootstrap/modal";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-cart',
@@ -10,10 +11,22 @@ import {BsModalService} from "ngx-bootstrap/modal";
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent {
+  firstFormGroup = this.formBuilder.group({
+    city: ['', Validators.required],
+    street: ['', Validators.required],
+    postalCode: ['', Validators.required],
+  });
+  secondFormGroup = this.formBuilder.group({
+    bankCard: ['', Validators.required],
+    expireTime: ['', Validators.required],
+    cvc: ['', Validators.required],
+  });
+
+  modalRef?: BsModalRef;
    products: Product[] = [];
    displayedColumns= ['name', 'description', 'price', 'delete']
 
-   constructor(private productService: ProductService, private modalService: BsModalService) {
+   constructor(private productService: ProductService, private modalService: BsModalService, private formBuilder: FormBuilder) {
      this.productService.getAll().pipe(
        tap(products => this.products = products),
      ).subscribe();
@@ -24,6 +37,6 @@ export class CartComponent {
   }
 
   openPayingModal(template: TemplateRef<any>) {
-    this.modalService.show(template);
+    this.modalRef = this.modalService.show(template, {class: 'modal-xl'});
   }
 }

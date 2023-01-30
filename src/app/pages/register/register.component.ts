@@ -47,5 +47,6 @@ export class RegisterComponent {
   }
 
   goBack() {
+    this.router.navigateByUrl('/main');
   }
 }

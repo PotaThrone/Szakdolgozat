@@ -1,2 +1,11 @@
-
+<div class="container">
+  <div *ngFor="let forum of forums">
+    <h2>{{forum.title}}</h2>
+    <p>{{forum.text}}</p>
+    <div class="user">
+      {{forum.user}}<br>
+      {{forum.date}}
+    </div>
+  </div>
+</div>
 

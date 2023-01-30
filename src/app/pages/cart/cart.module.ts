@@ -5,6 +5,9 @@ import {RouterModule} from "@angular/router";
 import {MatTableModule} from "@angular/material/table";
 import {MatButtonModule} from "@angular/material/button";
 import {ModalModule} from "ngx-bootstrap/modal";
+import {MatStepperModule} from "@angular/material/stepper";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -17,6 +20,9 @@ import {ModalModule} from "ngx-bootstrap/modal";
     MatTableModule,
     MatButtonModule,
     ModalModule.forRoot(),
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ]
 })
 export class CartModule {
