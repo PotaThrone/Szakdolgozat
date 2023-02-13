@@ -1,6 +1,22 @@
-mat-nav-list{
+mat-nav-list {
   background-color: green;
-  display: flex;
-  flex-direction: row;
+  width: 100%;
 }
 
+.header-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: green;
+  width: 100%;
+}
+
+a{
+  padding: 10px;
+  display: inline-block;
+  align-items: center;
+}
+
+a:hover{
+  background-color: rgb(0, 100, 0);
+}

@@ -5,6 +5,8 @@ import {RegisterComponent} from "./register.component";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
 
 const routes: Routes = [
   {path: '', component: RegisterComponent}
@@ -12,13 +14,15 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [RegisterComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    MatInputModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+    ]
 })
 export class RegisterModule {
 }

@@ -1,18 +1,28 @@
-<div class="component_div">
-  <div class="div-flex">
+<div class="container">
+  <mat-card class="formCard">
     <h1>Regisztráció</h1>
     <form [formGroup]="form">
       <mat-form-field>
         <mat-label for="email">Email:</mat-label>
         <input matInput type="text" formControlName="email"/>
+        <mat-error *ngIf="form.get('email')?.hasError('pattern')">E-mail nincs rendes formázva</mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('accountTaken')">Az e-mail cím már használatban van</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label for="password">Jelszó:</mat-label>
-        <input matInput type="password" formControlName="password"/>
+        <input [type]="hide ? 'password' : 'text'" matInput type="password" formControlName="password"/>
+        <button mat-icon-button matSuffix (click)="hide = !hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error>Legalább 6 karaktert kell tartalmaznia</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label for="rePassword">Jelszó újra:</mat-label>
-        <input matInput type="password" formControlName="rePassword"/>
+        <input [type]="hide ? 'password' : 'text'" matInput type="password" formControlName="rePassword"/>
+        <button mat-icon-button matSuffix (click)="hide = !hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error>Nem egyeznek a jelszavak</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label for="lastName">Vezetéknév:</mat-label>
@@ -24,14 +34,14 @@
       </mat-form-field>
       <div>
         <span class="buttons">
-          <button mat-raised-button color="primary" (click)="register()" type="submit">Regisztráció</button>
+          <button mat-raised-button color="primary" (click)="register()" [disabled]="form.invalid" type="submit">Regisztráció</button>
         </span>
         <span class="buttons">
           <button mat-raised-button color="primary" (click)="goBack()">Vissza</button>
        </span>
       </div>
     </form>
-  </div>
+  </mat-card>
 </div>
 
 

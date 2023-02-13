@@ -2,18 +2,25 @@
     <mat-spinner></mat-spinner>
 </span>
 
-<div class="main_component">
-  <h1>Bejelentkezés</h1>
-  <form [formGroup]="form">
-  <mat-form-field >
-    <mat-label for="email">Email: </mat-label><input matInput type="text" formControlName="email" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label for="password">Jelszó: </mat-label><input matInput type="password" formControlName="password" />
-  </mat-form-field>
-  <span>
+<div class="container">
+  <mat-card class="formCard">
+    <h1>Bejelentkezés</h1>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label for="email">Email:</mat-label>
+        <input matInput type="text" formControlName="email"/>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-label for="password">Jelszó:</mat-label>
+        <input matInput type="password" formControlName="password"/>
+      </mat-form-field>
+      <br>
+      <a routerLink="/register">Nincs még fiókod? Regisztrálj!</a> <br>
+      <span>
         <span><button mat-raised-button color="primary" type="submit" (click)="login()">Bejelentkezés</button></span>
-        <span><button mat-raised-button color="primary" [routerLink]="'/register'">Regisztráció</button></span>
+        <span><button mat-raised-button color="primary" [routerLink]="'/main'">Főoldal</button></span>
     </span>
-  </form>
+    </form>
+  </mat-card>
 </div>

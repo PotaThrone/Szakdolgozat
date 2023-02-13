@@ -12,7 +12,7 @@ export class AuthService {
   }
 
   signup(email: string, password: string) {
-    return this.auth.createUserWithEmailAndPassword(email, password);
+    return this.auth.createUserWithEmailAndPassword(email, password).catch(error => console.error(error));
   }
 
   isUserLoggedIn() {

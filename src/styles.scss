@@ -1,20 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
 
-mat-card{
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.productItems {
   float: left;
   margin: 80px 15px 0 15px;
   max-width: 300px;
 }
 
-.buttonAndPrice{
+.buttonAndPrice {
   float: right;
   position: relative;
   bottom: 40px;
 
-  button{
+  button {
     background-color: #5555ff;
   }
+}
+
+.formCard {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 800px;
+  box-shadow: 0 0 10px #ccc;
+  padding: 30px;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  a {
+    text-decoration: none;
+    text-align: center;
+    padding-left: 40px;
+  }
+
+  button {
+    margin: 10px;
+  }
+
 }

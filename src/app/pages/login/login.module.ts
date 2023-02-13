@@ -6,6 +6,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from "@angular/material/card";
 
 const routes: Routes = [
   { path: '', component: LoginComponent }
@@ -14,14 +15,15 @@ const routes: Routes = [
   declarations: [
     LoginComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    MatProgressSpinnerModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatButtonModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        MatProgressSpinnerModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatCardModule
+    ],
   exports: [RouterModule]
 })
 export class LoginModule { }
