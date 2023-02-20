@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {Categories} from "./categories";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 
 @Component({
@@ -10,11 +10,15 @@ import {FormBuilder, FormGroup} from "@angular/forms";
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent {
+  searchForm: FormGroup;
   categoryForm: FormGroup;
   categories = Object.values(Categories);
   constructor(private router: Router, private fb: FormBuilder) {
     this.categoryForm = this.fb.group({
       category: ['Videókártya']
+    });
+    this.searchForm = this.fb.group({
+      searchTerm: new FormControl(),
     });
   }
 
@@ -29,5 +33,9 @@ export class CategoriesComponent {
       }
       this.router.navigate(['../products'], {queryParams: {category: category}});
     }
+  }
+
+  search() {
+    console.log(this.searchForm.get('searchTerm')?.value);
   }
 }

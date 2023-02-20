@@ -21,6 +21,7 @@ import {provideStorage, getStorage} from '@angular/fire/storage';
 import {AngularFireModule} from "@angular/fire/compat";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +47,9 @@ import {MatSelectModule} from "@angular/material/select";
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

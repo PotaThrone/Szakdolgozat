@@ -1,11 +1,11 @@
 <div class="container">
-  <div *ngFor="let forum of forums">
+  <div class="forumBox" *ngFor="let forum of forums">
     <h2>{{forum.title}}</h2>
     <p>{{forum.text}}</p>
-<!--    <div class="user">-->
-<!--      {{forum.user.email}}<br>-->
-<!--      {{forum.date.getTime()}}-->
-<!--    </div>-->
+    <div class="user">
+      {{forum.user.email}}<br>
+      {{forum.date.toDate() | date }}
+    </div>
   </div>
 </div>
 
