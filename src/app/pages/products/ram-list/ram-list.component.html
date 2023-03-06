@@ -10,8 +10,8 @@
     Termék leírás: {{ram.description}}
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>Kosárba</button>
-    <button mat-button>Kedvenc</button>
+    <button mat-button (click)="openCart(ram)">Kosárba</button>
+    <button mat-button (click)="addToFavorites(ram)">Kedvenc</button>
   </mat-card-actions>
 </mat-card>
 

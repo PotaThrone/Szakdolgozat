@@ -12,8 +12,8 @@
     Termék leírás: {{motherboard.description}}
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>Kosárba</button>
-    <button mat-button>Kedvenc</button>
+    <button mat-button (click)="openCart(motherboard)">Kosárba</button>
+    <button mat-button (click)="addToFavorites(motherboard)" >Kedvenc</button>
   </mat-card-actions>
 </mat-card>
 

@@ -11,6 +11,7 @@ import {RamListComponent} from './ram-list/ram-list.component';
 import {MatCardModule} from "@angular/material/card";
 import { CartPopupComponent } from './cart-popup/cart-popup.component';
 import {ModalModule} from "ngx-bootstrap/modal";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 const routes: Routes = [
   {path: '', component: ProductsComponent}
@@ -32,6 +33,7 @@ const routes: Routes = [
     MatButtonModule,
     MatCardModule,
     ModalModule.forRoot(),
+    MatSnackBarModule,
   ],
   exports: [RouterModule],
 })

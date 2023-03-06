@@ -9,8 +9,8 @@
     Termék leírás: {{hdd.description}}
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>Kosárba</button>
-    <button mat-button>Kedvenc</button>
+    <button mat-button (click)="openCart(hdd)">Kosárba</button>
+    <button mat-button (click)="addToFavorites(hdd)">Kedvenc</button>
   </mat-card-actions>
 </mat-card>
 

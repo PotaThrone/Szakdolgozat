@@ -1,5 +1,3 @@
-import {Gpu} from "../gpu/gpu";
-
 export interface Product{
   id: string;
   brand: string;
@@ -9,6 +7,4 @@ export interface Product{
   count: number;
 }
 
-export const isGpu = (product: Product): product is Gpu => {
-  return 'gpu' in product;
-}
+

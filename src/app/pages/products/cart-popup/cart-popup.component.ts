@@ -1,9 +1,6 @@
 import {Component} from '@angular/core';
 import {BsModalRef} from "ngx-bootstrap/modal";
-import {Gpu} from "../../../shared/model/gpu/gpu";
-import {Hdd} from "../../../shared/model/hdd/hdd";
 import {Router} from "@angular/router";
-import {ProductService} from "../../../shared/model/product/product.service";
 import {Product} from "../../../shared/model/product/product";
 
 @Component({
@@ -12,12 +9,10 @@ import {Product} from "../../../shared/model/product/product";
   styleUrls: ['./cart-popup.component.scss'],
 })
 export class CartPopupComponent {
-  gpu?: Gpu;
-  hdd?: Hdd;
+  product?: Product;
 
-  constructor(public bsModalRef: BsModalRef, private router: Router, private productService: ProductService) {
+  constructor(public bsModalRef: BsModalRef, private router: Router) {
   }
-
   redirectToCart() {
     this.router.navigate(['../cart']);
     this.bsModalRef.hide();

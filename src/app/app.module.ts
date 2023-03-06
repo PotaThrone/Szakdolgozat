@@ -22,6 +22,7 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ModalModule} from "ngx-bootstrap/modal";
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +50,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatInputModule,
     MatSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
