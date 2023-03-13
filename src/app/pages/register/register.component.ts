@@ -48,7 +48,7 @@ export class RegisterComponent {
     this.authService.signup(this.form.get('email')?.value, this.form.get('password')?.value).then(cred => {
       console.log(cred);
       const user: User = {
-        id: cred?.user?.uid as string,
+        uid: cred?.user?.uid as string,
         email: this.form.get('email')?.value,
         username: this.form.get('email')?.value.split('@')[0],
         firstname: this.form.get('firstName')?.value,

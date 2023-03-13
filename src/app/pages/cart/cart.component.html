@@ -31,7 +31,7 @@
 <ng-template #template>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Fizetés</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close"  (click)="modalRef?.hide()">
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
@@ -40,18 +40,43 @@
       <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Szállítási adatok</ng-template>
-          <mat-form-field appearance="fill">
-            <mat-label>Irányítószám</mat-label>
-            <input matInput placeholder="Irányítószám" formControlName="postalCode" required>
-          </mat-form-field><br>
-          <mat-form-field appearance="fill">
-            <mat-label>Város</mat-label>
-            <input matInput placeholder="Város" formControlName="city" required>
-          </mat-form-field><br>
-          <mat-form-field appearance="fill">
-            <mat-label>Utca, házszám</mat-label>
-            <input matInput placeholder="Utca, házszám" formControlName="street" required>
-          </mat-form-field>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="fill">
+                <mat-label>Vezetéknév</mat-label>
+                <input matInput placeholder="Vezetéknév" formControlName="lastName" required>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="fill">
+                <mat-label>Keresztnév</mat-label>
+                <input matInput placeholder="Keresztnév" formControlName="firstName" required>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="fill">
+                <mat-label>Város</mat-label>
+                <input matInput placeholder="Város" formControlName="city" required>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="fill">
+                <mat-label>Irányítószám</mat-label>
+                <input matInput placeholder="Irányítószám" formControlName="postalCode" required>
+                <mat-error>Nem megfelelő irányítószám!</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="fill">
+                <mat-label>Utca, házszám</mat-label>
+                <input matInput placeholder="Utca, házszám" formControlName="street" required>
+              </mat-form-field>
+            </div>
+          </div>
           <div>
             <button mat-button matStepperNext>Tovább</button>
           </div>
@@ -59,24 +84,38 @@
       </mat-step>
       <mat-step [stepControl]="secondFormGroup" label="Fizetési mód">
         <form [formGroup]="secondFormGroup">
-          <mat-form-field appearance="fill">
-            <mat-label>Bankkártya szám</mat-label>
-            <input matInput formControlName="bankCard" placeholder="8888 8888 8888 8888"
-                   required>
-          </mat-form-field><br>
-          <mat-form-field appearance="fill">
-            <mat-label>Lejárati dátum</mat-label>
-            <input matInput formControlName="expireTime" placeholder="01/23"
-                   required>
-          </mat-form-field><br>
-          <mat-form-field appearance="fill">
-            <mat-label>CVC</mat-label>
-            <input matInput formControlName="cvc" placeholder="000"
-                   required>
-          </mat-form-field>
-          <div>
-            <button mat-button matStepperPrevious>Vissza</button>
-            <button mat-button matStepperNext>Tovább</button>
+          <mat-radio-group [(ngModel)]="showBankCard"
+                           formControlName="payMethod">
+            <mat-radio-button [value]="false">Készpénzes fizetés átvételkor</mat-radio-button>
+            <br>
+            <mat-radio-button [value]="true">Bankkártyás fizetés most</mat-radio-button>
+          </mat-radio-group>
+          <div *ngIf="showBankCard">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                  <mat-label>Bankkártya szám</mat-label>
+                  <input maxlength="19" matInput formControlName="bankCard" placeholder="8888 8888 8888 8888"
+                         required [(ngModel)]="bankCardNumbers" (ngModelChange)="addSpaceBetween($event)">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                  <mat-label>Lejárati dátum</mat-label>
+                  <input maxlength="5" matInput formControlName="expireTime" placeholder="01/23"
+                         required [(ngModel)]="expireDate" (ngModelChange)="addSlashBetween($event)">
+                </mat-form-field>
+              </div>
+            </div>
+            <mat-form-field appearance="fill">
+              <mat-label>CVC</mat-label>
+              <input matInput formControlName="cvc" placeholder="000"
+                     required maxlength="3">
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Vissza</button>
+              <button mat-button matStepperNext>Tovább</button>
+            </div>
           </div>
         </form>
       </mat-step>
@@ -90,6 +129,8 @@
     </mat-stepper>
   </div>
   <div class="modal-footer">
-    <button type="button" mat-button class="mat-primary pull-right" aria-label="Close"  (click)="modalRef?.hide()">Bezárás</button>
+    <button type="button" mat-button class="mat-primary pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      Bezárás
+    </button>
   </div>
 </ng-template>

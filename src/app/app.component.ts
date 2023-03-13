@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {MatSidenav} from "@angular/material/sidenav";
 import {AuthService} from "./shared/auth/auth.service";
 
 @Component({
@@ -10,10 +9,6 @@ import {AuthService} from "./shared/auth/auth.service";
 export class AppComponent implements OnInit{
   loggedInUser?: firebase.default.User | null;
   title = 'Szakdolgozat';
-
-  onToggleSidenav(sidenav: MatSidenav){
-    sidenav.toggle();
-  }
   constructor(private authService: AuthService) {
   }
   ngOnInit(): void {

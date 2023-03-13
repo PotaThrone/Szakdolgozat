@@ -5,14 +5,13 @@
   <a mat-list-item routerLink="/login" *ngIf="!loggedInUser">
     <mat-icon>perm_identity</mat-icon>
   </a>
-  <a mat-list-item routerLink="/favorite" *ngIf="!loggedInUser">
+  <a mat-list-item routerLink="/favorite" *ngIf="loggedInUser">
     <mat-icon>favorite</mat-icon>
   </a>
-  <a mat-list-item routerLink="/cart" *ngIf="!loggedInUser">
+  <a mat-list-item routerLink="/cart">
     <mat-icon>shopping_cart</mat-icon>
   </a>
   <a mat-list-item routerLink="/login" (click)="logout()" *ngIf="loggedInUser">
     <mat-icon>logout</mat-icon>
-    <span>Kijelentkezés</span>
   </a>
 </div>

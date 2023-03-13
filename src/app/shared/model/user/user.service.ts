@@ -10,7 +10,7 @@ export class UserService {
   constructor(private afs: AngularFirestore) {
   }
   create(user: User) {
-    return this.afs.collection<User>(this.collectionName).doc(user.id).set(user);
+    return this.afs.collection<User>(this.collectionName).doc(user.uid).set(user);
   }
 
   getAll() {
@@ -22,7 +22,7 @@ export class UserService {
   }
 
   update(user: User) {
-    return this.afs.collection<User>(this.collectionName).doc(user.id).set(user);
+    return this.afs.collection<User>(this.collectionName).doc(user.uid).set(user);
   }
 
   delete(id: string) {
