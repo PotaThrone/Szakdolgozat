@@ -33,7 +33,6 @@ const routes: Routes = [
     MatButtonModule,
     MatCardModule,
     ModalModule.forRoot(),
-    MatSnackBarModule,
   ],
   exports: [RouterModule],
 })

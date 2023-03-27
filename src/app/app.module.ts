@@ -23,6 +23,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ModalModule} from "ngx-bootstrap/modal";
+import {FavoriteModule} from "./pages/favorite/favorite.module";
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +53,7 @@ import {ModalModule} from "ngx-bootstrap/modal";
     FormsModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
+    FavoriteModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

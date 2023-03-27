@@ -3,7 +3,7 @@ import {Gpu} from "../../../shared/model/gpu/gpu";
 import {GpuService} from "../../../shared/model/gpu/gpu.service";
 import {tap} from "rxjs";
 import {CartService} from "../../cart/cart.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {FavoriteService} from "../../favorite/favorite.service";
 
 @Component({
   selector: 'app-gpu-list',
@@ -13,7 +13,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class GpuListComponent {
   gpus: Gpu[] = [];
 
-  constructor(private gpuService: GpuService, private cartService: CartService, private snackBar: MatSnackBar) {
+  constructor(private gpuService: GpuService, private cartService: CartService, private favoriteService: FavoriteService) {
     gpuService.getAll().pipe(
       tap(gpus => this.gpus = gpus),
     ).subscribe();
@@ -24,6 +24,6 @@ export class GpuListComponent {
   }
 
   addToFavorites(gpu: Gpu) {
-    this.snackBar.open(gpu.brand + ' a kedvencek között!', 'OK');
+    this.favoriteService.addToFavorites(gpu, 'gpu');
   }
 }

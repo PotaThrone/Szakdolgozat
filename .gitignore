@@ -45,3 +45,5 @@ Thumbs.db
 .firebase
 *-debug.log
 .runtimeconfig.json
+/Szakdolgozat_Nagy_Gyorgy.pdf
+/use-case.png

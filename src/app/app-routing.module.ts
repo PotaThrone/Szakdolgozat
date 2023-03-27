@@ -30,6 +30,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'favorite',
+    loadChildren: () => import('./pages/favorite/favorite.module').then(m => m.FavoriteModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'not-found',
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule),
     canActivate: [AuthGuard]

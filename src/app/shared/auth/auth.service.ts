@@ -1,11 +1,22 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {User} from "../model/user/user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private auth: AngularFireAuth) { }
+  constructor(private auth: AngularFireAuth) {
+  }
+
+  getLoggedInUser() {
+    let loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
+      let user: User = JSON.parse(loggedInUser);
+      return user;
+    }
+    return null;
+  }
 
   login(email: string, password: string) {
     return this.auth.signInWithEmailAndPassword(email, password);

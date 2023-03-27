@@ -21,7 +21,7 @@ export class CartService {
         count = productFromService?.count;
         if (count && count > 0 && productFromService) {
           product.count = count + 1;
-          product.id = <string>productFromService.id;
+          product.id = productFromService.id;
           if (!productCreatedOrUpdated) {
             this.productService.update(product);
             productCreatedOrUpdated = true;

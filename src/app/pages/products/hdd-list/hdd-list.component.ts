@@ -3,7 +3,7 @@ import {tap} from "rxjs";
 import {HddService} from "../../../shared/model/hdd/hdd.service";
 import {Hdd} from "../../../shared/model/hdd/hdd";
 import {CartService} from "../../cart/cart.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {FavoriteService} from "../../favorite/favorite.service";
 
 @Component({
   selector: 'app-hdd-list',
@@ -13,7 +13,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class HddListComponent {
   hdds: Hdd[] = [];
 
-  constructor(private hddService: HddService, private cartService: CartService, private snackBar: MatSnackBar) {
+  constructor(private hddService: HddService, private cartService: CartService, private favoriteService: FavoriteService) {
     this.hddService.getAll().pipe(
       tap(hdds => this.hdds = hdds),
     ).subscribe();
@@ -24,6 +24,6 @@ export class HddListComponent {
   }
 
   addToFavorites(hdd: Hdd) {
-    this.snackBar.open(hdd.brand + ' a kedvencek között!', 'OK');
+    this.favoriteService.addToFavorites(hdd, 'hdd');
   }
 }
