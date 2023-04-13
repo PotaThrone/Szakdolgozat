@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {Product} from "../../shared/model/product/product";
 import {User} from "../../shared/model/user/user";
-import {map} from "rxjs";
+import {map, Observable} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {AuthService} from "../../shared/auth/auth.service";
+import {Products} from "./favorite.component";
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,11 @@ export class FavoriteService {
   getRef(userId: string){
     return this.afs.collection(this.collectionName).doc(userId);
   }
+
   getFavoritesForUser(){
     let user = this.authService.getLoggedInUser();
     if (user) {
-      return this.afs.collection<Product[]>(this.collectionName).doc(user.uid).valueChanges();
+      return this.afs.collection<Products>(this.collectionName).doc(user.uid).valueChanges();
     }
     return null;
   }

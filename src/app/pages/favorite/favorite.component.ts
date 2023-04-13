@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Product} from "../../shared/model/product/product";
-import {ProductService} from "../../shared/model/product/product.service";
 import {tap} from "rxjs";
 import {Router} from "@angular/router";
 import {FavoriteService} from "./favorite.service";
@@ -15,13 +14,20 @@ export class FavoriteComponent {
 
   displayedColumns = ['name', 'description', 'price', 'delete']
 
-  //TODO: Finish the contructor
   constructor(private favoriteService: FavoriteService, private router: Router) {
     this.favoriteService.getFavoritesForUser()?.pipe(
-      tap(products => console.log(products)),
+      tap(products => {
+        if (products) {
+          const productArray = Object.values(products);
+          this.products = Object.values(productArray[0]);
+        } else {
+          this.products = [];
+        }
+      }),
     ).subscribe();
   }
 
+  //TODO: implement delete from user in favoriteService
   removeFromFavorites(product: Product) {
 
   }
@@ -29,4 +35,8 @@ export class FavoriteComponent {
   redirectToCart() {
     this.router.navigate(['../cart']);
   }
+}
+
+export interface Products {
+  [key: string]: Product;
 }
