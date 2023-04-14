@@ -14,28 +14,7 @@ export class CartService {
   }
 
   openCart(product: Product, productType: string) {
-    let productCreatedOrUpdated = false;
-    let count: number | undefined = 0;
-    this.productService.getById(productType + product.id).subscribe(
-      (productFromService) => {
-        count = productFromService?.count;
-        if (count && count > 0 && productFromService) {
-          product.count = count + 1;
-          product.id = productFromService.id;
-          if (!productCreatedOrUpdated) {
-            this.productService.update(product);
-            productCreatedOrUpdated = true;
-          }
-        } else {
-          product.id = productType + product.id;
-          product.count = 1;
-          if (!productCreatedOrUpdated) {
-            this.productService.create(product);
-            productCreatedOrUpdated = true;
-          }
-        }
-      }
-    );
+    this.productService.addProductToCart(product, productType);
     const initialState: ModalOptions = {
       initialState: {
         product: product,

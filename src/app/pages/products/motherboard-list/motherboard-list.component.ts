@@ -3,7 +3,7 @@ import {tap} from "rxjs";
 import {Motherboard} from "../../../shared/model/motherboard/motherboard";
 import {MotherboardService} from "../../../shared/model/motherboard/motherboard.service";
 import {CartService} from "../../cart/cart.service";
-import {FavoriteService} from "../../favorite/favorite.service";
+import {ProductService} from "../../../shared/model/product/product.service";
 
 @Component({
   selector: 'app-motherboard-list',
@@ -13,7 +13,7 @@ import {FavoriteService} from "../../favorite/favorite.service";
 export class MotherboardListComponent {
   motherboards: Motherboard[] = [];
 
-  constructor(private motherboardService: MotherboardService, private cartService: CartService, private favoriteService: FavoriteService) {
+  constructor(private motherboardService: MotherboardService, private cartService: CartService, private productService: ProductService) {
    this.motherboardService.getAll().pipe(
      tap(motherboards => this.motherboards = motherboards)
    ).subscribe();
@@ -24,6 +24,6 @@ export class MotherboardListComponent {
   }
 
   addToFavorites(motherboard: Motherboard) {
-    this.favoriteService.addToFavorites(motherboard, 'motherboard');
+    this.productService.addProductToFavorites(motherboard, 'motherboard');
   }
 }

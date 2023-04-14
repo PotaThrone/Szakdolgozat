@@ -3,7 +3,7 @@ import {tap} from "rxjs";
 import {ProcessorService} from "../../../shared/model/processor/processor.service";
 import {Processor} from "../../../shared/model/processor/processor";
 import {CartService} from "../../cart/cart.service";
-import {FavoriteService} from "../../favorite/favorite.service";
+import {ProductService} from "../../../shared/model/product/product.service";
 
 @Component({
   selector: 'app-processor-list',
@@ -13,7 +13,7 @@ import {FavoriteService} from "../../favorite/favorite.service";
 export class ProcessorListComponent {
   processors: Processor[] = [];
 
-  constructor(private processorService: ProcessorService, private cartService: CartService, private favoriteService: FavoriteService) {
+  constructor(private processorService: ProcessorService, private cartService: CartService,  private productService: ProductService) {
     this.processorService.getAll().pipe(
       tap(processors => this.processors = processors),
     ).subscribe();
@@ -24,6 +24,6 @@ export class ProcessorListComponent {
   }
 
   addToFavorites(processor: Processor) {
-    this.favoriteService.addToFavorites(processor, 'proccessor')
+    this.productService.addProductToFavorites(processor, 'proccessor')
   }
 }
