@@ -47,5 +47,23 @@ body {
   button {
     margin: 10px;
   }
+}
 
+.edit-form{
+  margin: 0 auto;
+  max-width: 800px;
+  box-shadow: 0 0 10px #ccc;
+  padding: 30px;
+
+  h1{
+
+  }
+
+  button {
+    margin-right: 10px;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
 }

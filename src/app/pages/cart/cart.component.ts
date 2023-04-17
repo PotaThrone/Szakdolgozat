@@ -39,13 +39,20 @@ export class CartComponent implements OnInit {
 
   constructor(private productService: ProductService, private modalService: BsModalService, private formBuilder: FormBuilder,
               private authService: AuthService, private router: Router, private userService: UserService) {
-    this.productService.getAll().pipe(
-      tap(products => this.products = products),
+    this.productService.getProducts('Cart')?.pipe(
+      tap(products => {
+        if (products) {
+          const productArray = Object.values(products);
+          this.products = Object.values(productArray[0]);
+        } else {
+          this.products = [];
+        }
+      }),
     ).subscribe();
   }
 
   removeFromCart(id: string) {
-    this.productService.delete(id);
+    this.productService.deleteProduct(id, 'Cart');
   }
 
   openPayingModal(template: TemplateRef<any>) {

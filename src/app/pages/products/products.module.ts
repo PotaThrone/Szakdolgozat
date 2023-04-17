@@ -12,6 +12,10 @@ import {MatCardModule} from "@angular/material/card";
 import { CartPopupComponent } from './cart-popup/cart-popup.component';
 import {ModalModule} from "ngx-bootstrap/modal";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { GpuEditComponent } from './gpu-edit/gpu-edit.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
+import {MatIconModule} from "@angular/material/icon";
 
 const routes: Routes = [
   {path: '', component: ProductsComponent}
@@ -25,7 +29,8 @@ const routes: Routes = [
     MotherboardListComponent,
     ProcessorListComponent,
     RamListComponent,
-    CartPopupComponent
+    CartPopupComponent,
+    GpuEditComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +38,9 @@ const routes: Routes = [
     MatButtonModule,
     MatCardModule,
     ModalModule.forRoot(),
+    ReactiveFormsModule,
+    MatInputModule,
+    MatIconModule,
   ],
   exports: [RouterModule],
 })

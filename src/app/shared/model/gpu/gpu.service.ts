@@ -22,6 +22,14 @@ export class GpuService {
     return this.afs.collection<Gpu>(this.collectionName).doc(id).valueChanges();
   }
 
+  getLastId() {
+    return this.afs.collection<LastId>(this.collectionName).doc('lastId').valueChanges();
+  }
+
+  incrementLastId(lastId: number){
+    const lastIdObj: LastId = { lastId: lastId } as LastId;
+    this.afs.collection<LastId>(this.collectionName).doc('lastId').set(lastIdObj);
+  }
   update(gpu: Gpu) {
     return this.afs.collection<Gpu>(this.collectionName).doc(gpu.id).set(gpu);
   }
@@ -29,4 +37,8 @@ export class GpuService {
   delete(id: string) {
     return this.afs.collection<Gpu>(this.collectionName).doc(id).delete();
   }
+}
+
+export interface LastId{
+  lastId: number;
 }
