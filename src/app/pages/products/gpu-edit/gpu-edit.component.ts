@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BsModalRef} from "ngx-bootstrap/modal";
 import {GpuService} from "../../../shared/model/gpu/gpu.service";
-import {Gpu} from "../../../shared/model/gpu/gpu";
-import {EMPTY, finalize, map, mergeMap, switchMap, take} from "rxjs";
+import {map, take} from "rxjs";
 
 @Component({
   selector: 'app-gpu-edit',

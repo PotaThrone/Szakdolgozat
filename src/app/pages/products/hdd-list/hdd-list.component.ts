@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {tap} from "rxjs";
+import {map, tap} from "rxjs";
 import {HddService} from "../../../shared/model/hdd/hdd.service";
 import {Hdd} from "../../../shared/model/hdd/hdd";
 import {CartService} from "../../cart/cart.service";
@@ -14,9 +14,9 @@ export class HddListComponent {
   hdds: Hdd[] = [];
 
   constructor(private hddService: HddService, private cartService: CartService, private productService: ProductService) {
-    this.hddService.getAll().pipe(
-      tap(hdds => this.hdds = hdds),
-    ).subscribe();
+    hddService.getAll().pipe(
+      map(hdds => hdds.filter(hdd => hdd.id != null)),
+    ).subscribe(hdds => this.hdds = hdds);
   }
 
   openCart(hdd: Hdd) {

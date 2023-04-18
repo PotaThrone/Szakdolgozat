@@ -6,12 +6,18 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit{
+export class ProductsComponent implements OnInit {
   category?: string | null;
+  product?: string | null;
+
   constructor(private route: ActivatedRoute) {
+
   }
-  ngOnInit(){
-    this.route.queryParamMap.subscribe(params =>
-      this.category = params.get('category'));
+
+  ngOnInit() {
+    this.route.queryParamMap.subscribe(params => {
+      this.category = params.get('category');
+      this.product = params.get('product');
+    });
   }
 }

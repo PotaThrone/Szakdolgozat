@@ -5,3 +5,6 @@
   <app-processor-list *ngSwitchCase="'processor'" ></app-processor-list>
   <app-ram-list *ngSwitchCase="'ram'"></app-ram-list>
 </ng-container>
+<ng-container>
+  <app-gpu-edit *ngIf="product?.includes('gpu')"></app-gpu-edit>
+</ng-container>

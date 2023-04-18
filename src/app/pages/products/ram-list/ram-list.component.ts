@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {tap} from "rxjs";
+import {map, tap} from "rxjs";
 import {Ram} from "../../../shared/model/ram/ram";
 import {RamService} from "../../../shared/model/ram/ram.service";
 import {CartService} from "../../cart/cart.service";
@@ -14,9 +14,9 @@ export class RamListComponent {
   rams: Ram[] = [];
 
   constructor(private ramService: RamService, private cartService: CartService,  private productService: ProductService) {
-    this.ramService.getAll().pipe(
-      tap(rams => this.rams = rams),
-    ).subscribe();
+    ramService.getAll().pipe(
+      map(rams => rams.filter(ram => ram.id != null)),
+    ).subscribe(rams => this.rams = rams);
   }
 
   openCart(ram: Ram) {

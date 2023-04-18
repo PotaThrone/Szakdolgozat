@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {tap} from "rxjs";
+import {map, tap} from "rxjs";
 import {ProcessorService} from "../../../shared/model/processor/processor.service";
 import {Processor} from "../../../shared/model/processor/processor";
 import {CartService} from "../../cart/cart.service";
@@ -14,9 +14,9 @@ export class ProcessorListComponent {
   processors: Processor[] = [];
 
   constructor(private processorService: ProcessorService, private cartService: CartService,  private productService: ProductService) {
-    this.processorService.getAll().pipe(
-      tap(processors => this.processors = processors),
-    ).subscribe();
+    processorService.getAll().pipe(
+      map(processors => processors.filter(processor => processor.id != null)),
+    ).subscribe(processors => this.processors = processors);
   }
 
   openCart(processor: Processor) {
