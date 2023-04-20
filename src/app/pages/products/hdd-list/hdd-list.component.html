@@ -1,16 +1,24 @@
-<mat-card class="productItems" *ngFor="let hdd of hdds">
-  <mat-card-header>
-    <mat-card-title>{{hdd.brand}}</mat-card-title>
-    <mat-card-subtitle><strong>Ár: {{hdd.price}} Ft</strong></mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    Kábel típus: {{hdd.cableType}} <br>
-    Méret: {{hdd.size}} GB <br>
-    Termék leírás: {{hdd.description}}
-  </mat-card-content>
+<div class="add-product">
+  <button class="btn btn-primary" (click)="openHddEdit(null)">Merevlemez hozzáadása<mat-icon style="padding-top: 5px">add</mat-icon></button>
+</div>
+<mat-card class="product-items" *ngFor="let hdd of hdds">
+  <a (click)="navigateToProduct(hdd)">
+    <mat-card-header>
+      <mat-card-title>{{hdd.brand}}</mat-card-title>
+      <mat-card-subtitle><strong>Ár: {{hdd.price}} Ft</strong></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      Kábel típus: {{hdd.cableType}} <br>
+      Méret: {{hdd.size}} GB <br>
+    </mat-card-content>
+  </a>
   <mat-card-actions>
     <button mat-button (click)="openCart(hdd)">Kosárba</button>
     <button mat-button (click)="addToFavorites(hdd)">Kedvenc</button>
+  </mat-card-actions>
+  <mat-card-actions *ngIf="true" >
+    <button mat-button (click)="delete(hdd)"><mat-icon style="color: red;">delete</mat-icon></button>
+    <button mat-button (click)="openHddEdit(hdd)"><mat-icon style="color: blue;">edit</mat-icon></button>
   </mat-card-actions>
 </mat-card>
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {Motherboard} from "./motherboard";
+import {LastId} from "../product/product";
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +16,6 @@ export class MotherboardService {
 
   getAll() {
     return this.afs.collection<Motherboard>(this.collectionName).valueChanges();
-  }
-
-  getById(id: string) {
-    return this.afs.collection<Motherboard>(this.collectionName).doc(id).valueChanges();
   }
 
   update(motherboard: Motherboard) {

@@ -16,6 +16,10 @@ import { GpuEditComponent } from './gpu-edit/gpu-edit.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
+import { HddEditComponent } from './hdd-edit/hdd-edit.component';
+import { MotherboardEditComponent } from './motherboard-edit/motherboard-edit.component';
+import { ProcessorEditComponent } from './processor-edit/processor-edit.component';
+import { RamEditComponent } from './ram-edit/ram-edit.component';
 
 const routes: Routes = [
   {path: '', component: ProductsComponent}
@@ -30,7 +34,11 @@ const routes: Routes = [
     ProcessorListComponent,
     RamListComponent,
     CartPopupComponent,
-    GpuEditComponent
+    GpuEditComponent,
+    HddEditComponent,
+    MotherboardEditComponent,
+    ProcessorEditComponent,
+    RamEditComponent
   ],
   imports: [
     CommonModule,

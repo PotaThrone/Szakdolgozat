@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {Hdd} from "./hdd";
+import {LastId} from "../product/product";
 
 
 @Injectable({

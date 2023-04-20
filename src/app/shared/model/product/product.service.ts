@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
-import {Product} from "./product";
+import {LastId, Product} from "./product";
 import {Products} from "../../../pages/favorite/favorite.component";
 import {map, take} from "rxjs";
 import {AuthService} from "../../auth/auth.service";
@@ -28,6 +28,15 @@ export class ProductService {
 
   delete(id: string) {
     return this.afs.collection<Product>(this.collectionName).doc(id).delete();
+  }
+
+  getLastId(collectionName: string) {
+    return this.afs.collection<LastId>(collectionName).doc('lastId').valueChanges();
+  }
+
+  incrementLastId(lastId: number, collectionName: string){
+    const lastIdObj: LastId = { lastId: lastId } as LastId;
+    this.afs.collection<LastId>(collectionName).doc('lastId').set(lastIdObj);
   }
 
   private getRef(userId: string, collectionName: string) {

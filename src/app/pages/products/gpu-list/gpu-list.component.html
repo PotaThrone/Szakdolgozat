@@ -1,7 +1,7 @@
-<div>
-  <button class="btn btn-primary" (click)="openGpuEdit(null)">Videókártya hozzáadása</button>
+<div class="add-product">
+  <button class="btn btn-primary" (click)="openGpuEdit(null)">Videókártya hozzáadása<mat-icon style="padding-top: 5px">add</mat-icon></button>
 </div>
-<mat-card class="productItems" *ngFor="let gpu of gpus">
+<mat-card class="product-items" *ngFor="let gpu of gpus">
   <a (click)="navigateToProduct(gpu)">
     <mat-card-header>
       <mat-card-title>{{gpu.brand}}</mat-card-title>
@@ -11,12 +11,15 @@
       Foglalat: {{gpu.slot}} <br>
       Gyorsaság: {{gpu.clock}} GHz <br>
       Memória: {{gpu.memory}} MB <br>
-      Termék leírás: {{gpu.description}}
     </mat-card-content>
   </a>
   <mat-card-actions>
     <button mat-button (click)="openCart(gpu)">Kosárba</button>
-    <button mat-button (click)="addToFavorites(gpu)">Kedvenc</button>
+    <button mat-button (click)="addToFavorites(gpu)">Kedvenc</button><br>
+  </mat-card-actions>
+  <mat-card-actions *ngIf="true" >
+    <button mat-button (click)="delete(gpu)"><mat-icon style="color: red;">delete</mat-icon></button>
+    <button mat-button (click)="openGpuEdit(gpu)"><mat-icon style="color: blue;">edit</mat-icon></button>
   </mat-card-actions>
 </mat-card>
 

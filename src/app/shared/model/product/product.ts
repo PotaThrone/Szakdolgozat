@@ -6,5 +6,6 @@ export interface Product{
   rating: number;
   count: number;
 }
-
-
+export interface LastId {
+  lastId: number;
+}

@@ -1,19 +1,29 @@
-<mat-card class="productItems" *ngFor="let motherboard of motherboards">
-  <mat-card-header>
-    <mat-card-title>{{motherboard.brand}}</mat-card-title>
-    <mat-card-subtitle><strong>Ár: {{motherboard.price}} Ft</strong></mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    Chipset: {{motherboard.chipset}} <br>
-    Videókártya foglalat: {{motherboard.gpuSlots}} <br>
-    Merevlemez kábel: {{motherboard.hddCable}} <br>
-    RAM darabszám: {{motherboard.ramCount}} <br>
-    RAM foglalat: {{motherboard.ramSlots}} <br>
-    Termék leírás: {{motherboard.description}}
-  </mat-card-content>
+<div class="add-product">
+  <button class="btn btn-primary" (click)="openMotherboardEdit(null)">Alaplap hozzáadása
+    <mat-icon style="padding-top: 5px">add</mat-icon>
+  </button>
+</div>
+<mat-card class="product-items" *ngFor="let motherboard of motherboards">
+  <a (click)="navigateToProduct(motherboard)">
+    <mat-card-header>
+      <mat-card-title>{{motherboard.brand}}</mat-card-title>
+      <mat-card-subtitle><strong>Ár: {{motherboard.price}} Ft</strong></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      Chipset: {{motherboard.chipset}} <br>
+      Videókártya foglalat: {{motherboard.gpuSlots}} <br>
+      Merevlemez kábel: {{motherboard.hddCable}} <br>
+      RAM darabszám: {{motherboard.ramCount}} <br>
+      RAM foglalat: {{motherboard.ramSlots}} <br>
+    </mat-card-content>
+  </a>
   <mat-card-actions>
     <button mat-button (click)="openCart(motherboard)">Kosárba</button>
-    <button mat-button (click)="addToFavorites(motherboard)" >Kedvenc</button>
+    <button mat-button (click)="addToFavorites(motherboard)">Kedvenc</button>
+  </mat-card-actions>
+  <mat-card-actions *ngIf="true" >
+    <button mat-button (click)="delete(motherboard)"><mat-icon style="color: red;">delete</mat-icon></button>
+    <button mat-button (click)="openMotherboardEdit(motherboard)"><mat-icon style="color: blue;">edit</mat-icon></button>
   </mat-card-actions>
 </mat-card>
 

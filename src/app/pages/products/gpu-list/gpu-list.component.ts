@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
 import {Gpu} from "../../../shared/model/gpu/gpu";
 import {GpuService} from "../../../shared/model/gpu/gpu.service";
-import {map, tap} from "rxjs";
+import {map} from "rxjs";
 import {CartService} from "../../cart/cart.service";
 import {ProductService} from "../../../shared/model/product/product.service";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
-import {Product} from "../../../shared/model/product/product";
 import {GpuEditComponent} from "../gpu-edit/gpu-edit.component";
 import {Router} from "@angular/router";
 
@@ -33,10 +32,15 @@ export class GpuListComponent {
     this.productService.addProductToFavorites(gpu, 'gpu');
   }
 
-  openGpuEdit(product: Product | null) {
+  openGpuEdit(gpu: Gpu | null) {
+    let title = "Videokártya hozzáadása";
+    if(gpu){
+      title = "Videokártya módosítása"
+    }
     const initialState: ModalOptions = {
       initialState: {
-        product: product,
+        gpu: gpu,
+        title: title,
       },
       class: 'modal-lg',
     };
@@ -45,5 +49,9 @@ export class GpuListComponent {
 
   navigateToProduct(gpu: Gpu) {
     this.router.navigate(['../products'], {queryParams: {product: 'gpu' + gpu.id}});
+  }
+
+  delete(gpu: Gpu) {
+    this.gpuService.delete(gpu.id);
   }
 }

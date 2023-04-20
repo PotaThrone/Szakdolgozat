@@ -8,22 +8,16 @@
           <input matInput type="text" formControlName="brand"/>
         </mat-form-field>
         <mat-form-field>
-          <mat-label for="clock">Gyorsaság:</mat-label>
-          <input matInput type="text" formControlName="clock"/>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label for="memory">Memória:</mat-label>
-          <input matInput type="text" formControlName="memory"/>
+          <mat-label for="cableType">Kábel típus:</mat-label>
+          <input matInput type="text" formControlName="cableType"/>
         </mat-form-field>
       </div>
       <div class="col-6">
         <div class="col-12">
           <mat-form-field>
-            <mat-label for="slot">Foglalat:</mat-label>
-            <input matInput type="text" formControlName="slot"/>
+            <mat-label for="size">Méret:</mat-label>
+            <input matInput type="text" formControlName="size"/>
           </mat-form-field>
-        </div>
-        <div class="col-12">
           <mat-form-field>
             <mat-label for="price">Ár:</mat-label>
             <input matInput type="text" formControlName="price"/>
@@ -37,15 +31,16 @@
     </div>
     <div>
         <span class="buttons">
-          <button *ngIf="gpu" mat-raised-button color="primary" (click)="editGpu()" [disabled]="form.invalid"
+          <button *ngIf="hdd" mat-raised-button color="primary" (click)="editHdd()" [disabled]="form.invalid"
                   type="submit">Módosítás</button>
-          <button *ngIf="!gpu" mat-raised-button color="primary" (click)="addGpu()" [disabled]="form.invalid"
+          <button *ngIf="!hdd" mat-raised-button color="primary" (click)="addHdd()" [disabled]="form.invalid"
                   type="submit">Hozzáadás</button>
             <button mat-raised-button (click)="modalRef.hide()">Bezárás</button>
         </span>
     </div>
   </form>
 </div>
+
 
 
 

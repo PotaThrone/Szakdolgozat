@@ -1,17 +1,27 @@
-<mat-card class="productItems" *ngFor="let ram of rams">
-  <mat-card-header>
-    <mat-card-title>{{ram.brand}}</mat-card-title>
-    <mat-card-subtitle><strong>Ár: {{ram.price}} Ft</strong></mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    Memória mérete {{ram.memorySize}} MB<br>
-    Óra gyorsasága: {{ram.speed}} MHz<br>
-    Foglalat: {{ram.slot}} <br>
-    Termék leírás: {{ram.description}}
-  </mat-card-content>
+<div class="add-product">
+  <button class="btn btn-primary" (click)="openRamEdit(null)">RAM hozzáadása
+    <mat-icon style="padding-top: 5px">add</mat-icon>
+  </button>
+</div>
+<mat-card class="product-items" *ngFor="let ram of rams">
+  <a (click)="navigateToProduct(ram)">
+    <mat-card-header>
+      <mat-card-title>{{ram.brand}}</mat-card-title>
+      <mat-card-subtitle><strong>Ár: {{ram.price}} Ft</strong></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      Memória mérete {{ram.memorySize}} MB<br>
+      Óra gyorsasága: {{ram.speed}} MHz<br>
+      Foglalat: {{ram.slot}} <br>
+    </mat-card-content>
+  </a>
   <mat-card-actions>
     <button mat-button (click)="openCart(ram)">Kosárba</button>
     <button mat-button (click)="addToFavorites(ram)">Kedvenc</button>
+  </mat-card-actions>
+  <mat-card-actions *ngIf="true" >
+    <button mat-button (click)="delete(ram)"><mat-icon style="color: red;">delete</mat-icon></button>
+    <button mat-button (click)="openRamEdit(ram)"><mat-icon style="color: blue;">edit</mat-icon></button>
   </mat-card-actions>
 </mat-card>
 

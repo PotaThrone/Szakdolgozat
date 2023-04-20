@@ -9,10 +9,27 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.productItems {
+.add-product{
+  float: left;
+  width: 100%;
+  padding: 10px;
+}
+
+.product-items {
   float: left;
   margin: 15px 15px 0 15px;
   max-width: 300px;
+
+  mat-card-actions{
+    display: flex;
+    justify-content: center;
+  }
+
+  a{
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+  }
 }
 
 .buttonAndPrice {
