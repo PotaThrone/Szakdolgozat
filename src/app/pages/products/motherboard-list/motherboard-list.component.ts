@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {map} from "rxjs";
 import {Motherboard} from "../../../shared/model/motherboard/motherboard";
 import {MotherboardService} from "../../../shared/model/motherboard/motherboard.service";
@@ -7,6 +7,7 @@ import {ProductService} from "../../../shared/model/product/product.service";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {Router} from "@angular/router";
 import {MotherboardEditComponent} from "../motherboard-edit/motherboard-edit.component";
+import {ProductType} from "../../../shared/model/product/product";
 
 @Component({
   selector: 'app-motherboard-list',
@@ -14,22 +15,19 @@ import {MotherboardEditComponent} from "../motherboard-edit/motherboard-edit.com
   styleUrls: ['./motherboard-list.component.scss']
 })
 export class MotherboardListComponent {
+  @Input()
   motherboards: Motherboard[] = [];
   bsModalRef?: BsModalRef;
 
   constructor(private motherboardService: MotherboardService, private cartService: CartService, private productService: ProductService,
-              private modalService: BsModalService, private router: Router) {
-    motherboardService.getAll().pipe(
-      map(motherboards => motherboards.filter(motherboard => motherboard.id != null)),
-    ).subscribe(motherboards => this.motherboards = motherboards);
-  }
+              private modalService: BsModalService, private router: Router) {}
 
   openCart(motherboard: Motherboard) {
-    this.cartService.openCart(motherboard, 'motherboard');
+    this.cartService.openCart(motherboard, ProductType.MOTHERBOARD);
   }
 
   addToFavorites(motherboard: Motherboard) {
-    this.productService.addProductToFavorites(motherboard, 'motherboard');
+    this.productService.addProductToFavorites(motherboard, ProductType.MOTHERBOARD);
   }
 
   openMotherboardEdit(motherboard: Motherboard | null) {
@@ -48,7 +46,7 @@ export class MotherboardListComponent {
   }
 
   navigateToProduct(motherboard: Motherboard) {
-    this.router.navigate(['../products'], {queryParams: {product: 'motherboard' + motherboard.id}});
+    this.router.navigate(['../products'], {queryParams: {product: ProductType.MOTHERBOARD + motherboard.id}});
   }
 
   delete(motherboard: Motherboard) {

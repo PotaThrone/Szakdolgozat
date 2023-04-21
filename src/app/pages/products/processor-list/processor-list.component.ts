@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {map} from "rxjs";
 import {ProcessorService} from "../../../shared/model/processor/processor.service";
 import {Processor} from "../../../shared/model/processor/processor";
@@ -7,6 +7,7 @@ import {ProductService} from "../../../shared/model/product/product.service";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {Router} from "@angular/router";
 import {ProcessorEditComponent} from "../processor-edit/processor-edit.component";
+import {ProductType} from "../../../shared/model/product/product";
 
 @Component({
   selector: 'app-processor-list',
@@ -14,21 +15,18 @@ import {ProcessorEditComponent} from "../processor-edit/processor-edit.component
   styleUrls: ['./processor-list.component.scss']
 })
 export class ProcessorListComponent {
+  @Input()
   processors: Processor[] = [];
   bsModalRef?: BsModalRef;
   constructor(private processorService: ProcessorService, private cartService: CartService,  private productService: ProductService,
-              private modalService: BsModalService, private router: Router) {
-    processorService.getAll().pipe(
-      map(processors => processors.filter(processor => processor.id != null)),
-    ).subscribe(processors => this.processors = processors);
-  }
+              private modalService: BsModalService, private router: Router) {}
 
   openCart(processor: Processor) {
-    this.cartService.openCart(processor, 'processor');
+    this.cartService.openCart(processor, ProductType.PROCESSOR);
   }
 
   addToFavorites(processor: Processor) {
-    this.productService.addProductToFavorites(processor, 'proccessor')
+    this.productService.addProductToFavorites(processor, ProductType.PROCESSOR)
   }
 
   openProcessorEdit(processor: Processor | null) {
@@ -47,7 +45,7 @@ export class ProcessorListComponent {
   }
 
   navigateToProduct(processor: Processor) {
-    this.router.navigate(['../products'], {queryParams: {product: 'processor' + processor.id}});
+    this.router.navigate(['../products'], {queryParams: {product: ProductType.PROCESSOR + processor.id}});
   }
 
   delete(processor: Processor) {

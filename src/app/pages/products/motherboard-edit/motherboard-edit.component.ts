@@ -48,7 +48,8 @@ export class MotherboardEditComponent implements OnInit {
         }
         this.motherboardService.create({
           ...this.form.value,
-          id: (newId).toString()
+          id: (newId).toString(),
+          rating: 0,
         });
       }
     });

@@ -46,7 +46,8 @@ export class GpuEditComponent implements OnInit {
         }
         this.gpuService.create({
           ...this.form.value,
-          id: (newId).toString()
+          id: (newId).toString(),
+          rating: 0,
         });
       }
     });

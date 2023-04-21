@@ -32,13 +32,32 @@ body {
   }
 }
 
+.selected-product {
+  margin: 0 auto;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+
+  mat-card{
+    margin-top: 30px;
+    min-width: 1000px;
+  }
+
+  button{
+    margin-top: 20px;
+  }
+}
+
 .buttonAndPrice {
   float: right;
   position: relative;
   bottom: 40px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 
   button {
-    background-color: #5555ff;
+    background-color: #01f329;
   }
 }
 
@@ -82,5 +101,35 @@ body {
 
   mat-form-field {
     width: 100%;
+  }
+}
+
+.comments{
+  margin-top: 30px;
+  padding: 15px;
+  border: 1px solid black;
+  border-radius: 15px;
+
+  textarea{
+    width: 100%;
+    height: 100px;
+  }
+
+  h3{
+    width: 50%;
+  }
+
+  .star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 0;
+    float: right;
+  }
+
+  .star {
+    display: inline-block;
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
   }
 }

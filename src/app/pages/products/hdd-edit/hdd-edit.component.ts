@@ -46,7 +46,8 @@ export class HddEditComponent implements OnInit {
         }
         this.hddService.create({
           ...this.form.value,
-          id: (newId).toString()
+          id: (newId).toString(),
+          rating: 0,
         });
       }
     });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {map} from "rxjs";
 import {Ram} from "../../../shared/model/ram/ram";
 import {RamService} from "../../../shared/model/ram/ram.service";
@@ -7,6 +7,7 @@ import {ProductService} from "../../../shared/model/product/product.service";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {Router} from "@angular/router";
 import {RamEditComponent} from "../ram-edit/ram-edit.component";
+import {ProductType} from "../../../shared/model/product/product";
 
 @Component({
   selector: 'app-ram-list',
@@ -14,22 +15,19 @@ import {RamEditComponent} from "../ram-edit/ram-edit.component";
   styleUrls: ['./ram-list.component.scss']
 })
 export class RamListComponent {
+  @Input()
   rams: Ram[] = [];
   bsModalRef?: BsModalRef;
 
   constructor(private ramService: RamService, private cartService: CartService,  private productService: ProductService,
-              private modalService: BsModalService, private router: Router) {
-    ramService.getAll().pipe(
-      map(rams => rams.filter(ram => ram.id != null)),
-    ).subscribe(rams => this.rams = rams);
-  }
+              private modalService: BsModalService, private router: Router) {}
 
   openCart(ram: Ram) {
-    this.cartService.openCart(ram, 'ram');
+    this.cartService.openCart(ram, ProductType.RAM);
   }
 
   addToFavorites(ram: Ram) {
-    this.productService.addProductToFavorites(ram, 'ram');
+    this.productService.addProductToFavorites(ram,  ProductType.RAM);
   }
 
   openRamEdit(ram: Ram | null) {
@@ -48,7 +46,7 @@ export class RamListComponent {
   }
 
   navigateToProduct(ram: Ram) {
-    this.router.navigate(['../products'], {queryParams: {product: 'ram' + ram.id}});
+    this.router.navigate(['../products'], {queryParams: {product: ProductType.RAM + ram.id}});
   }
 
   delete(ram: Ram) {

@@ -5,6 +5,7 @@ import {Products} from "../../../pages/favorite/favorite.component";
 import {map, take} from "rxjs";
 import {AuthService} from "../../auth/auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Hdd} from "../hdd/hdd";
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +20,19 @@ export class ProductService {
     return this.afs.collection<Product>(this.collectionName).doc(product.id).set(product);
   }
 
-  getAll() {
-    return this.afs.collection<Product>(this.collectionName).valueChanges();
+  getAll(collectionName: string) {
+    return this.afs.collection<any>(collectionName).valueChanges();
   }
-  update(product: Product) {
-    return this.afs.collection<Product>(this.collectionName).doc(product.id).set(product);
+  update(product: Product, collectionName: string) {
+    return this.afs.collection<any>(collectionName).doc(product.id).set(product);
   }
 
   delete(id: string) {
     return this.afs.collection<Product>(this.collectionName).doc(id).delete();
+  }
+
+  getById(id: string, collectionName: string) {
+    return this.afs.collection<any>(collectionName).doc(id).valueChanges();
   }
 
   getLastId(collectionName: string) {
@@ -113,7 +118,11 @@ export class ProductService {
       ).subscribe((products: any) => {
         const productFound = !!products[productId];
         if (productFound) {
-          delete products[productId];
+          if(products[productId].count > 1){
+            products[productId].count = products[productId].count - 1;
+          }else{
+            delete products[productId];
+          }
           productRef.update({products: products}).then(() => console.log("Product deleted"));
         }
       });

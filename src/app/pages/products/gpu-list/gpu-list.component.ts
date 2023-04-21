@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Gpu} from "../../../shared/model/gpu/gpu";
 import {GpuService} from "../../../shared/model/gpu/gpu.service";
-import {map} from "rxjs";
 import {CartService} from "../../cart/cart.service";
 import {ProductService} from "../../../shared/model/product/product.service";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {GpuEditComponent} from "../gpu-edit/gpu-edit.component";
 import {Router} from "@angular/router";
+import {ProductType} from "../../../shared/model/product/product";
 
 @Component({
   selector: 'app-gpu-list',
@@ -14,14 +14,13 @@ import {Router} from "@angular/router";
   styleUrls: ['./gpu-list.component.scss']
 })
 export class GpuListComponent {
+
+  @Input()
   gpus: Gpu[] = [];
   bsModalRef?: BsModalRef;
 
   constructor(private gpuService: GpuService, private cartService: CartService, private productService: ProductService,
               private modalService: BsModalService, private router: Router) {
-    gpuService.getAll().pipe(
-      map(gpus => gpus.filter(gpu => gpu.id != null)),
-    ).subscribe(gpus => this.gpus = gpus);
   }
 
   openCart(gpu: Gpu) {
@@ -48,7 +47,7 @@ export class GpuListComponent {
   }
 
   navigateToProduct(gpu: Gpu) {
-    this.router.navigate(['../products'], {queryParams: {product: 'gpu' + gpu.id}});
+    this.router.navigate(['../products'], {queryParams: {product: ProductType.GPU + gpu.id}});
   }
 
   delete(gpu: Gpu) {

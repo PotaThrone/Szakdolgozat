@@ -33,7 +33,7 @@ export class CartComponent implements OnInit {
   loggedInUser?: firebase.default.User | null;
   modalRef?: BsModalRef;
   products: Product[] = [];
-  displayedColumns = ['name', 'description', 'price', 'delete']
+  displayedColumns = ['name', 'description', 'count', 'price', 'delete']
   bankCardNumbers: string = '';
   expireDate: string = '';
 
@@ -111,6 +111,10 @@ export class CartComponent implements OnInit {
   addSlashBetween(expireDate: string) {
     expireDate = expireDate.replace(/[^0-9]/g, '');
     this.expireDate = expireDate.replace(/(\d{2})(?=\d)/g, '$1/');
+  }
+
+  getTotalPrice(): number {
+    return this.products.reduce((total, product) => total + (product.count * product.price), 0);
   }
 }
 

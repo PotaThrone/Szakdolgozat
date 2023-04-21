@@ -45,7 +45,8 @@ export class RamEditComponent implements OnInit{
         }
         this.ramService.create({
           ...this.form.value,
-          id: (newId).toString()
+          id: (newId).toString(),
+          rating: 0,
         });
       }
     });

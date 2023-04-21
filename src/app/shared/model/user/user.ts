@@ -5,3 +5,8 @@ export interface User {
   firstname: string;
   lastname: string;
 }
+
+export interface Comment{
+  comment: string;
+  user: User;
+}
