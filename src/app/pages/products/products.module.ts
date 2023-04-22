@@ -11,7 +11,6 @@ import {RamListComponent} from './ram-list/ram-list.component';
 import {MatCardModule} from "@angular/material/card";
 import { CartPopupComponent } from './cart-popup/cart-popup.component';
 import {ModalModule} from "ngx-bootstrap/modal";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { GpuEditComponent } from './gpu-edit/gpu-edit.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
@@ -20,6 +19,9 @@ import { HddEditComponent } from './hdd-edit/hdd-edit.component';
 import { MotherboardEditComponent } from './motherboard-edit/motherboard-edit.component';
 import { ProcessorEditComponent } from './processor-edit/processor-edit.component';
 import { RamEditComponent } from './ram-edit/ram-edit.component';
+import {StarRatingComponent} from "../../shared/util/star-rating/star-rating.component";
+import {ProductCommentComponent} from "../../shared/util/product-comment/product-comment.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 const routes: Routes = [
   {path: '', component: ProductsComponent}
@@ -38,18 +40,21 @@ const routes: Routes = [
     HddEditComponent,
     MotherboardEditComponent,
     ProcessorEditComponent,
-    RamEditComponent
+    RamEditComponent,
+    StarRatingComponent,
+    ProductCommentComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    MatButtonModule,
-    MatCardModule,
-    ModalModule.forRoot(),
-    ReactiveFormsModule,
-    MatInputModule,
-    MatIconModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        MatButtonModule,
+        MatCardModule,
+        ModalModule.forRoot(),
+        ReactiveFormsModule,
+        MatInputModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+    ],
   exports: [RouterModule],
 })
 export class ProductsModule {

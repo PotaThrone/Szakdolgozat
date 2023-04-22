@@ -44,6 +44,7 @@ export class CartComponent implements OnInit {
         if (products) {
           const productArray = Object.values(products);
           this.products = Object.values(productArray[0]);
+          this.products.sort((product1, product2) => product1.brand.localeCompare(product2.brand));
         } else {
           this.products = [];
         }

@@ -46,7 +46,6 @@ export class RegisterComponent {
 
   register() {
     this.authService.signup(this.form.get('email')?.value, this.form.get('password')?.value).then(cred => {
-      console.log(cred);
       const user: User = {
         uid: cred?.user?.uid as string,
         email: this.form.get('email')?.value,
@@ -55,14 +54,11 @@ export class RegisterComponent {
         lastname: this.form.get('lastName')?.value
       };
       this.userService.create(user).then(_ => {
-        console.log('User added successfully.');
         this.router.navigateByUrl('/main');
 
       }).catch(error => {
-        console.error(error);
       })
     }).catch(error => {
-      console.error(error);
     });
   }
 

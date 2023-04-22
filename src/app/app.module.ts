@@ -10,7 +10,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatListModule} from "@angular/material/list";
 import {MatButtonModule} from "@angular/material/button";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {CategoriesComponent} from './shared/categories/categories.component';
+import {SubHeaderComponent} from './shared/categories/sub-header.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {HeaderComponent} from './shared/header/header.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -28,7 +28,7 @@ import {FavoriteModule} from "./pages/favorite/favorite.module";
   declarations: [
     AppComponent,
     MainComponent,
-    CategoriesComponent,
+    SubHeaderComponent,
     HeaderComponent,
   ],
   imports: [

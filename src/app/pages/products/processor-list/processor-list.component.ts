@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {map} from "rxjs";
 import {ProcessorService} from "../../../shared/model/processor/processor.service";
 import {Processor} from "../../../shared/model/processor/processor";
@@ -8,25 +8,40 @@ import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {Router} from "@angular/router";
 import {ProcessorEditComponent} from "../processor-edit/processor-edit.component";
 import {ProductType} from "../../../shared/model/product/product";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-processor-list',
   templateUrl: './processor-list.component.html',
   styleUrls: ['./processor-list.component.scss']
 })
-export class ProcessorListComponent {
-  @Input()
+export class ProcessorListComponent implements OnInit{
   processors: Processor[] = [];
+  filteredProcessors: Processor[] = [];
   bsModalRef?: BsModalRef;
+  isLoading = false;
+  searchForm: FormGroup;
   constructor(private processorService: ProcessorService, private cartService: CartService,  private productService: ProductService,
-              private modalService: BsModalService, private router: Router) {}
+              private modalService: BsModalService, private router: Router, private fb: FormBuilder) {
+    this.processorService.getAll().pipe(
+      map(processors => processors.filter(processor => processor.id != null)),
+    ).subscribe(processors => {
+      this.processors = processors;
+      this.filteredProcessors = processors;
+    });
+    this.searchForm = this.fb.group({
+      searchTerm: new FormControl(),
+    });
+  }
 
   openCart(processor: Processor) {
-    this.cartService.openCart(processor, ProductType.PROCESSOR);
+    this.isLoading = true;
+    this.cartService.openCart(processor, ProductType.PROCESSOR).subscribe(isLoading => this.isLoading = isLoading);
   }
 
   addToFavorites(processor: Processor) {
-    this.productService.addProductToFavorites(processor, ProductType.PROCESSOR)
+    this.isLoading = true;
+    this.productService.addProductToFavorites(processor, ProductType.PROCESSOR).subscribe(isLoading => this.isLoading = isLoading);
   }
 
   openProcessorEdit(processor: Processor | null) {
@@ -50,5 +65,10 @@ export class ProcessorListComponent {
 
   delete(processor: Processor) {
     this.processorService.delete(processor.id);
+  }
+  ngOnInit(): void {
+    this.searchForm.get('searchTerm')?.valueChanges.subscribe(searchTerm => {
+      this.filteredProcessors = this.processors.filter(processor => processor.brand.toLowerCase().includes(searchTerm.toLowerCase()));
+    });
   }
 }

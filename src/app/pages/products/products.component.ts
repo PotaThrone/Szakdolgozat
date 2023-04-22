@@ -3,15 +3,16 @@ import {ActivatedRoute} from "@angular/router";
 import {Gpu} from "../../shared/model/gpu/gpu";
 import {CollectionName, Product, ProductType} from "../../shared/model/product/product";
 import {map, take} from "rxjs";
-import {GpuService} from "../../shared/model/gpu/gpu.service";
 import {ProductService} from "../../shared/model/product/product.service";
 import {Hdd} from "../../shared/model/hdd/hdd";
 import {Ram} from "../../shared/model/ram/ram";
 import {Motherboard} from "../../shared/model/motherboard/motherboard";
 import {Processor} from "../../shared/model/processor/processor";
 import {CartService} from "../cart/cart.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
 import {AuthService} from "../../shared/auth/auth.service";
+import {Comment} from "../../shared/model/user/user";
+import {CommentFormData} from "../../shared/util/product-comment/product-comment.component";
 
 @Component({
   selector: 'app-products',
@@ -19,34 +20,22 @@ import {AuthService} from "../../shared/auth/auth.service";
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
+  commentForm!: FormGroup;
   category?: string | null;
   product?: string | null;
-  gpus: Gpu[] = [];
-  hdds: Hdd[] = [];
-  rams: Ram[] = [];
-  motherboards: Motherboard[] = [];
-  processors: Processor[] = [];
   selectedGpu?: Gpu;
   selectedHdd?: Hdd;
   selectedRam?: Ram;
   selectedProcessor?: Processor;
   selectedMotherboard?: Motherboard;
-  commentForm: FormGroup;
-  stars: number[] = [5, 4, 3, 2, 1];
-  currentRating: number = 0;
-  constructor(private route: ActivatedRoute, private productService: ProductService, private cartService: CartService, private fb: FormBuilder, private authService: AuthService) {
-    this.commentForm = fb.group({
-        rating: [0],
-        comment: ["", Validators.required],
-        user: [authService.getLoggedInUser()],
-      }
-    )
+  isLoading = false;
+  constructor(private route: ActivatedRoute, private productService: ProductService, private cartService: CartService, private authService: AuthService) {
+
   }
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
       take(1);
-      this.getAllProducts(params.get('category'));
       this.category = params.get('category');
       this.getProduct(params.get('product'));
       this.product = params.get('product');
@@ -95,75 +84,81 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  getAllProducts(category: string | null) {
-    switch (category) {
-      case ProductType.HDD:
-        this.productService.getAll(CollectionName.HDD).pipe(
-          map(hdds => hdds.filter(hdd => hdd.id != null)),
-        ).subscribe(hdds => {
-          this.hdds = hdds;
-        });
-        break;
-      case ProductType.GPU:
-        this.productService.getAll(CollectionName.GPU).pipe(
-          map(gpus => gpus.filter(gpu => gpu.id != null)),
-        ).subscribe(gpus => {
-          this.gpus = gpus;
-        });
-        break;
-      case ProductType.RAM:
-        this.productService.getAll(CollectionName.RAM).pipe(
-          map(rams => rams.filter(ram => ram.id != null)),
-        ).subscribe(rams => {
-          this.rams = rams;
-        });
-        break;
-      case ProductType.PROCESSOR:
-        this.productService.getAll(CollectionName.PROCESSOR).pipe(
-          map(processors => processors.filter(processor => processor.id != null)),
-        ).subscribe(processors => {
-          this.processors = processors;
-        });
-        break;
-      case ProductType.MOTHERBOARD:
-        this.productService.getAll(CollectionName.MOTHERBOARD).pipe(
-          map(motherboards => motherboards.filter(motherboard => motherboard.id != null)),
-        ).subscribe(motherboards => {
-          this.motherboards = motherboards;
-        });
-        break;
-    }
-  }
-
   openCart(selectedProduct: Product | undefined, productType: string) {
     if(selectedProduct){
-      this.cartService.openCart(selectedProduct, productType);
+      this.isLoading = true;
+      this.cartService.openCart(selectedProduct, productType).subscribe(isLoading => this.isLoading = false);
     }
   }
 
-  sendComment(productType: string) {
+  private sendComment(productType: string) {
+    this.isLoading = true;
+    let comment: Comment = {
+      comment: this.commentForm.get('comment')?.value,
+      rating: this.commentForm.get('rating')?.value,
+      userEmail: this.authService.getLoggedInUser()?.email ?? "",
+    }
     switch (productType) {
       case ProductType.HDD:
-        this.productService.update({...this.commentForm.value}, CollectionName.HDD);
+        if(this.selectedHdd){
+          this.productService.update({
+            ...this.selectedHdd,
+            rating: this.selectedHdd.rating == 0 ? this.commentForm.value.rating : (this.selectedHdd.rating + this.commentForm.value.rating) / 2,
+            comments: [
+              ...this.selectedHdd.comments ?? [],
+              comment
+            ]}, CollectionName.HDD).finally(() => this.isLoading = false);
+        }
         break;
       case ProductType.GPU:
-        this.productService.update({...this.commentForm.value, ...this.selectedGpu}, CollectionName.GPU);
+        if(this.selectedGpu){
+          this.productService.update({
+            ...this.selectedGpu,
+            rating: this.selectedGpu.rating == 0 ? this.commentForm.value.rating : (this.selectedGpu.rating + this.commentForm.value.rating) / 2,
+            comments: [
+            ...this.selectedGpu.comments ?? [],
+            comment
+          ]}, CollectionName.GPU).finally(() => this.isLoading = false);
+        }
         break;
       case ProductType.RAM:
-        this.productService.update({...this.commentForm.value}, CollectionName.RAM);
+        if(this.selectedRam){
+          this.productService.update({
+            ...this.selectedRam,
+            rating: this.selectedRam.rating == 0 ? this.commentForm.value.rating : (this.selectedRam.rating + this.commentForm.value.rating) / 2,
+            comments: [
+              ...this.selectedRam.comments ?? [],
+              comment
+            ]}, CollectionName.RAM).finally(() => this.isLoading = false);
+        }
         break;
       case ProductType.PROCESSOR:
-        this.productService.update({...this.commentForm.value}, CollectionName.PROCESSOR);
+        if(this.selectedProcessor){
+          this.productService.update({
+            ...this.selectedProcessor,
+            rating: this.selectedProcessor.rating == 0 ? this.commentForm.value.rating : (this.selectedProcessor.rating + this.commentForm.value.rating) / 2,
+            comments: [
+              ...this.selectedProcessor.comments ?? [],
+              comment
+            ]}, CollectionName.PROCESSOR).finally(() => this.isLoading = false);
+        }
         break;
       case ProductType.MOTHERBOARD:
-        this.productService.update({...this.commentForm.value}, CollectionName.MOTHERBOARD);
+        if(this.selectedMotherboard){
+          this.productService.update({
+            ...this.selectedMotherboard,
+            rating: this.selectedMotherboard.rating == 0 ? this.commentForm.value.rating : (this.selectedMotherboard.rating + this.commentForm.value.rating) / 2,
+            comments: [
+              ...this.selectedMotherboard.comments ?? [],
+              comment
+            ]}, CollectionName.MOTHERBOARD).finally(() => this.isLoading = false);
+        }
         break;
     }
   }
 
-  rate(rating: number) {
-    this.commentForm.controls['rating'].patchValue(rating);
-    this.currentRating = rating;
+  initForm(commentFormData: CommentFormData) {
+    this.commentForm = commentFormData.commentForm;
+    this.sendComment(commentFormData.productType);
   }
-
 }

@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
-import {LastId, Product} from "./product";
-import {Products} from "../../../pages/favorite/favorite.component";
-import {map, take} from "rxjs";
+import {LastId, Product, Products} from "./product";
+import {finalize, map, Observable, Subject, take} from "rxjs";
 import {AuthService} from "../../auth/auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Hdd} from "../hdd/hdd";
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +18,6 @@ export class ProductService {
     return this.afs.collection<Product>(this.collectionName).doc(product.id).set(product);
   }
 
-  getAll(collectionName: string) {
-    return this.afs.collection<any>(collectionName).valueChanges();
-  }
   update(product: Product, collectionName: string) {
     return this.afs.collection<any>(collectionName).doc(product.id).set(product);
   }
@@ -39,14 +34,15 @@ export class ProductService {
     return this.afs.collection<LastId>(collectionName).doc('lastId').valueChanges();
   }
 
-  incrementLastId(lastId: number, collectionName: string){
-    const lastIdObj: LastId = { lastId: lastId } as LastId;
+  incrementLastId(lastId: number, collectionName: string) {
+    const lastIdObj: LastId = {lastId: lastId} as LastId;
     this.afs.collection<LastId>(collectionName).doc('lastId').set(lastIdObj);
   }
 
   private getRef(userId: string, collectionName: string) {
     return this.afs.collection(collectionName).doc(userId);
   }
+
   getProducts(collectionName: string) {
     let user = this.authService.getLoggedInUser();
     if (user) {
@@ -56,26 +52,32 @@ export class ProductService {
   }
 
   addProductToFavorites(product: Product, productType: string) {
+    const isLoading$ = new Subject<boolean>();
     let user = this.authService.getLoggedInUser();
     if (user) {
       const productRef = this.getRef(user.uid, 'Favorite');
 
       productRef.valueChanges().pipe(
         map((favorites: any) => favorites?.products || {}),
-        take(1)
+        finalize(() => isLoading$.next(false)),
+        take(1),
       ).subscribe((products: any) => {
         const productAlreadyAdded = !!products[product.id];
         if (!productAlreadyAdded) {
           product.id = productType + product.id;
           productRef.set({products: {...products, [product.id]: product}}, {merge: true})
-            .then(() => this.snackBar.open(product.brand + ' a kedvencek között!', 'OK'))
+            .then(() => this.snackBar.open(product.brand + ' a kedvencek között!', 'OK', {
+              duration: 2000
+            }))
             .catch((error) => console.error('Error adding product:', error))
         }
       });
     }
+    return isLoading$.asObservable();
   }
 
-  addProductToCart(product: Product, productType: string) {
+  addProductToCart(product: Product, productType: string): Observable<boolean> {
+    const isLoading$ = new Subject<boolean>();
     let user = this.authService.getLoggedInUser();
     let productCreatedOrUpdated = false;
     let count: number | undefined = 0;
@@ -86,26 +88,38 @@ export class ProductService {
         map((favorites: any) => favorites?.products || {}),
         take(1)
       ).subscribe((products: any) => {
-        const productFromCart = products[product.id];
-        if(productFromCart){
+        let productFromCart: Product;
+        if (product.id.includes(productType)) {
+          productFromCart = products[product.id];
+        } else {
+          productFromCart = products[productType + product.id];
+        }
+
+        if (productFromCart) {
           count = productFromCart.count;
           if (count && count > 0) {
             productFromCart.count = productFromCart.count + 1;
             if (!productCreatedOrUpdated) {
-              productRef.update({products: products});
+              productRef.update({products: products}).then(() => isLoading$.next(false));
               productCreatedOrUpdated = true;
             }
           }
-        }else{
+        } else {
           product.id = productType + product.id;
           product.count = 1;
           if (!productCreatedOrUpdated) {
-            productRef.set({products: {...products, [product.id]: product}}, {merge: true});
+            productRef.set({
+              products: {
+                ...products,
+                [product.id]: product
+              }
+            }, {merge: true}).then(() => isLoading$.next(false));
             productCreatedOrUpdated = true;
           }
         }
       });
     }
+    return isLoading$.asObservable();
   }
 
   deleteProduct(productId: string, collectionName: string) {
@@ -118,9 +132,9 @@ export class ProductService {
       ).subscribe((products: any) => {
         const productFound = !!products[productId];
         if (productFound) {
-          if(products[productId].count > 1){
+          if (products[productId].count > 1) {
             products[productId].count = products[productId].count - 1;
-          }else{
+          } else {
             delete products[productId];
           }
           productRef.update({products: products}).then(() => console.log("Product deleted"));

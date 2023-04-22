@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  loading: boolean = false;
+  isLoading: boolean = false;
   form: FormGroup;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
@@ -21,14 +21,13 @@ export class LoginComponent {
   }
 
   async login() {
-    this.loading = true;
-    this.authService.login(this.form.controls['email'].value, this.form.controls['password'].value).then(cred => {
-      console.log(cred);
+    this.isLoading = true;
+    this.authService.login(this.form.controls['email'].value, this.form.controls['password'].value).then(() => {
       this.router.navigateByUrl('/main');
-      this.loading = false;
-    }).catch(error => {
-      console.error(error);
-      this.loading = false;
+      this.isLoading = false;
+    }).catch(() => {
+      this.form.setErrors({accountInvalid: true});
+      this.isLoading = false;
     });
   }
 }

@@ -8,14 +8,6 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <form [formGroup]="searchForm" (ngSubmit)="search()" class="form-inline my-2 my-lg-0">
-    <mat-form-field appearance="outline">
-      <input formControlName="searchTerm" matInput type="search" placeholder="Keresés">
-      <button type="submit" matSuffix mat-icon-button aria-label="Search">
-        <mat-icon>search</mat-icon>
-      </button>
-    </mat-form-field>
-  </form>
   <button mat-button routerLink="topProducts">TOP termékek</button>
 </div>
 

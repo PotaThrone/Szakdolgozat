@@ -1,0 +1,12 @@
+<div *ngIf="!rating" class="star-rating">
+  <mat-icon [style]="star <= currentRating ? 'color: yellow;' : 'color: black;'"
+            *ngFor="let star of stars;"
+            class="star" (click)="rate(star)">star
+  </mat-icon>
+</div>
+<div *ngIf="rating" class="star-rating">
+  <mat-icon [style]="(star <= rating ? 'color: yellow;' : 'color: black;') + 'cursor: default;'"
+            *ngFor="let star of stars;"
+            class="star">star
+  </mat-icon>
+</div>

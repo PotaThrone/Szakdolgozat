@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {map} from "rxjs";
 import {Motherboard} from "../../../shared/model/motherboard/motherboard";
 import {MotherboardService} from "../../../shared/model/motherboard/motherboard.service";
@@ -8,26 +8,41 @@ import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {Router} from "@angular/router";
 import {MotherboardEditComponent} from "../motherboard-edit/motherboard-edit.component";
 import {ProductType} from "../../../shared/model/product/product";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-motherboard-list',
   templateUrl: './motherboard-list.component.html',
   styleUrls: ['./motherboard-list.component.scss']
 })
-export class MotherboardListComponent {
-  @Input()
+export class MotherboardListComponent implements OnInit{
   motherboards: Motherboard[] = [];
+  filteredMotherboards: Motherboard[] = [];
   bsModalRef?: BsModalRef;
+  isLoading = false;
+  searchForm: FormGroup;
 
   constructor(private motherboardService: MotherboardService, private cartService: CartService, private productService: ProductService,
-              private modalService: BsModalService, private router: Router) {}
+              private modalService: BsModalService, private router: Router, private fb: FormBuilder) {
+    this.motherboardService.getAll().pipe(
+      map(motherboards => motherboards.filter(motherboard => motherboard.id != null)),
+    ).subscribe(motherboards => {
+      this.motherboards = motherboards;
+      this.filteredMotherboards = motherboards;
+    });
+    this.searchForm = this.fb.group({
+      searchTerm: new FormControl(),
+    });
+  }
 
   openCart(motherboard: Motherboard) {
-    this.cartService.openCart(motherboard, ProductType.MOTHERBOARD);
+    this.isLoading = true;
+    this.cartService.openCart(motherboard, ProductType.MOTHERBOARD).subscribe(isLoading => this.isLoading = isLoading);
   }
 
   addToFavorites(motherboard: Motherboard) {
-    this.productService.addProductToFavorites(motherboard, ProductType.MOTHERBOARD);
+    this.isLoading = true;
+    this.productService.addProductToFavorites(motherboard, ProductType.MOTHERBOARD).subscribe(isLoading => this.isLoading = isLoading);
   }
 
   openMotherboardEdit(motherboard: Motherboard | null) {
@@ -51,5 +66,10 @@ export class MotherboardListComponent {
 
   delete(motherboard: Motherboard) {
      this.motherboardService.delete(motherboard.id);
+  }
+  ngOnInit(): void {
+    this.searchForm.get('searchTerm')?.valueChanges.subscribe(searchTerm => {
+      this.filteredMotherboards = this.motherboards.filter(motherboard => motherboard.brand.toLowerCase().includes(searchTerm.toLowerCase()));
+    });
   }
 }

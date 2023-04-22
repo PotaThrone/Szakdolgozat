@@ -8,5 +8,6 @@ export interface User {
 
 export interface Comment{
   comment: string;
-  user: User;
+  rating: number;
+  userEmail: string;
 }

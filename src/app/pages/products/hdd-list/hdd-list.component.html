@@ -1,7 +1,20 @@
+<div class="overlay" *ngIf="isLoading">
+  <div class="spinner-wrapper">
+    <mat-spinner class="spinner"></mat-spinner>
+  </div>
+</div>
 <div class="add-product">
   <button class="btn btn-primary" (click)="openHddEdit(null)">Merevlemez hozzáadása<mat-icon style="padding-top: 5px">add</mat-icon></button>
+  <form [formGroup]="searchForm" class="form-inline my-2 my-lg-0">
+    <mat-form-field appearance="outline">
+      <input formControlName="searchTerm" matInput type="search" placeholder="Keresés">
+      <button type="submit" matSuffix mat-icon-button aria-label="Search">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
 </div>
-<mat-card class="product-items" *ngFor="let hdd of hdds">
+<mat-card class="product-items" *ngFor="let hdd of filteredHdds">
   <a (click)="navigateToProduct(hdd)">
     <mat-card-header>
       <mat-card-title>{{hdd.brand}}</mat-card-title>

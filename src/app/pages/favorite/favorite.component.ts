@@ -20,6 +20,7 @@ export class FavoriteComponent {
         if (products) {
           const productArray = Object.values(products);
           this.products = Object.values(productArray[0]);
+          this.products.sort((product1, product2) => product1.brand.localeCompare(product2.brand));
         } else {
           this.products = [];
         }
@@ -34,8 +35,4 @@ export class FavoriteComponent {
   redirectToCart() {
     this.router.navigate(['../cart']);
   }
-}
-
-export interface Products {
-  [key: string]: Product;
 }

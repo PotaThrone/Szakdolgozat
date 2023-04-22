@@ -1,11 +1,16 @@
+<div class="overlay" *ngIf="isLoading">
+  <div class="spinner-wrapper">
+    <mat-spinner class="spinner"></mat-spinner>
+  </div>
+</div>
 <ng-container [ngSwitch]="category">
-  <app-gpu-list [gpus]="gpus" *ngSwitchCase="'gpu'"></app-gpu-list>
-  <app-hdd-list [hdds]="hdds" *ngSwitchCase="'hdd'"></app-hdd-list>
-  <app-motherboard-list [motherboards]="motherboards" *ngSwitchCase="'motherboard'"></app-motherboard-list>
-  <app-processor-list [processors]="processors" *ngSwitchCase="'processor'"></app-processor-list>
-  <app-ram-list [rams]="rams" *ngSwitchCase="'ram'"></app-ram-list>
+  <app-gpu-list *ngSwitchCase="'gpu'"></app-gpu-list>
+  <app-hdd-list  *ngSwitchCase="'hdd'"></app-hdd-list>
+  <app-motherboard-list  *ngSwitchCase="'motherboard'"></app-motherboard-list>
+  <app-processor-list  *ngSwitchCase="'processor'"></app-processor-list>
+  <app-ram-list  *ngSwitchCase="'ram'"></app-ram-list>
 </ng-container>
-<ng-container>
+<ng-container >
   <div class="selected-product">
     <mat-card>
       <div *ngIf="product?.includes('gpu')">
@@ -13,101 +18,93 @@
           <mat-card-title>{{selectedGpu?.brand}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          Foglalat: {{selectedGpu?.slot}} <br>
-          Gyorsaság: {{selectedGpu?.clock}} GHz <br>
-          Memória: {{selectedGpu?.memory}} MB <br>
-          Értékelés: {{selectedGpu?.rating}}<br>
-          Termék leírás: {{selectedGpu?.description}}<br>
           <div class="buttonAndPrice">
+            <app-star-rating [rating]="selectedGpu?.rating" [currentRating]="0"></app-star-rating><br>
             <strong>Ár: {{selectedGpu?.price}} Ft</strong>
             <button mat-button (click)="openCart(selectedGpu, 'gpu')">Kosárba rak</button>
           </div>
+          Foglalat: {{selectedGpu?.slot}} <br>
+          Gyorsaság: {{selectedGpu?.clock}} GHz <br>
+          Memória: {{selectedGpu?.memory}} MB <br>
+          Termék leírás: {{selectedGpu?.description}}<br>
           <button class="btn btn-primary">Gépbe rak</button>
-          <div class="comments">
-            <form [formGroup]="commentForm">
-              <span>Szólj hozzá!</span>
-              <div class="star-rating">
-                <mat-icon [style]="star <= currentRating ? 'color: yellow;' : 'color: black;'"
-                          *ngFor="let star of stars;"
-                          class="star" (click)="rate(star)">star
-                </mat-icon>
-              </div>
-              <textarea type="text" formControlName="comment"></textarea>
-              <button mat-raised-button color="primary" (click)="sendComment('gpu')" [disabled]="commentForm.invalid"
-                      type="submit">Küldés
-              </button>
-            </form>
-          </div>
-          <div>
-            <h2>További hozzászólások:</h2>
-            <div class="container">
-              <div class="forumBox" *ngFor="let comment of selectedGpu?.comments">
-                {{comment.comment}}
-                {{comment.user}}
-              </div>
-            </div>
-
-          </div>
+          <app-product-comment *ngIf="selectedGpu" [productType]="'gpu'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedGpu" ></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('hdd')">
         <mat-card-header>
           <mat-card-title>{{selectedHdd?.brand}}</mat-card-title>
-          <mat-card-subtitle><strong>Ár: {{selectedHdd?.price}} Ft</strong></mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
+          <div class="buttonAndPrice">
+            <app-star-rating [rating]="selectedHdd?.rating" [currentRating]="0"></app-star-rating><br>
+            <strong>Ár: {{selectedHdd?.price}} Ft</strong>
+            <button mat-button (click)="openCart(selectedHdd, 'hdd')">Kosárba rak</button>
+          </div>
           Kábel típus: {{selectedHdd?.cableType}} <br>
           Méret: {{selectedHdd?.size}} GB <br>
-          Értékelés: {{selectedHdd?.rating}}<br>
           Termék leírás: {{selectedHdd?.description}}<br>
+          <button class="btn btn-primary">Gépbe rak</button>
+          <app-product-comment *ngIf="selectedHdd" [productType]="'hdd'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedHdd" ></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('ram')">
         <mat-card-header>
           <mat-card-title>{{selectedRam?.brand}}</mat-card-title>
-          <mat-card-subtitle><strong>Ár: {{selectedRam?.price}} Ft</strong></mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
+          <div class="buttonAndPrice">
+            <app-star-rating [rating]="selectedRam?.rating" [currentRating]="0"></app-star-rating><br>
+            <strong>Ár: {{selectedRam?.price}} Ft</strong>
+            <button mat-button (click)="openCart(selectedRam, 'ram')">Kosárba rak</button>
+          </div>
           Memória mérete {{selectedRam?.memorySize}} MB<br>
           Óra gyorsasága: {{selectedRam?.speed}} MHz<br>
           Foglalat: {{selectedRam?.slot}} <br>
-          Értékelés: {{selectedRam?.rating}}<br>
           Termék leírás: {{selectedRam?.description}}<br>
+          <button class="btn btn-primary">Gépbe rak</button>
+          <app-product-comment *ngIf="selectedRam" [productType]="'ram'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedRam" ></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('motherboard')">
         <mat-card-header>
           <mat-card-title>{{selectedMotherboard?.brand}}</mat-card-title>
-          <mat-card-subtitle><strong>Ár: {{selectedMotherboard?.price}} Ft</strong></mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
+          <div class="buttonAndPrice">
+            <app-star-rating [rating]="selectedMotherboard?.rating" [currentRating]="0"></app-star-rating><br>
+            <strong>Ár: {{selectedMotherboard?.price}} Ft</strong>
+            <button mat-button (click)="openCart(selectedMotherboard, 'motherboard')">Kosárba rak</button>
+          </div>
           Chipset: {{selectedMotherboard?.chipset}} <br>
           Videókártya foglalat: {{selectedMotherboard?.gpuSlots}} <br>
           Merevlemez kábel: {{selectedMotherboard?.hddCable}} <br>
           RAM darabszám: {{selectedMotherboard?.ramCount}} <br>
           RAM foglalat: {{selectedMotherboard?.ramSlots}} <br>
-          Értékelés: {{selectedMotherboard?.rating}}<br>
           Termék leírás: {{selectedMotherboard?.description}}<br>
+          <button class="btn btn-primary">Gépbe rak</button>
+          <app-product-comment *ngIf="selectedMotherboard" [productType]="'motherboard'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedMotherboard" ></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('processor')">
         <mat-card-header>
           <mat-card-title>{{selectedProcessor?.brand}}</mat-card-title>
-          <mat-card-subtitle><strong>Ár: {{selectedProcessor?.price}} Ft</strong></mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
+          <div class="buttonAndPrice">
+            <app-star-rating [rating]="selectedProcessor?.rating" [currentRating]="0"></app-star-rating><br>
+            <strong>Ár: {{selectedProcessor?.price}} Ft</strong>
+            <button mat-button (click)="openCart(selectedProcessor, 'processor')">Kosárba rak</button>
+          </div>
           Chipset: {{selectedProcessor?.chipset}} <br>
           Óra gyorsasága: {{selectedProcessor?.clockSpeed}} GHz<br>
           Magok száma: {{selectedProcessor?.core}} <br>
-          Értékelés: {{selectedProcessor?.rating}}<br>
           Termék leírás: {{selectedProcessor?.description}}<br>
+          <button class="btn btn-primary">Gépbe rak</button>
+          <app-product-comment *ngIf="selectedProcessor" [productType]="'processor'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedProcessor" ></app-product-comment>
         </mat-card-content>
       </div>
-      <mat-card-content>
-
-      </mat-card-content>
     </mat-card>
   </div>
 </ng-container>
-
 

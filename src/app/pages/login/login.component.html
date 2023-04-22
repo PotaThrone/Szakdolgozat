@@ -1,7 +1,8 @@
-<span class="loading-indicator" *ngIf="loading">
-    <mat-spinner></mat-spinner>
-</span>
-
+<div class="overlay" *ngIf="isLoading">
+  <div class="spinner-wrapper">
+    <mat-spinner class="spinner"></mat-spinner>
+  </div>
+</div>
 <div class="container">
   <mat-card class="formCard">
     <h1>Bejelentkezés</h1>
@@ -15,6 +16,7 @@
         <mat-label for="password">Jelszó:</mat-label>
         <input matInput type="password" formControlName="password"/>
       </mat-form-field>
+      <mat-error *ngIf="form.hasError('accountInvalid')">Hibás email vagy jelszó!</mat-error>
       <br>
       <a routerLink="/register">Nincs még fiókod? Regisztrálj!</a> <br>
       <span>

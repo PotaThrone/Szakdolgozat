@@ -29,3 +29,7 @@ export enum ProductType {
   MOTHERBOARD = "motherboard",
   PROCESSOR = "processor",
 }
+
+export interface Products {
+  [key: string]: Product;
+}

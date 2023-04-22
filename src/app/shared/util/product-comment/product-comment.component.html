@@ -1,0 +1,22 @@
+<div class="comments">
+  <form [formGroup]="commentForm">
+    <span>Szólj hozzá!</span>
+    <app-star-rating (starSelected)="onStarRated($event)" [currentRating]="currentRating" ></app-star-rating>
+    <textarea type="text" formControlName="comment"></textarea>
+    <button mat-raised-button color="primary" (click)="sendComment()" [disabled]="commentForm.invalid"
+            type="submit">Küldés
+    </button>
+  </form>
+</div>
+<div>
+  <h2>További hozzászólások:</h2>
+  <div class="container">
+    <div class="comments" *ngFor="let comment of selectedProduct?.comments">
+      <div class="star-rating">
+        <app-star-rating [rating]="comment?.rating" [currentRating]="currentRating" ></app-star-rating>
+      </div>
+      <strong>{{comment.userEmail}}</strong><br>
+      {{comment.comment}}
+    </div>
+  </div>
+</div>
