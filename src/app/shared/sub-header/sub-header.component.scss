@@ -1,0 +1,18 @@
+mat-form-field {
+  margin-right: 10px;
+  padding-top: 10px;
+  margin-bottom: -1.25em;
+}
+
+.sub-header-container{
+  display: flex;
+  align-items: center;
+  float:left;
+  width: 100%;
+  flex-direction: row;
+  background-color: greenyellow;
+
+  a{
+    height: 70px;
+  }
+}

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Categories} from "./categories";
+import {Category} from "./category";
 
 
 @Component({
@@ -9,7 +9,7 @@ import {Categories} from "./categories";
   styleUrls: ['./sub-header.component.scss']
 })
 export class SubHeaderComponent implements OnInit {
-  categories = Object.values(Categories);
+  categories = Object.values(Category);
   categoryFromParam?: string;
 
   constructor(private router: Router, private route: ActivatedRoute) {}
@@ -18,14 +18,14 @@ export class SubHeaderComponent implements OnInit {
     this.route.queryParamMap.subscribe(params =>{
       let categoryParam = params.get('category');
       if(categoryParam){
-        this.categoryFromParam = Categories[categoryParam as keyof typeof Categories];
+        this.categoryFromParam = Category[categoryParam as keyof typeof Category];
       }
     });
   }
 
   categorySelected(category: string, event: any) {
     if (event.isUserInput) {
-      let categoryObject = Object(Categories);
+      let categoryObject = Object(Category);
       for (let categoryKey in categoryObject) {
         if (categoryObject[categoryKey] === category) {
           category = categoryKey;

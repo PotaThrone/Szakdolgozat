@@ -35,6 +35,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'pc-builder',
+    loadChildren: () => import('./pages/pc-builder/pc-builder.module').then(m => m.PcBuilderModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'not-found',
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule),
     canActivate: [AuthGuard]

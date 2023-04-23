@@ -10,7 +10,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatListModule} from "@angular/material/list";
 import {MatButtonModule} from "@angular/material/button";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {SubHeaderComponent} from './shared/categories/sub-header.component';
+import {SubHeaderComponent} from './shared/sub-header/sub-header.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {HeaderComponent} from './shared/header/header.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -24,6 +24,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {FavoriteModule} from "./pages/favorite/favorite.module";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,30 +32,30 @@ import {FavoriteModule} from "./pages/favorite/favorite.module";
     SubHeaderComponent,
     HeaderComponent,
   ],
-  imports: [
-    BrowserModule,
-    MatSidenavModule,
-    RouterOutlet,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
-    RouterLink,
-    MatButtonModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot([]),
-    MatMenuModule,
-    AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()),
-    MatInputModule,
-    MatSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ModalModule.forRoot(),
-    FavoriteModule,
-  ],
+    imports: [
+        BrowserModule,
+        MatSidenavModule,
+        RouterOutlet,
+        MatToolbarModule,
+        MatIconModule,
+        MatListModule,
+        RouterLink,
+        MatButtonModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot([]),
+        MatMenuModule,
+        AppRoutingModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore()),
+        provideStorage(() => getStorage()),
+        MatInputModule,
+        MatSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ModalModule.forRoot(),
+        FavoriteModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

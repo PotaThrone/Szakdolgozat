@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
-import {LastId, Product, Products} from "./product";
+import {LastId, Product, Products, ProductType} from "./product";
 import {finalize, map, Observable, Subject, take} from "rxjs";
 import {AuthService} from "../../auth/auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -10,6 +10,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class ProductService {
   collectionName = 'Cart';
+  user = this.authService.getLoggedInUser();
 
   constructor(private afs: AngularFirestore, private authService: AuthService, private snackBar: MatSnackBar) {
   }
@@ -53,11 +54,10 @@ export class ProductService {
 
   addProductToFavorites(product: Product, productType: string) {
     const isLoading$ = new Subject<boolean>();
-    let user = this.authService.getLoggedInUser();
-    if (user) {
-      const productRef = this.getRef(user.uid, 'Favorite');
+    if (this.user) {
+      const favoriteRef = this.getRef(this.user.uid, 'Favorite');
 
-      productRef.valueChanges().pipe(
+      favoriteRef.valueChanges().pipe(
         map((favorites: any) => favorites?.products || {}),
         finalize(() => isLoading$.next(false)),
         take(1),
@@ -65,7 +65,7 @@ export class ProductService {
         const productAlreadyAdded = !!products[product.id];
         if (!productAlreadyAdded) {
           product.id = productType + product.id;
-          productRef.set({products: {...products, [product.id]: product}}, {merge: true})
+          favoriteRef.set({products: {...products, [product.id]: product}}, {merge: true})
             .then(() => this.snackBar.open(product.brand + ' a kedvencek között!', 'OK', {
               duration: 2000
             }))
@@ -78,14 +78,13 @@ export class ProductService {
 
   addProductToCart(product: Product, productType: string): Observable<boolean> {
     const isLoading$ = new Subject<boolean>();
-    let user = this.authService.getLoggedInUser();
     let productCreatedOrUpdated = false;
     let count: number | undefined = 0;
-    if (user) {
-      const productRef = this.getRef(user.uid, 'Cart');
+    if (this.user) {
+      const cartRef = this.getRef(this.user.uid, 'Cart');
 
-      productRef.valueChanges().pipe(
-        map((favorites: any) => favorites?.products || {}),
+      cartRef.valueChanges().pipe(
+        map((cartProducts: any) => cartProducts?.products || {}),
         take(1)
       ).subscribe((products: any) => {
         let productFromCart: Product;
@@ -100,7 +99,7 @@ export class ProductService {
           if (count && count > 0) {
             productFromCart.count = productFromCart.count + 1;
             if (!productCreatedOrUpdated) {
-              productRef.update({products: products}).then(() => isLoading$.next(false));
+              cartRef.update({products: products}).finally(() => isLoading$.next(false));
               productCreatedOrUpdated = true;
             }
           }
@@ -108,12 +107,12 @@ export class ProductService {
           product.id = productType + product.id;
           product.count = 1;
           if (!productCreatedOrUpdated) {
-            productRef.set({
+            cartRef.set({
               products: {
                 ...products,
                 [product.id]: product
               }
-            }, {merge: true}).then(() => isLoading$.next(false));
+            }, {merge: true}).finally(() => isLoading$.next(false));
             productCreatedOrUpdated = true;
           }
         }
@@ -122,12 +121,44 @@ export class ProductService {
     return isLoading$.asObservable();
   }
 
+  addProductToPc(product: Product, productType: string) {
+    const isLoading$ = new Subject<boolean>();
+
+    if (this.user) {
+      const pcRef = this.getRef(this.user.uid, 'PC');
+
+      switch (productType) {
+        case ProductType.GPU:
+          product.id = ProductType.GPU;
+          pcRef.update({gpu: product}).finally(() => isLoading$.next(false));
+          break;
+        case ProductType.HDD:
+          product.id = ProductType.HDD;
+          pcRef.update({hdd: product}).finally(() => isLoading$.next(false));
+          break;
+        case ProductType.RAM:
+          product.id = ProductType.RAM;
+          pcRef.update({ram: product}).finally(() => isLoading$.next(false));
+          break;
+        case ProductType.PROCESSOR:
+          product.id = ProductType.PROCESSOR;
+          pcRef.update({processor: product}).finally(() => isLoading$.next(false));
+          break;
+        case ProductType.MOTHERBOARD:
+          product.id = ProductType.MOTHERBOARD;
+          pcRef.update({motherboard: product}).finally(() => isLoading$.next(false));
+          break;
+      }
+
+    }
+    return isLoading$.asObservable();
+  }
+
   deleteProduct(productId: string, collectionName: string) {
-    let user = this.authService.getLoggedInUser();
-    if (user) {
-      const productRef = this.getRef(user.uid, collectionName);
+    if (this.user) {
+      const productRef = this.getRef(this.user.uid, collectionName);
       productRef.valueChanges().pipe(
-        map((favorites: any) => favorites?.products || {}),
+        map((products: any) => products?.products || {}),
         take(1)
       ).subscribe((products: any) => {
         const productFound = !!products[productId];

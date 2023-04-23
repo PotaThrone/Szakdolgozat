@@ -6,3 +6,10 @@ export interface Gpu extends Product{
   memory: number;
   slot: string;
 }
+
+export enum GpuSlot{
+  isa= 'ISA',
+  pci= 'PCI',
+  agp= 'AGP',
+  pciExpress= 'PCI Express',
+}

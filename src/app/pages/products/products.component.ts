@@ -87,7 +87,7 @@ export class ProductsComponent implements OnInit {
   openCart(selectedProduct: Product | undefined, productType: string) {
     if(selectedProduct){
       this.isLoading = true;
-      this.cartService.openCart(selectedProduct, productType).subscribe(isLoading => this.isLoading = false);
+      this.cartService.openCart(selectedProduct, productType).subscribe(isLoading => this.isLoading = isLoading);
     }
   }
 
@@ -160,5 +160,12 @@ export class ProductsComponent implements OnInit {
   initForm(commentFormData: CommentFormData) {
     this.commentForm = commentFormData.commentForm;
     this.sendComment(commentFormData.productType);
+  }
+
+  addToPc(selectedProduct: Product | undefined, productType: string) {
+    if(selectedProduct){
+      this.isLoading = true;
+      this.productService.addProductToPc(selectedProduct, productType).subscribe(isLoading => this.isLoading = isLoading);
+    }
   }
 }

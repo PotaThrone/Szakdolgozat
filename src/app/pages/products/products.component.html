@@ -27,7 +27,7 @@
           Gyorsaság: {{selectedGpu?.clock}} GHz <br>
           Memória: {{selectedGpu?.memory}} MB <br>
           Termék leírás: {{selectedGpu?.description}}<br>
-          <button class="btn btn-primary">Gépbe rak</button>
+          <button (click)="addToPc(selectedGpu, 'gpu')" class="btn btn-primary">Gépbe rak</button>
           <app-product-comment *ngIf="selectedGpu" [productType]="'gpu'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedGpu" ></app-product-comment>
         </mat-card-content>
       </div>
@@ -44,7 +44,7 @@
           Kábel típus: {{selectedHdd?.cableType}} <br>
           Méret: {{selectedHdd?.size}} GB <br>
           Termék leírás: {{selectedHdd?.description}}<br>
-          <button class="btn btn-primary">Gépbe rak</button>
+          <button (click)="addToPc(selectedHdd, 'hdd')" class="btn btn-primary">Gépbe rak</button>
           <app-product-comment *ngIf="selectedHdd" [productType]="'hdd'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedHdd" ></app-product-comment>
         </mat-card-content>
       </div>
@@ -62,7 +62,7 @@
           Óra gyorsasága: {{selectedRam?.speed}} MHz<br>
           Foglalat: {{selectedRam?.slot}} <br>
           Termék leírás: {{selectedRam?.description}}<br>
-          <button class="btn btn-primary">Gépbe rak</button>
+          <button (click)="addToPc(selectedRam, 'ram')" class="btn btn-primary">Gépbe rak</button>
           <app-product-comment *ngIf="selectedRam" [productType]="'ram'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedRam" ></app-product-comment>
         </mat-card-content>
       </div>
@@ -82,7 +82,7 @@
           RAM darabszám: {{selectedMotherboard?.ramCount}} <br>
           RAM foglalat: {{selectedMotherboard?.ramSlots}} <br>
           Termék leírás: {{selectedMotherboard?.description}}<br>
-          <button class="btn btn-primary">Gépbe rak</button>
+          <button (click)="addToPc(selectedMotherboard, 'motherboard')" class="btn btn-primary">Gépbe rak</button>
           <app-product-comment *ngIf="selectedMotherboard" [productType]="'motherboard'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedMotherboard" ></app-product-comment>
         </mat-card-content>
       </div>
@@ -100,7 +100,7 @@
           Óra gyorsasága: {{selectedProcessor?.clockSpeed}} GHz<br>
           Magok száma: {{selectedProcessor?.core}} <br>
           Termék leírás: {{selectedProcessor?.description}}<br>
-          <button class="btn btn-primary">Gépbe rak</button>
+          <button (click)="addToPc(selectedProcessor, 'processor')" class="btn btn-primary">Gépbe rak</button>
           <app-product-comment *ngIf="selectedProcessor" [productType]="'processor'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedProcessor" ></app-product-comment>
         </mat-card-content>
       </div>

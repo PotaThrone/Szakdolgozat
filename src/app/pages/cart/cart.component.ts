@@ -3,11 +3,16 @@ import {Product} from "../../shared/model/product/product";
 import {ProductService} from "../../shared/model/product/product.service";
 import {tap} from "rxjs";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {AbstractControl, FormBuilder, ValidatorFn, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../../shared/auth/auth.service";
 import {Router} from "@angular/router";
 import {UserService} from "../../shared/model/user/user.service";
 import {User} from "../../shared/model/user/user";
+import {
+  onlyNumbersValidator,
+  onlyNumbersValidatorBankCard,
+  onlyNumbersValidatorExpireDate
+} from "../../shared/util/validators";
 
 @Component({
   selector: 'app-cart',
@@ -18,14 +23,14 @@ export class CartComponent implements OnInit {
   firstFormGroup = this.formBuilder.group({
     city: ['', Validators.required],
     street: ['', Validators.required],
-    postalCode: ['', [Validators.required, this.onlyNumbersValidator()]],
+    postalCode: ['', [Validators.required, onlyNumbersValidator()]],
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
   });
   secondFormGroup = this.formBuilder.group({
-    bankCard: ['', [Validators.required, this.onlyNumbersValidatorBankCard(), Validators.maxLength(19)]],
-    expireTime: ['', [Validators.required, this.onlyNumbersValidatorExpireDate()]],
-    cvc: ['', [Validators.required, this.onlyNumbersValidator()]],
+    bankCard: ['', [Validators.required, onlyNumbersValidatorBankCard(), Validators.maxLength(19)]],
+    expireTime: ['', [Validators.required, onlyNumbersValidatorExpireDate()]],
+    cvc: ['', [Validators.required, onlyNumbersValidator()]],
     payMethod: [''],
   });
 
@@ -64,26 +69,7 @@ export class CartComponent implements OnInit {
     }
   }
 
-  onlyNumbersValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const onlyNumbers = /^\d+$/.test(control.value);
-      return onlyNumbers ? null : {'onlyNumbers': {value: control.value}};
-    };
-  }
 
-  onlyNumbersValidatorBankCard(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const onlyNumbers = /^[0-9\s]+$/.test(control.value);
-      return onlyNumbers ? null : {'onlyNumbers': {value: control.value}};
-    };
-  }
-
-  onlyNumbersValidatorExpireDate(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const onlyNumbers = /^[\d\/]+$/.test(control.value);
-      return onlyNumbers ? null : {'onlyNumbers': {value: control.value}};
-    };
-  }
 
   ngOnInit(): void {
     this.authService.isUserLoggedIn().subscribe(user => {

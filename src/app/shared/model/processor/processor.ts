@@ -6,3 +6,8 @@ export interface Processor extends Product{
   clockSpeed: number;
   core: number;
 }
+
+export enum Chipset{
+  amd = 'AMD',
+  intel = 'Intel',
+}

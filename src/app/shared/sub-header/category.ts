@@ -1,4 +1,4 @@
-export enum Categories{
+export enum Category{
   gpu = 'Videókártya',
   ram = 'RAM',
   processor = 'Processzor',

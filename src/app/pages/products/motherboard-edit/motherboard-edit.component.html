@@ -1,55 +1,61 @@
+<div class="overlay" *ngIf="isLoading">
+  <div class="spinner-wrapper">
+    <mat-spinner class="spinner"></mat-spinner>
+  </div>
+</div>
 <div class="edit-form">
   <h1>{{title}}</h1>
   <form [formGroup]="form">
     <div class="row">
       <div class="col-6">
-        <mat-form-field>
-          <mat-label for="brand">Márka:</mat-label>
-          <input matInput type="text" formControlName="brand"/>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label for="chipset">Chipset:</mat-label>
-          <input matInput type="text" formControlName="chipset"/>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label for="gpuSlots">Videókártya foglalat:</mat-label>
-          <input matInput type="text" formControlName="gpuSlots"/>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label for="price">Ár:</mat-label>
-          <input matInput type="text" formControlName="price"/>
-        </mat-form-field>
+        <label for="brand">Márka:</label>
+        <input id="brand" type="text" formControlName="brand"/>
+
+        <label for="chipset">Chipset:</label>
+        <select id="chipset" formControlName="chipset">
+          <option *ngFor="let chipset of chipsets" [value]="chipset">{{chipset}}</option>
+        </select>
+
+        <label for="gpuSlots">Videókártya foglalat:</label>
+        <select id="gpuSlots" formControlName="gpuSlots">
+          <option *ngFor="let gpu of gpuSlots" [value]="gpu">{{gpu}}</option>
+        </select>
+
+        <label for="price">Ár:</label>
+        <input id="price" type="number" placeholder="Ft" formControlName="price"/>
       </div>
       <div class="col-6">
         <div class="col-12">
-          <mat-form-field>
-            <mat-label for="hddCable">Merevlemez kábel:</mat-label>
-            <input matInput type="text" formControlName="hddCable"/>
-          </mat-form-field>
+          <label for="hddCable">Merevlemez kábel:</label>
+          <select id="hddCable" formControlName="hddCable">
+            <option *ngFor="let cableType of cableTypes" [value]="cableType">{{cableType}}</option>
+          </select>
         </div>
         <div class="col-12">
-          <mat-form-field>
-            <mat-label for="ramCount">RAM darabszám:</mat-label>
-            <input matInput type="text" formControlName="ramCount"/>
-          </mat-form-field>
+          <label for="ramCount">RAM darabszám:</label>
+          <input id="ramCount" type="number" formControlName="ramCount"/>
         </div>
         <div class="col-12">
-          <mat-form-field>
-            <mat-label for="ramSlots">RAM foglalat:</mat-label>
-            <input matInput type="text" formControlName="ramSlots"/>
-          </mat-form-field>
+          <label for="ramSlots">RAM foglalat:</label>
+          <select id="ramSlots" formControlName="ramSlots">
+            <option *ngFor="let ramSlot of ramSlots" [value]="ramSlot">{{ramSlot}}</option>
+          </select>
         </div>
       </div>
-      <mat-form-field>
-        <mat-label for="description">Termék leírás:</mat-label>
-        <input matInput type="text" formControlName="description"/>
-      </mat-form-field>
+      <div class="row">
+        <div class="col-12">
+          <label for="description">Termék leírás:</label>
+          <input id="description" type="text" formControlName="description"/>
+        </div>
+      </div>
     </div>
     <div>
         <span class="buttons">
-          <button *ngIf="motherboard" mat-raised-button color="primary" (click)="editMotherboard()" [disabled]="form.invalid"
+          <button *ngIf="motherboard" mat-raised-button color="primary" (click)="editMotherboard()"
+                  [disabled]="form.invalid"
                   type="submit">Módosítás</button>
-          <button *ngIf="!motherboard" mat-raised-button color="primary" (click)="addMotherboard()" [disabled]="form.invalid"
+          <button *ngIf="!motherboard" mat-raised-button color="primary" (click)="addMotherboard()"
+                  [disabled]="form.invalid"
                   type="submit">Hozzáadás</button>
             <button mat-raised-button (click)="modalRef.hide()">Bezárás</button>
         </span>

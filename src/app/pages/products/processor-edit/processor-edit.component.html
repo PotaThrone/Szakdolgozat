@@ -1,45 +1,48 @@
+<div class="overlay" *ngIf="isLoading">
+  <div class="spinner-wrapper">
+    <mat-spinner class="spinner"></mat-spinner>
+  </div>
+</div>
 <div class="edit-form">
   <h1>{{title}}</h1>
   <form [formGroup]="form">
     <div class="row">
       <div class="col-6">
-        <mat-form-field>
-          <mat-label for="brand">Márka:</mat-label>
-          <input matInput type="text" formControlName="brand"/>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label for="chipset">Chipset:</mat-label>
-          <input matInput type="text" formControlName="chipset"/>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label for="clockSpeed">Óra gyorsasága:</mat-label>
-          <input matInput type="text" formControlName="clockSpeed"/>
-        </mat-form-field>
+        <label for="brand">Márka:</label>
+        <input id="brand" type="text" formControlName="brand"/>
+
+        <label for="chipset">Chipset:</label>
+        <select id="chipset" formControlName="chipset">
+          <option *ngFor="let chipset of chipsets" [value]="chipset">{{chipset}}</option>
+        </select>
+
+        <label for="clockSpeed">Óra gyorsasága:</label>
+        <input id="clockSpeed" type="number" placeholder="GHz" formControlName="clockSpeed"/>
       </div>
       <div class="col-6">
         <div class="col-12">
-          <mat-form-field>
-            <mat-label for="core">Magok száma:</mat-label>
-            <input matInput type="text" formControlName="core"/>
-          </mat-form-field>
+          <label for="core">Magok száma:</label>
+          <input id="core" type="number" formControlName="core"/>
         </div>
         <div class="col-12">
-          <mat-form-field>
-            <mat-label for="price">Ár:</mat-label>
-            <input matInput type="text" formControlName="price"/>
-          </mat-form-field>
+          <label for="price">Ár:</label>
+          <input id="price" type="number" placeholder="Ft" formControlName="price"/>
         </div>
       </div>
-      <mat-form-field>
-        <mat-label for="description">Termék leírás:</mat-label>
-        <input matInput type="text" formControlName="description"/>
-      </mat-form-field>
+      <div class="row">
+        <div class="col-12">
+          <label for="description">Termék leírás:</label>
+          <input id="description" type="text" formControlName="description"/>
+        </div>
+      </div>
     </div>
     <div>
         <span class="buttons">
-          <button *ngIf="processor" mat-raised-button color="primary" (click)="editProcessor()" [disabled]="form.invalid"
+          <button *ngIf="processor" mat-raised-button color="primary" (click)="editProcessor()"
+                  [disabled]="form.invalid"
                   type="submit">Módosítás</button>
-          <button *ngIf="!processor" mat-raised-button color="primary" (click)="addProcessor()" [disabled]="form.invalid"
+          <button *ngIf="!processor" mat-raised-button color="primary" (click)="addProcessor()"
+                  [disabled]="form.invalid"
                   type="submit">Hozzáadás</button>
             <button mat-raised-button (click)="modalRef.hide()">Bezárás</button>
         </span>

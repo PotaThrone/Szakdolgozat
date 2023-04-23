@@ -34,6 +34,7 @@ export class ProductCommentComponent {
     this.currentRating = 1;
     this.sendCommentForm.emit({commentForm: this.commentForm, productType: this.productType});
     this.commentForm.reset();
+    this.commentForm.get('rating')?.patchValue(1);
   }
 }
 

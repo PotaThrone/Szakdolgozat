@@ -1,39 +1,40 @@
+<div class="overlay" *ngIf="isLoading">
+  <div class="spinner-wrapper">
+    <mat-spinner class="spinner"></mat-spinner>
+  </div>
+</div>
 <div class="edit-form">
   <h1>{{title}}</h1>
   <form [formGroup]="form">
     <div class="row">
       <div class="col-6">
-        <mat-form-field>
-          <mat-label for="brand">Márka:</mat-label>
-          <input matInput type="text" formControlName="brand"/>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label for="memorySize">Memória mérete:</mat-label>
-          <input matInput type="text" formControlName="memorySize"/>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label for="speed">Óra gyorsasága:</mat-label>
-          <input matInput type="text" formControlName="speed"/>
-        </mat-form-field>
+        <label for="brand">Márka:</label>
+        <input id="brand" type="text" formControlName="brand"/>
+
+        <label for="memorySize">Memória mérete:</label>
+        <input id="memorySize" placeholder="MB" type="number" formControlName="memorySize"/>
+
+        <label for="speed">Óra gyorsasága:</label>
+        <input id="speed" placeholder="MHz" type="number" formControlName="speed"/>
       </div>
       <div class="col-6">
         <div class="col-12">
-          <mat-form-field>
-            <mat-label for="slot">Foglalat:</mat-label>
-            <input matInput type="text" formControlName="slot"/>
-          </mat-form-field>
+          <label for="slot">Foglalat:</label>
+          <select id="slot" formControlName="slot">
+            <option *ngFor="let ramSlot of ramSlots" [value]="ramSlot">{{ramSlot}}</option>
+          </select>
         </div>
         <div class="col-12">
-          <mat-form-field>
-            <mat-label for="price">Ár:</mat-label>
-            <input matInput type="text" formControlName="price"/>
-          </mat-form-field>
+          <label for="price">Ár:</label>
+          <input id="price" placeholder="Ft" type="number" formControlName="price"/>
         </div>
       </div>
-      <mat-form-field>
-        <mat-label for="description">Termék leírás:</mat-label>
-        <input matInput type="text" formControlName="description"/>
-      </mat-form-field>
+      <div class="row">
+        <div class="col-12">
+          <label for="description">Termék leírás:</label>
+          <input id="description" type="text" formControlName="description"/>
+        </div>
+      </div>
     </div>
     <div>
         <span class="buttons">
