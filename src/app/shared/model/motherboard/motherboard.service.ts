@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {Motherboard} from "./motherboard";
-import {LastId} from "../product/product";
 
 @Injectable({
   providedIn: 'root'

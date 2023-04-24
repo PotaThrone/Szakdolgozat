@@ -1,16 +1,31 @@
-.user{
+.user {
   float: right;
 }
 
-.container{
+
+.container {
   width: 90%;
   margin: 80px auto;
 }
 
-.forumBox{
+.forumBox {
   border: solid black 2px;
   border-radius: 10px;
   margin: 30px;
   overflow: hidden;
   padding: 10px;
+}
+
+.image-text {
+  display: flex;
+  flex-direction: row;
+
+  img {
+    width: 200px;
+    height: 200px;
+  }
+
+  p{
+    padding-left: 15px;
+  }
 }

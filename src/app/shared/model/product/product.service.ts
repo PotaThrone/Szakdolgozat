@@ -37,7 +37,7 @@ export class ProductService {
 
   incrementLastId(lastId: number, collectionName: string) {
     const lastIdObj: LastId = {lastId: lastId} as LastId;
-    this.afs.collection<LastId>(collectionName).doc('lastId').set(lastIdObj);
+    this.afs.collection<LastId>(collectionName).doc('lastId').update(lastIdObj);
   }
 
   private getRef(userId: string, collectionName: string) {

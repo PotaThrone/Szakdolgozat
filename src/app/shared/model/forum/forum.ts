@@ -1,13 +1,14 @@
 import {User} from "../user/user";
 import firebase from "firebase/compat";
-import Timestamp = firebase.firestore.Timestamp;
 import {Observable} from "rxjs";
+import {Game} from "../game/game";
 
 export interface Forum {
   id: string;
-  date: Timestamp;
+  date: Date;
   text: string;
-  title: string;
+  game: Game;
   user: User;
+  rating: number;
   imageLink: Observable<any>;
 }

@@ -57,7 +57,7 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatSelectModule,
   ],
-  exports: [RouterModule],
+    exports: [RouterModule, StarRatingComponent],
 })
 export class ProductsModule {
 }

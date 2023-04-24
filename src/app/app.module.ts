@@ -24,6 +24,9 @@ import {MatSelectModule} from "@angular/material/select";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {FavoriteModule} from "./pages/favorite/favorite.module";
+import {ProductsModule} from "./pages/products/products.module";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { LineBreakPipe } from './shared/util/line-break.pipe';
 
 @NgModule({
   declarations: [
@@ -31,31 +34,34 @@ import {FavoriteModule} from "./pages/favorite/favorite.module";
     MainComponent,
     SubHeaderComponent,
     HeaderComponent,
+    LineBreakPipe,
   ],
-    imports: [
-        BrowserModule,
-        MatSidenavModule,
-        RouterOutlet,
-        MatToolbarModule,
-        MatIconModule,
-        MatListModule,
-        RouterLink,
-        MatButtonModule,
-        BrowserAnimationsModule,
-        RouterModule.forRoot([]),
-        MatMenuModule,
-        AppRoutingModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        provideAuth(() => getAuth()),
-        provideFirestore(() => getFirestore()),
-        provideStorage(() => getStorage()),
-        MatInputModule,
-        MatSelectModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ModalModule.forRoot(),
-        FavoriteModule,
-    ],
+  imports: [
+    BrowserModule,
+    MatSidenavModule,
+    RouterOutlet,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+    RouterLink,
+    MatButtonModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot([]),
+    MatMenuModule,
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
+    MatInputModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ModalModule.forRoot(),
+    FavoriteModule,
+    ProductsModule,
+    MatProgressSpinnerModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

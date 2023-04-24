@@ -62,6 +62,7 @@ export class PcBuilderComponent {
     this.isLoading = true;
     const pcFiltered = this.pcComponents.filter(pcComponent => pcComponent.id !== product.id);
     this.pcService.update(this.createPc(pcFiltered))?.finally(() => this.isLoading = false);
+    this.pcComponents = pcFiltered;
     this.products.next(pcFiltered);
   }
 

@@ -1,12 +1,39 @@
-<div class="container">
-  <div class="forumBox" *ngFor="let forum of forums">
-    <h2>{{forum.title}}</h2>
-    <img width="200" height="200" [src]="forum.imageLink | async">
-    <p>{{forum.text}}</p>
-    <div class="user">
-      {{forum.user.email}}<br>
-      {{forum.date.toDate() | date }}
-    </div>
+<div class="overlay" *ngIf="isLoading">
+  <div class="spinner-wrapper">
+    <mat-spinner class="spinner"></mat-spinner>
   </div>
 </div>
-
+<div class="container">
+  <h2>Fórum létrehozása</h2>
+  <div class="comments">
+    <form [formGroup]="forumForm">
+      <mat-form-field appearance="outline">
+        <mat-label for="game">Játék kiválasztása</mat-label>
+        <mat-select id="game" formControlName="game">
+          <mat-option *ngFor="let game of games" [value]="game">{{game.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <app-star-rating (starSelected)="onStarRated($event)" [currentRating]="currentRating"></app-star-rating>
+      <textarea type="text" formControlName="text"></textarea>
+      <button mat-raised-button color="primary" (click)="createForum()" [disabled]="forumForm.invalid"
+              type="submit">Létrehozás
+      </button>
+    </form>
+  </div>
+  <div class="forumBox" *ngFor="let forum of forums">
+    <app-star-rating [rating]="forum.rating" [currentRating]="0"></app-star-rating>
+    <div class="row">
+      <h2>{{forum.game.name}}</h2>
+    </div>
+    <div class="image-text">
+      <img [src]="forum.imageLink | async"><br>
+      <p><strong>Leírás:</strong><br>{{forum.text | lineBreak}}</p>
+    </div>
+    <div class="user">
+      {{forum.user.email}}<br>
+      {{forum.date | date }}
+    </div>
+    <button mat-button style="background-color: red; width: 15%; margin-top: 20px" (click)="delete(forum.id)">Törlés
+    </button>
+  </div>
+</div>

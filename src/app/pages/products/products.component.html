@@ -5,12 +5,12 @@
 </div>
 <ng-container [ngSwitch]="category">
   <app-gpu-list *ngSwitchCase="'gpu'"></app-gpu-list>
-  <app-hdd-list  *ngSwitchCase="'hdd'"></app-hdd-list>
-  <app-motherboard-list  *ngSwitchCase="'motherboard'"></app-motherboard-list>
-  <app-processor-list  *ngSwitchCase="'processor'"></app-processor-list>
-  <app-ram-list  *ngSwitchCase="'ram'"></app-ram-list>
+  <app-hdd-list *ngSwitchCase="'hdd'"></app-hdd-list>
+  <app-motherboard-list *ngSwitchCase="'motherboard'"></app-motherboard-list>
+  <app-processor-list *ngSwitchCase="'processor'"></app-processor-list>
+  <app-ram-list *ngSwitchCase="'ram'"></app-ram-list>
 </ng-container>
-<ng-container >
+<ng-container>
   <div class="selected-product">
     <mat-card>
       <div *ngIf="product?.includes('gpu')">
@@ -19,7 +19,8 @@
         </mat-card-header>
         <mat-card-content>
           <div class="buttonAndPrice">
-            <app-star-rating [rating]="selectedGpu?.rating" [currentRating]="0"></app-star-rating><br>
+            <app-star-rating [rating]="selectedGpu?.rating" [currentRating]="0"></app-star-rating>
+            <br>
             <strong>Ár: {{selectedGpu?.price}} Ft</strong>
             <button mat-button (click)="openCart(selectedGpu, 'gpu')">Kosárba rak</button>
           </div>
@@ -28,7 +29,8 @@
           Memória: {{selectedGpu?.memory}} MB <br>
           Termék leírás: {{selectedGpu?.description}}<br>
           <button (click)="addToPc(selectedGpu, 'gpu')" class="btn btn-primary">Gépbe rak</button>
-          <app-product-comment *ngIf="selectedGpu" [productType]="'gpu'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedGpu" ></app-product-comment>
+          <app-product-comment *ngIf="selectedGpu" [productType]="'gpu'" (sendCommentForm)="initForm($event)"
+                               [selectedProduct]="selectedGpu"></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('hdd')">
@@ -37,7 +39,8 @@
         </mat-card-header>
         <mat-card-content>
           <div class="buttonAndPrice">
-            <app-star-rating [rating]="selectedHdd?.rating" [currentRating]="0"></app-star-rating><br>
+            <app-star-rating [rating]="selectedHdd?.rating" [currentRating]="0"></app-star-rating>
+            <br>
             <strong>Ár: {{selectedHdd?.price}} Ft</strong>
             <button mat-button (click)="openCart(selectedHdd, 'hdd')">Kosárba rak</button>
           </div>
@@ -45,7 +48,8 @@
           Méret: {{selectedHdd?.size}} GB <br>
           Termék leírás: {{selectedHdd?.description}}<br>
           <button (click)="addToPc(selectedHdd, 'hdd')" class="btn btn-primary">Gépbe rak</button>
-          <app-product-comment *ngIf="selectedHdd" [productType]="'hdd'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedHdd" ></app-product-comment>
+          <app-product-comment *ngIf="selectedHdd" [productType]="'hdd'" (sendCommentForm)="initForm($event)"
+                               [selectedProduct]="selectedHdd"></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('ram')">
@@ -54,7 +58,8 @@
         </mat-card-header>
         <mat-card-content>
           <div class="buttonAndPrice">
-            <app-star-rating [rating]="selectedRam?.rating" [currentRating]="0"></app-star-rating><br>
+            <app-star-rating [rating]="selectedRam?.rating" [currentRating]="0"></app-star-rating>
+            <br>
             <strong>Ár: {{selectedRam?.price}} Ft</strong>
             <button mat-button (click)="openCart(selectedRam, 'ram')">Kosárba rak</button>
           </div>
@@ -63,7 +68,8 @@
           Foglalat: {{selectedRam?.slot}} <br>
           Termék leírás: {{selectedRam?.description}}<br>
           <button (click)="addToPc(selectedRam, 'ram')" class="btn btn-primary">Gépbe rak</button>
-          <app-product-comment *ngIf="selectedRam" [productType]="'ram'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedRam" ></app-product-comment>
+          <app-product-comment *ngIf="selectedRam" [productType]="'ram'" (sendCommentForm)="initForm($event)"
+                               [selectedProduct]="selectedRam"></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('motherboard')">
@@ -72,7 +78,8 @@
         </mat-card-header>
         <mat-card-content>
           <div class="buttonAndPrice">
-            <app-star-rating [rating]="selectedMotherboard?.rating" [currentRating]="0"></app-star-rating><br>
+            <app-star-rating [rating]="selectedMotherboard?.rating" [currentRating]="0"></app-star-rating>
+            <br>
             <strong>Ár: {{selectedMotherboard?.price}} Ft</strong>
             <button mat-button (click)="openCart(selectedMotherboard, 'motherboard')">Kosárba rak</button>
           </div>
@@ -83,7 +90,9 @@
           RAM foglalat: {{selectedMotherboard?.ramSlots}} <br>
           Termék leírás: {{selectedMotherboard?.description}}<br>
           <button (click)="addToPc(selectedMotherboard, 'motherboard')" class="btn btn-primary">Gépbe rak</button>
-          <app-product-comment *ngIf="selectedMotherboard" [productType]="'motherboard'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedMotherboard" ></app-product-comment>
+          <app-product-comment *ngIf="selectedMotherboard" [productType]="'motherboard'"
+                               (sendCommentForm)="initForm($event)"
+                               [selectedProduct]="selectedMotherboard"></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('processor')">
@@ -92,7 +101,8 @@
         </mat-card-header>
         <mat-card-content>
           <div class="buttonAndPrice">
-            <app-star-rating [rating]="selectedProcessor?.rating" [currentRating]="0"></app-star-rating><br>
+            <app-star-rating [rating]="selectedProcessor?.rating" [currentRating]="0"></app-star-rating>
+            <br>
             <strong>Ár: {{selectedProcessor?.price}} Ft</strong>
             <button mat-button (click)="openCart(selectedProcessor, 'processor')">Kosárba rak</button>
           </div>
@@ -101,7 +111,9 @@
           Magok száma: {{selectedProcessor?.core}} <br>
           Termék leírás: {{selectedProcessor?.description}}<br>
           <button (click)="addToPc(selectedProcessor, 'processor')" class="btn btn-primary">Gépbe rak</button>
-          <app-product-comment *ngIf="selectedProcessor" [productType]="'processor'" (sendCommentForm)="initForm($event)" [selectedProduct]="selectedProcessor" ></app-product-comment>
+          <app-product-comment *ngIf="selectedProcessor" [productType]="'processor'"
+                               (sendCommentForm)="initForm($event)"
+                               [selectedProduct]="selectedProcessor"></app-product-comment>
         </mat-card-content>
       </div>
     </mat-card>
