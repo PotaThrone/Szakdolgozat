@@ -9,24 +9,26 @@ import {MatStepperModule} from "@angular/material/stepper";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatRadioModule} from "@angular/material/radio";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
   declarations: [CartComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild([{
-      path: '', component: CartComponent,
-    }]),
-    MatTableModule,
-    MatButtonModule,
-    ModalModule.forRoot(),
-    MatStepperModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatRadioModule,
-    FormsModule,
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild([{
+            path: '', component: CartComponent,
+        }]),
+        MatTableModule,
+        MatButtonModule,
+        ModalModule.forRoot(),
+        MatStepperModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatRadioModule,
+        FormsModule,
+        MatProgressSpinnerModule,
+    ]
 })
 export class CartModule {
 }

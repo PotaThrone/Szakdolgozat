@@ -8,8 +8,8 @@
   <div class="comments">
     <form [formGroup]="forumForm">
       <mat-form-field appearance="outline">
-        <mat-label for="game">Játék kiválasztása</mat-label>
-        <mat-select id="game" formControlName="game">
+        <mat-label >Játék kiválasztása</mat-label>
+        <mat-select formControlName="game">
           <mat-option *ngFor="let game of games" [value]="game">{{game.name}}</mat-option>
         </mat-select>
       </mat-form-field>

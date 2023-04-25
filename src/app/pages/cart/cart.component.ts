@@ -41,6 +41,7 @@ export class CartComponent implements OnInit {
   displayedColumns = ['name', 'description', 'count', 'price', 'delete']
   bankCardNumbers: string = '';
   expireDate: string = '';
+  isLoading = false;
 
   constructor(private productService: ProductService, private modalService: BsModalService, private formBuilder: FormBuilder,
               private authService: AuthService, private router: Router, private userService: UserService) {
@@ -58,7 +59,8 @@ export class CartComponent implements OnInit {
   }
 
   removeFromCart(id: string) {
-    this.productService.deleteProduct(id, 'Cart');
+    this.isLoading = true;
+    this.productService.deleteProduct(id, 'Cart').subscribe(isLoading => this.isLoading = isLoading);
   }
 
   openPayingModal(template: TemplateRef<any>) {

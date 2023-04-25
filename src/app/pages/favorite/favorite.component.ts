@@ -13,6 +13,7 @@ export class FavoriteComponent {
   products: Product[] = [];
 
   displayedColumns = ['name', 'description', 'price', 'delete']
+  isLoading = false;
 
   constructor(private router: Router, private productService: ProductService) {
     this.productService.getProducts('Favorite')?.pipe(
@@ -29,7 +30,8 @@ export class FavoriteComponent {
   }
 
   removeFromFavorites(id: string) {
-    this.productService.deleteProduct(id, 'Favorite');
+    this.isLoading = true;
+    this.productService.deleteProduct(id, 'Favorite').subscribe(isLoading => this.isLoading = isLoading);
   }
 
   redirectToCart() {

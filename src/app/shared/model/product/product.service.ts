@@ -93,8 +93,8 @@ export class ProductService {
         } else {
           productFromCart = products[productType + product.id];
         }
-
         if (productFromCart) {
+          console.log('Updating product to cart:', product.id);
           count = productFromCart.count;
           if (count && count > 0) {
             productFromCart.count = productFromCart.count + 1;
@@ -104,8 +104,11 @@ export class ProductService {
             }
           }
         } else {
-          product.id = productType + product.id;
+          if (!product.id.includes(productType)) {
+            product.id = productType + product.id;
+          }
           product.count = 1;
+          console.log('Adding product to cart:', product.id);
           if (!productCreatedOrUpdated) {
             cartRef.set({
               products: {
@@ -129,23 +132,23 @@ export class ProductService {
 
       switch (productType) {
         case ProductType.GPU:
-          product.id = ProductType.GPU;
+          product.id = ProductType.GPU + product.id;
           pcRef.update({gpu: product}).finally(() => isLoading$.next(false));
           break;
         case ProductType.HDD:
-          product.id = ProductType.HDD;
+          product.id = ProductType.HDD + product.id;
           pcRef.update({hdd: product}).finally(() => isLoading$.next(false));
           break;
         case ProductType.RAM:
-          product.id = ProductType.RAM;
+          product.id = ProductType.RAM + product.id;
           pcRef.update({ram: product}).finally(() => isLoading$.next(false));
           break;
         case ProductType.PROCESSOR:
-          product.id = ProductType.PROCESSOR;
+          product.id = ProductType.PROCESSOR + product.id;
           pcRef.update({processor: product}).finally(() => isLoading$.next(false));
           break;
         case ProductType.MOTHERBOARD:
-          product.id = ProductType.MOTHERBOARD;
+          product.id = ProductType.MOTHERBOARD + product.id;
           pcRef.update({motherboard: product}).finally(() => isLoading$.next(false));
           break;
       }
@@ -155,11 +158,13 @@ export class ProductService {
   }
 
   deleteProduct(productId: string, collectionName: string) {
+    const isLoading$ = new Subject<boolean>();
     if (this.user) {
       const productRef = this.getRef(this.user.uid, collectionName);
       productRef.valueChanges().pipe(
+        finalize(() => isLoading$.next(false)),
         map((products: any) => products?.products || {}),
-        take(1)
+        take(1),
       ).subscribe((products: any) => {
         const productFound = !!products[productId];
         if (productFound) {
@@ -168,9 +173,10 @@ export class ProductService {
           } else {
             delete products[productId];
           }
-          productRef.update({products: products}).then(() => console.log("Product deleted"));
+          productRef.update({products: products}).then(() => isLoading$.next(false));
         }
       });
     }
+    return isLoading$.asObservable();
   }
 }

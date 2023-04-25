@@ -45,6 +45,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'top-products',
+    loadChildren: () => import('./pages/top-products/top-products.module').then(m => m.TopProductsModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: '',
     redirectTo: '/main',
     pathMatch: 'full',

@@ -44,7 +44,7 @@ export class ProductsComponent implements OnInit {
 
   getProduct(productId: string | null) {
     if (productId?.includes(ProductType.GPU)) {
-      let id = productId?.replace(ProductType.GPU, "");
+      let id = productId?.replace(ProductType.GPU, '');
       this.productService.getById(id, CollectionName.GPU).subscribe(gpu => {
         take(1);
         this.selectedGpu = gpu;
@@ -52,7 +52,7 @@ export class ProductsComponent implements OnInit {
       return;
     }
     if (productId?.includes(ProductType.RAM)) {
-      let id = productId?.replace(ProductType.RAM, "");
+      let id = productId?.replace(ProductType.RAM, '');
       this.productService.getById(id, CollectionName.RAM).subscribe(ram => {
         take(1);
         this.selectedRam = ram;
@@ -60,7 +60,7 @@ export class ProductsComponent implements OnInit {
       return;
     }
     if (productId?.includes(ProductType.HDD)) {
-      let id = productId?.replace(ProductType.HDD, "");
+      let id = productId?.replace(ProductType.HDD, '');
       this.productService.getById(id, CollectionName.HDD).subscribe(hdd => {
         take(1);
         this.selectedHdd = hdd;
@@ -68,7 +68,7 @@ export class ProductsComponent implements OnInit {
       return;
     }
     if (productId?.includes(ProductType.PROCESSOR)) {
-      let id = productId?.replace(ProductType.PROCESSOR, "");
+      let id = productId?.replace(ProductType.PROCESSOR, '');
       this.productService.getById(id, CollectionName.PROCESSOR).subscribe(processor => {
         take(1);
         this.selectedProcessor = processor;
@@ -76,7 +76,7 @@ export class ProductsComponent implements OnInit {
       return;
     }
     if (productId?.includes(ProductType.MOTHERBOARD)) {
-      let id = productId?.replace(ProductType.MOTHERBOARD, "");
+      let id = productId?.replace(ProductType.MOTHERBOARD, '');
       this.productService.getById(id, CollectionName.MOTHERBOARD).subscribe(motherboard => {
         take(1);
         this.selectedMotherboard = motherboard;

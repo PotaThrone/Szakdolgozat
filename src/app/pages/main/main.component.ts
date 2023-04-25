@@ -25,7 +25,11 @@ export class MainComponent {
               private authService: AuthService) {
     this.isLoading = true;
     this.forumService.getAll().pipe(
-      map(forums => forums.filter(forum => forum.id != null)),
+      map(forums => {
+        forums = forums.filter(forum => forum.id != null);
+        forums = forums.sort((forum1, forum2) => forum2.date.toString().localeCompare(forum1.date.toString()));
+        return forums;
+      }),
     ).subscribe(forums => {
       forums.every(forum => forum.imageLink = this.storage.ref(forum.game.name.toLowerCase() + '.jpg').getDownloadURL());
       this.forums = forums;

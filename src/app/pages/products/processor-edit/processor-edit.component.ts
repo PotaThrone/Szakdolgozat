@@ -60,7 +60,7 @@ export class ProcessorEditComponent implements OnInit{
 
   editProcessor() {
     this.isLoading = true;
-    this.processorService.update({...this.form.value}).finally(() => this.isLoading = false);
+    this.processorService.update({...this.form.value, price: this.processor?.price, rating: this.processor?.rating, comments: this.processor?.comments}).finally(() => this.isLoading = false);
     this.modalRef.hide();
   }
 }

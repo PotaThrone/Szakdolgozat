@@ -1,7 +1,12 @@
-import {Pc} from "../pc/pc";
-
 export interface Game{
   id: string;
   name: string;
-  requirements: Omit<Pc, 'motherboard'>;
+  requirements: Requirements;
+}
+
+export interface Requirements{
+  cpuCore: number;
+  gpuClock: number;
+  hddSpace: number;
+  ramMemory: number;
 }
