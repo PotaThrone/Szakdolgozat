@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         MatRadioModule,
         FormsModule,
         MatProgressSpinnerModule,
+        MatIconModule,
     ]
 })
 export class CartModule {

@@ -1,4 +1,4 @@
-<div class="comments">
+<div [hidden]="userRole === 0" class="comments">
   <form [formGroup]="commentForm">
     <span>Szólj hozzá!</span>
     <app-star-rating (starSelected)="onStarRated($event)" [currentRating]="currentRating" ></app-star-rating>
@@ -11,12 +11,13 @@
 <div>
   <h2>További hozzászólások:</h2>
   <div class="container">
-    <div class="comments" *ngFor="let comment of selectedProduct?.comments">
+    <div class="comments" *ngFor="let comment of selectedProduct?.comments; let i = index">
       <div class="star-rating">
         <app-star-rating [rating]="comment?.rating" [currentRating]="currentRating" ></app-star-rating>
       </div>
-      <strong>{{comment.userEmail}}</strong><br>
-      {{comment.comment}}
+      <strong>{{comment?.userEmail}}</strong><br>
+      {{comment?.comment}}<br>
+      <button [hidden]="userRole < 2" mat-button style="background-color: red; width: 15%; margin-top: 20px" (click)="removeComment(i)" >Törlés</button>
     </div>
   </div>
 </div>

@@ -27,7 +27,7 @@ export class PcBuilderComponent {
   constructor(private pcService: PcService, private gameService: GameService, private cartService: CartService) {
     this.isLoading = true;
     this.pcService.getPc()?.pipe(
-      take(1),)
+      take(1))
       ?.subscribe(pc => {
         if (pc) {
           if (pc.gpu) {

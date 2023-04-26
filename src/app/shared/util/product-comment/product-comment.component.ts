@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Product} from "../../model/product/product";
 
@@ -9,11 +9,13 @@ import {Product} from "../../model/product/product";
 })
 export class ProductCommentComponent {
   @Output()
-  sendCommentForm = new EventEmitter<CommentFormData>();
+  sendCommentForm = new EventEmitter<FormGroup>();
+  @Output()
+  passRemovedId = new EventEmitter<number>();
   @Input()
   selectedProduct!: Product;
   @Input()
-  productType!: string;
+  userRole!: number;
   commentForm: FormGroup;
   currentRating: number = 1;
 
@@ -32,13 +34,13 @@ export class ProductCommentComponent {
 
   sendComment() {
     this.currentRating = 1;
-    this.sendCommentForm.emit({commentForm: this.commentForm, productType: this.productType});
+    this.sendCommentForm.emit(this.commentForm);
     this.commentForm.reset();
     this.commentForm.get('rating')?.patchValue(1);
   }
+
+  removeComment(index: number) {
+    this.passRemovedId.emit(index);
+  }
 }
 
-export interface CommentFormData {
-  commentForm: FormGroup;
-  productType: string;
-}

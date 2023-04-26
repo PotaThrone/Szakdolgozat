@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
-import {MainComponent} from './pages/main/main.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {RouterLink, RouterModule, RouterOutlet} from "@angular/router";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -26,15 +25,15 @@ import {ModalModule} from "ngx-bootstrap/modal";
 import {FavoriteModule} from "./pages/favorite/favorite.module";
 import {ProductsModule} from "./pages/products/products.module";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { LineBreakPipe } from './shared/util/line-break.pipe';
+import {MainModule} from "./pages/main/main.module";
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
     SubHeaderComponent,
     HeaderComponent,
-    LineBreakPipe,
   ],
   imports: [
     BrowserModule,
@@ -60,10 +59,11 @@ import { LineBreakPipe } from './shared/util/line-break.pipe';
     ModalModule.forRoot(),
     FavoriteModule,
     ProductsModule,
+    MainModule,
     MatProgressSpinnerModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

@@ -4,7 +4,7 @@
   </div>
 </div>
 <div class="add-product">
-  <button class="btn btn-primary" (click)="openHddEdit(null)">Merevlemez hozzáadása<mat-icon style="padding-top: 5px">add</mat-icon></button>
+  <button [hidden]="userRole < 2"  class="btn btn-primary" (click)="openHddEdit(null)">Merevlemez hozzáadása<mat-icon style="padding-top: 5px">add</mat-icon></button>
   <form [formGroup]="searchForm" class="form-inline my-2 my-lg-0">
     <mat-form-field appearance="outline">
       <input formControlName="searchTerm" matInput type="search" placeholder="Keresés">
@@ -25,11 +25,11 @@
       Méret: {{hdd.size}} GB <br>
     </mat-card-content>
   </a>
-  <mat-card-actions>
+  <mat-card-actions [hidden]="userRole === 0">
     <button mat-button (click)="openCart(hdd)">Kosárba</button>
     <button mat-button (click)="addToFavorites(hdd)">Kedvenc</button>
   </mat-card-actions>
-  <mat-card-actions *ngIf="true" >
+  <mat-card-actions [hidden]="userRole < 2" >
     <button mat-button (click)="delete(hdd)"><mat-icon style="color: red;">delete</mat-icon></button>
     <button mat-button (click)="openHddEdit(hdd)"><mat-icon style="color: blue;">edit</mat-icon></button>
   </mat-card-actions>

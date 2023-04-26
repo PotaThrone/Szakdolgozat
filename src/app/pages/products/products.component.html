@@ -4,11 +4,11 @@
   </div>
 </div>
 <ng-container [ngSwitch]="category">
-  <app-gpu-list *ngSwitchCase="'gpu'"></app-gpu-list>
-  <app-hdd-list *ngSwitchCase="'hdd'"></app-hdd-list>
-  <app-motherboard-list *ngSwitchCase="'motherboard'"></app-motherboard-list>
-  <app-processor-list *ngSwitchCase="'processor'"></app-processor-list>
-  <app-ram-list *ngSwitchCase="'ram'"></app-ram-list>
+  <app-gpu-list [userRole]="authGuard.getRole()" *ngSwitchCase="'gpu'"></app-gpu-list>
+  <app-hdd-list [userRole]="authGuard.getRole()" *ngSwitchCase="'hdd'"></app-hdd-list>
+  <app-motherboard-list [userRole]="authGuard.getRole()" *ngSwitchCase="'motherboard'"></app-motherboard-list>
+  <app-processor-list [userRole]="authGuard.getRole()" *ngSwitchCase="'processor'"></app-processor-list>
+  <app-ram-list [userRole]="authGuard.getRole()" *ngSwitchCase="'ram'"></app-ram-list>
 </ng-container>
 <ng-container>
   <div class="selected-product">
@@ -22,15 +22,21 @@
             <app-star-rating [rating]="selectedGpu?.rating" [currentRating]="0"></app-star-rating>
             <br>
             <strong>Ár: {{selectedGpu?.price}} Ft</strong>
-            <button mat-button (click)="openCart(selectedGpu, 'gpu')">Kosárba rak</button>
+            <button [hidden]="authGuard.getRole() === 0" mat-button (click)="openCart(selectedGpu, 'gpu')">Kosárba rak
+            </button>
           </div>
-          Foglalat: {{selectedGpu?.slot}} <br>
-          Gyorsaság: {{selectedGpu?.clock}} GHz <br>
-          Memória: {{selectedGpu?.memory}} MB <br>
-          Termék leírás: {{selectedGpu?.description}}<br>
-          <button (click)="addToPc(selectedGpu, 'gpu')" class="btn btn-primary">Gépbe rak</button>
-          <app-product-comment *ngIf="selectedGpu" [productType]="'gpu'" (sendCommentForm)="initForm($event)"
-                               [selectedProduct]="selectedGpu"></app-product-comment>
+          <strong>Foglalat:</strong> {{selectedGpu?.slot}} <br>
+          <strong>Gyorsaság:</strong> {{selectedGpu?.clock}} MHz <br>
+          <strong>Memória:</strong> {{selectedGpu?.memory}} GB <br>
+          <strong>Termék leírás:</strong>
+          <pre>{{selectedGpu?.description | lineBreak}}</pre>
+          <br>
+          <button [hidden]="authGuard.getRole() === 0" (click)="addToPc(selectedGpu, 'gpu')" class="btn btn-primary">
+            Gépbe rak
+          </button>
+          <app-product-comment *ngIf="selectedGpu" (passRemovedId)="removeComment($event, 'gpu')"
+                               (sendCommentForm)="initForm($event, 'gpu')"
+                               [selectedProduct]="selectedGpu" [userRole]="authGuard.getRole()"></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('hdd')">
@@ -42,14 +48,20 @@
             <app-star-rating [rating]="selectedHdd?.rating" [currentRating]="0"></app-star-rating>
             <br>
             <strong>Ár: {{selectedHdd?.price}} Ft</strong>
-            <button mat-button (click)="openCart(selectedHdd, 'hdd')">Kosárba rak</button>
+            <button [hidden]="authGuard.getRole() === 0" mat-button (click)="openCart(selectedHdd, 'hdd')">Kosárba rak
+            </button>
           </div>
-          Kábel típus: {{selectedHdd?.cableType}} <br>
-          Méret: {{selectedHdd?.size}} GB <br>
-          Termék leírás: {{selectedHdd?.description}}<br>
-          <button (click)="addToPc(selectedHdd, 'hdd')" class="btn btn-primary">Gépbe rak</button>
-          <app-product-comment *ngIf="selectedHdd" [productType]="'hdd'" (sendCommentForm)="initForm($event)"
-                               [selectedProduct]="selectedHdd"></app-product-comment>
+          <strong>Kábel típus:</strong> {{selectedHdd?.cableType}} <br>
+          <strong>Méret:</strong> {{selectedHdd?.size}} GB <br>
+          <strong>Termék leírás:</strong>
+          <pre>{{selectedHdd?.description | lineBreak}}</pre>
+          <br>
+          <button [hidden]="authGuard.getRole() === 0" (click)="addToPc(selectedHdd, 'hdd')" class="btn btn-primary">
+            Gépbe rak
+          </button>
+          <app-product-comment *ngIf="selectedHdd" (sendCommentForm)="initForm($event, 'hdd')"
+                               (passRemovedId)="removeComment($event, 'hdd')"
+                               [selectedProduct]="selectedHdd" [userRole]="authGuard.getRole()"></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('ram')">
@@ -61,15 +73,21 @@
             <app-star-rating [rating]="selectedRam?.rating" [currentRating]="0"></app-star-rating>
             <br>
             <strong>Ár: {{selectedRam?.price}} Ft</strong>
-            <button mat-button (click)="openCart(selectedRam, 'ram')">Kosárba rak</button>
+            <button [hidden]="authGuard.getRole() === 0" mat-button (click)="openCart(selectedRam, 'ram')">Kosárba rak
+            </button>
           </div>
-          Memória mérete {{selectedRam?.memorySize}} MB<br>
-          Óra gyorsasága: {{selectedRam?.speed}} MHz<br>
-          Foglalat: {{selectedRam?.slot}} <br>
-          Termék leírás: {{selectedRam?.description}}<br>
-          <button (click)="addToPc(selectedRam, 'ram')" class="btn btn-primary">Gépbe rak</button>
-          <app-product-comment *ngIf="selectedRam" [productType]="'ram'" (sendCommentForm)="initForm($event)"
-                               [selectedProduct]="selectedRam"></app-product-comment>
+          <strong>Memória mérete: </strong> {{selectedRam?.memorySize}} GB<br>
+          <strong>Óra gyorsasága:</strong>  {{selectedRam?.speed}} MHz<br>
+          <strong>Foglalat:</strong>  {{selectedRam?.slot}} <br>
+          <strong>Termék leírás:</strong>
+          <pre>{{selectedRam?.description | lineBreak}}</pre>
+          <br>
+          <button [hidden]="authGuard.getRole() === 0" (click)="addToPc(selectedRam, 'ram')" class="btn btn-primary">
+            Gépbe rak
+          </button>
+          <app-product-comment *ngIf="selectedRam" (sendCommentForm)="initForm($event, 'ram')"
+                               (passRemovedId)="removeComment($event, 'ram')"
+                               [selectedProduct]="selectedRam" [userRole]="authGuard.getRole()"></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('motherboard')">
@@ -81,18 +99,26 @@
             <app-star-rating [rating]="selectedMotherboard?.rating" [currentRating]="0"></app-star-rating>
             <br>
             <strong>Ár: {{selectedMotherboard?.price}} Ft</strong>
-            <button mat-button (click)="openCart(selectedMotherboard, 'motherboard')">Kosárba rak</button>
+            <button [hidden]="authGuard.getRole() === 0" mat-button
+                    (click)="openCart(selectedMotherboard, 'motherboard')">Kosárba rak
+            </button>
           </div>
-          Chipset: {{selectedMotherboard?.chipset}} <br>
-          Videókártya foglalat: {{selectedMotherboard?.gpuSlots}} <br>
-          Merevlemez kábel: {{selectedMotherboard?.hddCable}} <br>
-          RAM darabszám: {{selectedMotherboard?.ramCount}} <br>
-          RAM foglalat: {{selectedMotherboard?.ramSlots}} <br>
-          Termék leírás: {{selectedMotherboard?.description}}<br>
-          <button (click)="addToPc(selectedMotherboard, 'motherboard')" class="btn btn-primary">Gépbe rak</button>
-          <app-product-comment *ngIf="selectedMotherboard" [productType]="'motherboard'"
-                               (sendCommentForm)="initForm($event)"
-                               [selectedProduct]="selectedMotherboard"></app-product-comment>
+          <strong>Chipset:</strong>  {{selectedMotherboard?.chipset}} <br>
+          <strong>Videókártya foglalat:</strong>  {{selectedMotherboard?.gpuSlots}} <br>
+          <strong> Merevlemez kábel:</strong>  {{selectedMotherboard?.hddCable}} <br>
+          <strong>RAM darabszám:</strong>  {{selectedMotherboard?.ramCount}} <br>
+          <strong>RAM foglalat:</strong>  {{selectedMotherboard?.ramSlots}} <br>
+          <strong>Termék leírás:</strong>
+          <pre>{{selectedMotherboard?.description | lineBreak}}</pre>
+          <br>
+          <button [hidden]="authGuard.getRole() === 0" (click)="addToPc(selectedMotherboard, 'motherboard')"
+                  class="btn btn-primary">Gépbe rak
+          </button>
+          <app-product-comment *ngIf="selectedMotherboard"
+                               (sendCommentForm)="initForm($event, 'motherboard')"
+                               (passRemovedId)="removeComment($event, 'motherboard')"
+                               [selectedProduct]="selectedMotherboard"
+                               [userRole]="authGuard.getRole()"></app-product-comment>
         </mat-card-content>
       </div>
       <div *ngIf="product?.includes('processor')">
@@ -104,16 +130,23 @@
             <app-star-rating [rating]="selectedProcessor?.rating" [currentRating]="0"></app-star-rating>
             <br>
             <strong>Ár: {{selectedProcessor?.price}} Ft</strong>
-            <button mat-button (click)="openCart(selectedProcessor, 'processor')">Kosárba rak</button>
+            <button [hidden]="authGuard.getRole() === 0" mat-button (click)="openCart(selectedProcessor, 'processor')">
+              Kosárba rak
+            </button>
           </div>
-          Chipset: {{selectedProcessor?.chipset}} <br>
-          Óra gyorsasága: {{selectedProcessor?.clockSpeed}} GHz<br>
-          Magok száma: {{selectedProcessor?.core}} <br>
-          Termék leírás: {{selectedProcessor?.description}}<br>
-          <button (click)="addToPc(selectedProcessor, 'processor')" class="btn btn-primary">Gépbe rak</button>
-          <app-product-comment *ngIf="selectedProcessor" [productType]="'processor'"
-                               (sendCommentForm)="initForm($event)"
-                               [selectedProduct]="selectedProcessor"></app-product-comment>
+          <strong>Chipset:</strong> {{selectedProcessor?.chipset}} <br>
+          <strong>Óra gyorsasága:</strong> {{selectedProcessor?.clockSpeed}} GHz<br>
+          <strong>Magok száma:</strong> {{selectedProcessor?.core}} <br>
+          <strong>Termék leírás:</strong>
+          <pre>{{selectedProcessor?.description | lineBreak}}</pre>
+          <br>
+          <button [hidden]="authGuard.getRole() === 0" (click)="addToPc(selectedProcessor, 'processor')"
+                  class="btn btn-primary">Gépbe rak
+          </button>
+          <app-product-comment *ngIf="selectedProcessor" (passRemovedId)="removeComment($event, 'processor')"
+                               (sendCommentForm)="initForm($event, 'processor')"
+                               [selectedProduct]="selectedProcessor"
+                               [userRole]="authGuard.getRole()"></app-product-comment>
         </mat-card-content>
       </div>
     </mat-card>

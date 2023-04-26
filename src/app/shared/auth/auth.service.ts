@@ -31,6 +31,7 @@ export class AuthService {
   }
 
   logout() {
+    localStorage.clear();
     return this.auth.signOut();
   }
 }

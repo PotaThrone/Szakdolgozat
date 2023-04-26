@@ -16,6 +16,7 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./processor-list.component.scss']
 })
 export class ProcessorListComponent implements OnInit{
+  @Input() userRole!: number;
   processors: Processor[] = [];
   filteredProcessors: Processor[] = [];
   bsModalRef?: BsModalRef;
@@ -23,11 +24,13 @@ export class ProcessorListComponent implements OnInit{
   searchForm: FormGroup;
   constructor(private processorService: ProcessorService, private cartService: CartService,  private productService: ProductService,
               private modalService: BsModalService, private router: Router, private fb: FormBuilder) {
+    this.isLoading = true;
     this.processorService.getAll().pipe(
       map(processors => processors.filter(processor => processor.id != null)),
     ).subscribe(processors => {
       this.processors = processors;
       this.filteredProcessors = processors;
+      this.isLoading = false;
     });
     this.searchForm = this.fb.group({
       searchTerm: new FormControl(),

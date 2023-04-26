@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {AuthService} from "../auth/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -10,10 +11,9 @@ export class HeaderComponent {
   @Input()
   loggedInUser?: firebase.default.User | null;
 
-  constructor(private authService: AuthService) {
-  }
+  constructor(private authService: AuthService) {}
 
-  logout(_?: boolean) {
+  logout() {
     this.authService.logout().then(() => {
       console.log('Logged out successfully.');
     }).catch(error => {

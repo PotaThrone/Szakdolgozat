@@ -61,7 +61,7 @@ export class GpuEditComponent implements OnInit {
 
   editGpu() {
     this.isLoading = true;
-    this.gpuService.update({...this.form.value, price: this.gpu?.price, rating: this.gpu?.rating, comments: this.gpu?.comments}).finally(() => this.isLoading = false);
+    this.gpuService.update({...this.form.value, price: this.gpu?.price, rating: this.gpu?.rating, comments: this.gpu?.comments ?? null}).finally(() => this.isLoading = false);
     this.modalRef.hide();
   }
 }

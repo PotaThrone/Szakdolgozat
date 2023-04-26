@@ -23,6 +23,11 @@ import {StarRatingComponent} from "../../shared/util/star-rating/star-rating.com
 import {ProductCommentComponent} from "../../shared/util/product-comment/product-comment.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatSelectModule} from "@angular/material/select";
+import {AppModule} from "../../app.module";
+import {MainModule} from "../main/main.module";
+import {StarRatingModule} from "../../shared/util/star-rating/star-rating.module";
+import {LineBreakPipe} from "../../shared/util/line-break.pipe";
+import {LineBreakModule} from "../../shared/util/line-break.module";
 
 const routes: Routes = [
   {path: '', component: ProductsComponent}
@@ -42,7 +47,6 @@ const routes: Routes = [
     MotherboardEditComponent,
     ProcessorEditComponent,
     RamEditComponent,
-    StarRatingComponent,
     ProductCommentComponent
   ],
   imports: [
@@ -56,8 +60,10 @@ const routes: Routes = [
     MatIconModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    StarRatingModule,
+    LineBreakModule,
   ],
-    exports: [RouterModule, StarRatingComponent],
+    exports: [RouterModule],
 })
 export class ProductsModule {
 }

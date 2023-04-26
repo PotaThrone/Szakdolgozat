@@ -1,5 +1,5 @@
 <div class="header-container">
-  <a class="main" routerLink="/main">
+  <a class="main" routerLink="/main" >
     ELEKTRONIKAI WEBSHOP<mat-icon>laptop</mat-icon>
   </a>
   <a mat-list-item routerLink="/login" *ngIf="!loggedInUser">
@@ -8,7 +8,7 @@
   <a mat-list-item routerLink="/favorite" *ngIf="loggedInUser">
     <mat-icon>favorite</mat-icon>
   </a>
-  <a mat-list-item routerLink="/cart">
+  <a mat-list-item routerLink="/cart"  *ngIf="loggedInUser">
     <mat-icon>shopping_cart</mat-icon>
   </a>
   <a mat-list-item routerLink="/login" (click)="logout()" *ngIf="loggedInUser">

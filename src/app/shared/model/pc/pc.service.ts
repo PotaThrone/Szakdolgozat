@@ -12,33 +12,40 @@ import {finalize, map, Subject, take} from "rxjs";
 export class PcService {
   collectionName = 'PC';
 
-  user = this.authService.getLoggedInUser();
-
   constructor(private afs: AngularFirestore, private authService: AuthService) {
   }
-
 
   getAll() {
     return this.afs.collection<Pc>(this.collectionName).valueChanges();
   }
 
-  getPc() {
-    if (this.user) {
-      return this.afs.collection<Pc>(this.collectionName).doc(this.user.uid).valueChanges();
+  createEmptyPc(){
+    let user = this.authService.getLoggedInUser();
+    if (user) {
+      let pc: Pc = {
+        ram: null,
+        gpu: null,
+        processor: null,
+        hdd: null,
+        motherboard: null,
+      }
+      this.afs.collection<Pc>(this.collectionName).doc(user.uid).set(pc);
     }
     return null;
   }
 
-  getPcAny() {
-    if (this.user) {
-      return this.afs.collection<any>(this.collectionName).doc(this.user.uid).valueChanges();
+  getPc() {
+    let user = this.authService.getLoggedInUser();
+    if (user) {
+      return this.afs.collection<Pc>(this.collectionName).doc(user.uid).valueChanges();
     }
     return null;
   }
 
   update(pc: Pc) {
-    if (this.user) {
-      return this.afs.collection<Pc>(this.collectionName).doc(this.user.uid).update(pc);
+    let user = this.authService.getLoggedInUser();
+    if (user) {
+      return this.afs.collection<Pc>(this.collectionName).doc(user.uid).update(pc);
     }
     return null;
   }

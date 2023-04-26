@@ -11,3 +11,9 @@ export interface Comment{
   rating: number;
   userEmail: string;
 }
+
+export enum Role{
+  GUEST ,
+  USER ,
+  ADMIN ,
+}

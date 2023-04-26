@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Gpu} from "../../../shared/model/gpu/gpu";
 import {GpuService} from "../../../shared/model/gpu/gpu.service";
 import {CartService} from "../../cart/cart.service";
@@ -16,6 +16,7 @@ import {map} from "rxjs";
   styleUrls: ['./gpu-list.component.scss']
 })
 export class GpuListComponent implements OnInit{
+  @Input() userRole!: number;
   gpus: Gpu[] = [];
   filteredGpus: Gpu[] = [];
   bsModalRef?: BsModalRef;
@@ -24,6 +25,7 @@ export class GpuListComponent implements OnInit{
 
   constructor(private gpuService: GpuService, private cartService: CartService, private productService: ProductService,
               private modalService: BsModalService, private router: Router, private fb: FormBuilder) {
+    this.isLoading = true;
     this.searchForm = this.fb.group({
       searchTerm: new FormControl(),
     });
@@ -32,6 +34,7 @@ export class GpuListComponent implements OnInit{
     ).subscribe(gpus => {
       this.gpus = gpus;
       this.filteredGpus = gpus;
+      this.isLoading = false;
     });
   }
 

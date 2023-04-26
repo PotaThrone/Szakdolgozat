@@ -6,23 +6,19 @@ const routes: Routes = [
   {
     path: 'main',
     loadChildren: () => import('./pages/main/main.module').then(m => m.MainModule),
-    canActivate: [AuthGuard]
   },
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule),
-    canActivate: [AuthGuard]
   },
   {
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule),
-    canActivate: [AuthGuard]
   },
   {
     path: 'products',
     pathMatch: 'full',
     loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule),
-    canActivate: [AuthGuard]
   },
   {
     path: 'cart',
@@ -42,12 +38,10 @@ const routes: Routes = [
   {
     path: 'not-found',
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule),
-    canActivate: [AuthGuard]
   },
   {
     path: 'top-products',
     loadChildren: () => import('./pages/top-products/top-products.module').then(m => m.TopProductsModule),
-    canActivate: [AuthGuard]
   },
   {
     path: '',

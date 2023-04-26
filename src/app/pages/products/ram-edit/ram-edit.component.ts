@@ -60,7 +60,7 @@ export class RamEditComponent implements OnInit{
 
   editRam() {
     this.isLoading = true;
-    this.ramService.update({...this.form.value, price: this.ram?.price, rating: this.ram?.rating, comments: this.ram?.comments}).finally(() => this.isLoading = false);
+    this.ramService.update({...this.form.value, price: this.ram?.price, rating: this.ram?.rating, comments: this.ram?.comments ?? null}).finally(() => this.isLoading = false);
     this.modalRef.hide();
   }
 }

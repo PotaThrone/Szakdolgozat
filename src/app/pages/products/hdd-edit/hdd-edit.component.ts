@@ -61,7 +61,7 @@ export class HddEditComponent implements OnInit {
 
   editHdd() {
     this.isLoading = true;
-    this.hddService.update({...this.form.value, price: this.hdd?.price, rating: this.hdd?.rating, comments: this.hdd?.comments}).finally(() => this.isLoading = false);
+    this.hddService.update({...this.form.value, price: this.hdd?.price, rating: this.hdd?.rating, comments: this.hdd?.comments ?? null}).finally(() => this.isLoading = false);
     this.modalRef.hide();
   }
 }

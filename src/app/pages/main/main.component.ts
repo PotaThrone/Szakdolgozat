@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ForumService} from "../../shared/model/forum/forum.service";
 import {finalize, map, take} from "rxjs";
 import {Forum} from "../../shared/model/forum/forum";
@@ -7,13 +7,14 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Game} from "../../shared/model/game/game";
 import {GameService} from "../../shared/model/game/game.service";
 import {AuthService} from "../../shared/auth/auth.service";
+import {AuthGuard} from "../../shared/auth/auth.guard";
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent {
+export class MainComponent{
   title?: string;
   forums: Forum[] = [];
   forumForm: FormGroup;
@@ -22,7 +23,7 @@ export class MainComponent {
   isLoading = false;
 
   constructor(private forumService: ForumService, public storage: AngularFireStorage, private fb: FormBuilder, private gameService: GameService,
-              private authService: AuthService) {
+              private authService: AuthService, public authGuard: AuthGuard) {
     this.isLoading = true;
     this.forumService.getAll().pipe(
       map(forums => {

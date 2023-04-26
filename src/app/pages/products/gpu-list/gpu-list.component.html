@@ -4,7 +4,7 @@
   </div>
 </div>
 <div class="add-product">
-  <button class="btn btn-primary" (click)="openGpuEdit(null)">Videókártya hozzáadása<mat-icon style="padding-top: 5px">add</mat-icon></button>
+  <button [hidden]="userRole < 2"  class="btn btn-primary" (click)="openGpuEdit(null)">Videókártya hozzáadása<mat-icon style="padding-top: 5px">add</mat-icon></button>
   <form [formGroup]="searchForm" class="form-inline my-2 my-lg-0">
     <mat-form-field appearance="outline">
       <input formControlName="searchTerm" matInput type="search" placeholder="Keresés">
@@ -22,15 +22,15 @@
     </mat-card-header>
     <mat-card-content>
       Foglalat: {{gpu.slot}} <br>
-      Gyorsaság: {{gpu.clock}} GHz <br>
-      Memória: {{gpu.memory}} MB <br>
+      Gyorsaság: {{gpu.clock}} MHz <br>
+      Memória: {{gpu.memory}} GB <br>
     </mat-card-content>
   </a>
-  <mat-card-actions>
+  <mat-card-actions  [hidden]="userRole === 0">
     <button mat-button (click)="openCart(gpu)">Kosárba</button>
     <button mat-button (click)="addToFavorites(gpu)">Kedvenc</button><br>
   </mat-card-actions>
-  <mat-card-actions *ngIf="true" >
+  <mat-card-actions  [hidden]="userRole < 2" >
     <button mat-button (click)="delete(gpu)"><mat-icon style="color: red;">delete</mat-icon></button>
     <button mat-button (click)="openGpuEdit(gpu)"><mat-icon style="color: blue;">edit</mat-icon></button>
   </mat-card-actions>

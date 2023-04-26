@@ -16,6 +16,7 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./motherboard-list.component.scss']
 })
 export class MotherboardListComponent implements OnInit{
+  @Input() userRole!: number;
   motherboards: Motherboard[] = [];
   filteredMotherboards: Motherboard[] = [];
   bsModalRef?: BsModalRef;
@@ -24,11 +25,13 @@ export class MotherboardListComponent implements OnInit{
 
   constructor(private motherboardService: MotherboardService, private cartService: CartService, private productService: ProductService,
               private modalService: BsModalService, private router: Router, private fb: FormBuilder) {
+    this.isLoading = true;
     this.motherboardService.getAll().pipe(
       map(motherboards => motherboards.filter(motherboard => motherboard.id != null)),
     ).subscribe(motherboards => {
       this.motherboards = motherboards;
       this.filteredMotherboards = motherboards;
+      this.isLoading = false;
     });
     this.searchForm = this.fb.group({
       searchTerm: new FormControl(),

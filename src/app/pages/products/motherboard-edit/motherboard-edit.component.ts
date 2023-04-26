@@ -70,7 +70,7 @@ export class MotherboardEditComponent implements OnInit {
 
   editMotherboard() {
     this.isLoading = true;
-    this.motherboardService.update({...this.form.value, price: this.motherboard?.price, rating: this.motherboard?.rating, comments: this.motherboard?.comments}).finally(() => this.isLoading = false);
+    this.motherboardService.update({...this.form.value, price: this.motherboard?.price, rating: this.motherboard?.rating, comments: this.motherboard?.comments ?? null}).finally(() => this.isLoading = false);
     this.modalRef.hide();
   }
 }

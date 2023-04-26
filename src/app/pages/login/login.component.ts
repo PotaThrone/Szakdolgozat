@@ -24,10 +24,8 @@ export class LoginComponent {
     this.isLoading = true;
     this.authService.login(this.form.controls['email'].value, this.form.controls['password'].value).then(() => {
       this.router.navigateByUrl('/main');
-      this.isLoading = false;
     }).catch(() => {
       this.form.setErrors({accountInvalid: true});
-      this.isLoading = false;
-    });
+    }).finally(() => this.isLoading = false);
   }
 }

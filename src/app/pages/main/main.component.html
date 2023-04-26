@@ -4,21 +4,23 @@
   </div>
 </div>
 <div class="container">
-  <h2>Fórum létrehozása</h2>
-  <div class="comments">
-    <form [formGroup]="forumForm">
-      <mat-form-field appearance="outline">
-        <mat-label >Játék kiválasztása</mat-label>
-        <mat-select formControlName="game">
-          <mat-option *ngFor="let game of games" [value]="game">{{game.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <app-star-rating (starSelected)="onStarRated($event)" [currentRating]="currentRating"></app-star-rating>
-      <textarea type="text" formControlName="text"></textarea>
-      <button mat-raised-button color="primary" (click)="createForum()" [disabled]="forumForm.invalid"
-              type="submit">Létrehozás
-      </button>
-    </form>
+  <div [hidden]="authGuard.getRole() === 0" >
+    <h2>Fórum létrehozása</h2>
+    <div class="comments">
+      <form [formGroup]="forumForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Játék kiválasztása</mat-label>
+          <mat-select formControlName="game">
+            <mat-option *ngFor="let game of games" [value]="game">{{game.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <app-star-rating (starSelected)="onStarRated($event)" [currentRating]="currentRating"></app-star-rating>
+        <textarea type="text" formControlName="text"></textarea>
+        <button mat-raised-button color="primary" (click)="createForum()" [disabled]="forumForm.invalid"
+                type="submit">Létrehozás
+        </button>
+      </form>
+    </div>
   </div>
   <div class="forumBox" *ngFor="let forum of forums">
     <app-star-rating [rating]="forum.rating" [currentRating]="0"></app-star-rating>
@@ -26,14 +28,15 @@
       <h2>{{forum.game.name}}</h2>
     </div>
     <div class="image-text">
-      <img [src]="forum.imageLink | async"><br>
+      <img alt="Game picture" [src]="forum.imageLink | async"><br>
       <p><strong>Leírás:</strong><br>{{forum.text | lineBreak}}</p>
     </div>
     <div class="user">
       {{forum.user.email}}<br>
       {{forum.date | date }}
     </div>
-    <button mat-button style="background-color: red; width: 15%; margin-top: 20px" (click)="delete(forum.id)">Törlés
+    <button [hidden]="authGuard.getRole() < 2" mat-button style="background-color: red; width: 15%; margin-top: 20px"
+            (click)="delete(forum.id)">Törlés
     </button>
   </div>
 </div>

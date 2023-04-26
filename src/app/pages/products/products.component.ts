@@ -12,7 +12,7 @@ import {CartService} from "../cart/cart.service";
 import {FormGroup} from "@angular/forms";
 import {AuthService} from "../../shared/auth/auth.service";
 import {Comment} from "../../shared/model/user/user";
-import {CommentFormData} from "../../shared/util/product-comment/product-comment.component";
+import {AuthGuard} from "../../shared/auth/auth.guard";
 
 @Component({
   selector: 'app-products',
@@ -29,7 +29,8 @@ export class ProductsComponent implements OnInit {
   selectedProcessor?: Processor;
   selectedMotherboard?: Motherboard;
   isLoading = false;
-  constructor(private route: ActivatedRoute, private productService: ProductService, private cartService: CartService, private authService: AuthService) {
+  constructor(private route: ActivatedRoute, private productService: ProductService, private cartService: CartService, private authService: AuthService,
+              public authGuard: AuthGuard) {
 
   }
 
@@ -157,15 +158,51 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  initForm(commentFormData: CommentFormData) {
-    this.commentForm = commentFormData.commentForm;
-    this.sendComment(commentFormData.productType);
+  initForm(commentFrom: FormGroup, productType: string) {
+    this.commentForm = commentFrom;
+    this.sendComment(productType);
   }
 
   addToPc(selectedProduct: Product | undefined, productType: string) {
     if(selectedProduct){
       this.isLoading = true;
       this.productService.addProductToPc(selectedProduct, productType).subscribe(isLoading => this.isLoading = isLoading);
+    }
+  }
+
+  removeComment(index: number, productType: string) {
+    this.isLoading = true;
+    switch (productType) {
+      case ProductType.HDD:
+        if(this.selectedHdd){
+          this.selectedHdd.comments?.splice(index,1);
+          this.productService.update({...this.selectedHdd}, CollectionName.HDD).finally(() => this.isLoading = false);
+        }
+        break;
+      case ProductType.GPU:
+        if(this.selectedGpu){
+          this.selectedGpu.comments?.splice(index,1);
+          this.productService.update({...this.selectedGpu}, CollectionName.GPU).finally(() => this.isLoading = false);
+        }
+        break;
+      case ProductType.PROCESSOR:
+        if(this.selectedProcessor){
+          this.selectedProcessor.comments?.splice(index,1);
+          this.productService.update({...this.selectedProcessor}, CollectionName.PROCESSOR).finally(() => this.isLoading = false);
+        }
+        break;
+      case ProductType.MOTHERBOARD:
+        if(this.selectedMotherboard){
+          this.selectedMotherboard.comments?.splice(index,1);
+          this.productService.update({...this.selectedMotherboard}, CollectionName.MOTHERBOARD).finally(() => this.isLoading = false);
+        }
+        break;
+      case ProductType.RAM:
+        if(this.selectedRam){
+          this.selectedRam.comments?.splice(index,1);
+          this.productService.update({...this.selectedRam}, CollectionName.RAM).finally(() => this.isLoading = false);
+        }
+        break;
     }
   }
 }

@@ -4,7 +4,8 @@ import {AuthService} from "../../shared/auth/auth.service";
 import {User} from "../../shared/model/user/user";
 import {UserService} from "../../shared/model/user/user.service";
 import {Router} from "@angular/router";
-import {map, Observable, tap} from "rxjs";
+import {tap} from "rxjs";
+import {PcService} from "../../shared/model/pc/pc.service";
 
 @Component({
   selector: 'app-register',
@@ -15,8 +16,10 @@ export class RegisterComponent {
   form: FormGroup;
   hide = true;
   userList :User[] = [];
+  isLoading = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private userService: UserService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private userService: UserService, private router: Router,
+              private pcService: PcService) {
     this.userService.getAll().pipe(
       tap(users => this.userList = users),
     ).subscribe();
@@ -45,6 +48,7 @@ export class RegisterComponent {
   }
 
   register() {
+    this.isLoading = true;
     this.authService.signup(this.form.get('email')?.value, this.form.get('password')?.value).then(cred => {
       const user: User = {
         uid: cred?.user?.uid as string,
@@ -53,13 +57,11 @@ export class RegisterComponent {
         firstname: this.form.get('firstName')?.value,
         lastname: this.form.get('lastName')?.value
       };
-      this.userService.create(user).then(_ => {
+      this.userService.create(user).then(() => {
+        this.pcService.createEmptyPc();
         this.router.navigateByUrl('/main');
-
-      }).catch(error => {
-      })
-    }).catch(error => {
-    });
+      }).catch(error => { console.error(error)});
+    }).catch(error => {console.error(error)}).finally(() => this.isLoading = false);
   }
 
   goBack() {

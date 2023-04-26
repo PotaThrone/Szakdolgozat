@@ -4,7 +4,7 @@
   </div>
 </div>
 <div class="add-product">
-  <button class="btn btn-primary" (click)="openProcessorEdit(null)">Processzor hozzáadása
+  <button [hidden]="userRole < 2" class="btn btn-primary" (click)="openProcessorEdit(null)">Processzor hozzáadása
     <mat-icon style="padding-top: 5px">add</mat-icon>
   </button>
   <form [formGroup]="searchForm" class="form-inline my-2 my-lg-0">
@@ -28,11 +28,11 @@
       Magok száma: {{processor.core}} <br>
     </mat-card-content>
   </a>
-  <mat-card-actions>
+  <mat-card-actions  [hidden]="userRole === 0">
     <button mat-button (click)="openCart(processor)">Kosárba</button>
     <button mat-button (click)="addToFavorites(processor)">Kedvenc</button>
   </mat-card-actions>
-  <mat-card-actions *ngIf="true" >
+  <mat-card-actions [hidden]="userRole < 2" >
     <button mat-button (click)="delete(processor)"><mat-icon style="color: red;">delete</mat-icon></button>
     <button mat-button (click)="openProcessorEdit(processor)"><mat-icon style="color: blue;">edit</mat-icon></button>
   </mat-card-actions>

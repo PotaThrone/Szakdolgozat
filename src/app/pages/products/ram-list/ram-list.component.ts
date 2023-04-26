@@ -16,6 +16,7 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./ram-list.component.scss']
 })
 export class RamListComponent implements OnInit{
+  @Input() userRole!: number;
   rams: Ram[] = [];
   filteredRams: Ram[] = [];
   bsModalRef?: BsModalRef;
@@ -23,11 +24,13 @@ export class RamListComponent implements OnInit{
   searchForm: FormGroup;
   constructor(private ramService: RamService, private cartService: CartService,  private productService: ProductService,
               private modalService: BsModalService, private router: Router, private fb: FormBuilder) {
+    this.isLoading = true;
     this.ramService.getAll().pipe(
       map(rams => rams.filter(ram => ram.id != null)),
     ).subscribe(rams => {
       this.rams = rams;
       this.filteredRams = rams;
+      this.isLoading = false;
     });
     this.searchForm = this.fb.group({
       searchTerm: new FormControl(),

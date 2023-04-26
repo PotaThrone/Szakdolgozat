@@ -10,7 +10,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class ProductService {
   collectionName = 'Cart';
-  user = this.authService.getLoggedInUser();
 
   constructor(private afs: AngularFirestore, private authService: AuthService, private snackBar: MatSnackBar) {
   }
@@ -20,11 +19,15 @@ export class ProductService {
   }
 
   update(product: Product, collectionName: string) {
-    return this.afs.collection<any>(collectionName).doc(product.id).set(product);
+    return this.afs.collection<any>(collectionName).doc(product.id).update(product);
   }
 
-  delete(id: string) {
-    return this.afs.collection<Product>(this.collectionName).doc(id).delete();
+  delete() {
+    let user = this.authService.getLoggedInUser();
+    if(user){
+      return this.afs.collection<Product>(this.collectionName).doc(user.uid).delete();
+    }
+    return null;
   }
 
   getById(id: string, collectionName: string) {
@@ -54,8 +57,9 @@ export class ProductService {
 
   addProductToFavorites(product: Product, productType: string) {
     const isLoading$ = new Subject<boolean>();
-    if (this.user) {
-      const favoriteRef = this.getRef(this.user.uid, 'Favorite');
+    let user = this.authService.getLoggedInUser();
+    if (user) {
+      const favoriteRef = this.getRef(user.uid, 'Favorite');
 
       favoriteRef.valueChanges().pipe(
         map((favorites: any) => favorites?.products || {}),
@@ -69,7 +73,7 @@ export class ProductService {
             .then(() => this.snackBar.open(product.brand + ' a kedvencek között!', 'OK', {
               duration: 2000
             }))
-            .catch((error) => console.error('Error adding product:', error))
+            .catch((error) => console.error('Error adding product to favorites:', error))
         }
       });
     }
@@ -80,8 +84,9 @@ export class ProductService {
     const isLoading$ = new Subject<boolean>();
     let productCreatedOrUpdated = false;
     let count: number | undefined = 0;
-    if (this.user) {
-      const cartRef = this.getRef(this.user.uid, 'Cart');
+    let user = this.authService.getLoggedInUser();
+    if (user) {
+      const cartRef = this.getRef(user.uid, 'Cart');
 
       cartRef.valueChanges().pipe(
         map((cartProducts: any) => cartProducts?.products || {}),
@@ -94,7 +99,6 @@ export class ProductService {
           productFromCart = products[productType + product.id];
         }
         if (productFromCart) {
-          console.log('Updating product to cart:', product.id);
           count = productFromCart.count;
           if (count && count > 0) {
             productFromCart.count = productFromCart.count + 1;
@@ -108,7 +112,6 @@ export class ProductService {
             product.id = productType + product.id;
           }
           product.count = 1;
-          console.log('Adding product to cart:', product.id);
           if (!productCreatedOrUpdated) {
             cartRef.set({
               products: {
@@ -126,9 +129,9 @@ export class ProductService {
 
   addProductToPc(product: Product, productType: string) {
     const isLoading$ = new Subject<boolean>();
-
-    if (this.user) {
-      const pcRef = this.getRef(this.user.uid, 'PC');
+    let user = this.authService.getLoggedInUser();
+    if (user) {
+      const pcRef = this.getRef(user.uid, 'PC');
 
       switch (productType) {
         case ProductType.GPU:
@@ -159,8 +162,9 @@ export class ProductService {
 
   deleteProduct(productId: string, collectionName: string) {
     const isLoading$ = new Subject<boolean>();
-    if (this.user) {
-      const productRef = this.getRef(this.user.uid, collectionName);
+    let user = this.authService.getLoggedInUser();
+    if (user) {
+      const productRef = this.getRef(user.uid, collectionName);
       productRef.valueChanges().pipe(
         finalize(() => isLoading$.next(false)),
         map((products: any) => products?.products || {}),
@@ -173,6 +177,26 @@ export class ProductService {
           } else {
             delete products[productId];
           }
+          productRef.update({products: products}).then(() => isLoading$.next(false));
+        }
+      });
+    }
+    return isLoading$.asObservable();
+  }
+
+  incrementProductCount(productId: string, collectionName: string) {
+    const isLoading$ = new Subject<boolean>();
+    let user = this.authService.getLoggedInUser();
+    if (user) {
+      const productRef = this.getRef(user.uid, collectionName);
+      productRef.valueChanges().pipe(
+        finalize(() => isLoading$.next(false)),
+        map((products: any) => products?.products || {}),
+        take(1),
+      ).subscribe((products: any) => {
+        const productFound = !!products[productId];
+        if (productFound) {
+          products[productId].count = products[productId].count + 1;
           productRef.update({products: products}).then(() => isLoading$.next(false));
         }
       });

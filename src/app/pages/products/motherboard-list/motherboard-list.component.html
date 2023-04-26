@@ -4,7 +4,7 @@
   </div>
 </div>
 <div class="add-product">
-  <button class="btn btn-primary" (click)="openMotherboardEdit(null)">Alaplap hozzáadása
+  <button [hidden]="userRole < 2"  class="btn btn-primary" (click)="openMotherboardEdit(null)">Alaplap hozzáadása
     <mat-icon style="padding-top: 5px">add</mat-icon>
   </button>
   <form [formGroup]="searchForm" class="form-inline my-2 my-lg-0">
@@ -30,11 +30,11 @@
       RAM foglalat: {{motherboard.ramSlots}} <br>
     </mat-card-content>
   </a>
-  <mat-card-actions>
+  <mat-card-actions [hidden]="userRole === 0">
     <button mat-button (click)="openCart(motherboard)">Kosárba</button>
     <button mat-button (click)="addToFavorites(motherboard)">Kedvenc</button>
   </mat-card-actions>
-  <mat-card-actions *ngIf="true" >
+  <mat-card-actions [hidden]="userRole < 2">
     <button mat-button (click)="delete(motherboard)"><mat-icon style="color: red;">delete</mat-icon></button>
     <button mat-button (click)="openMotherboardEdit(motherboard)"><mat-icon style="color: blue;">edit</mat-icon></button>
   </mat-card-actions>
