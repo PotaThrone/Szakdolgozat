@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ForumService} from "../../shared/model/forum/forum.service";
 import {finalize, map, take} from "rxjs";
 import {Forum} from "../../shared/model/forum/forum";

@@ -5,6 +5,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {MatButtonModule} from "@angular/material/button";
 import {MatTableModule} from "@angular/material/table";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {StarRatingModule} from "../../shared/util/star-rating/star-rating.module";
 
 const routes: Routes = [
   {path: '', component: TopProductsComponent}
@@ -14,12 +15,13 @@ const routes: Routes = [
   declarations: [
     TopProductsComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    MatButtonModule,
-    MatTableModule,
-    MatProgressSpinnerModule,
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        MatButtonModule,
+        MatTableModule,
+        MatProgressSpinnerModule,
+        StarRatingModule,
+    ]
 })
 export class TopProductsModule { }

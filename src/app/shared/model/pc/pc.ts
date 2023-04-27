@@ -1,4 +1,3 @@
-import {Product} from "../product/product";
 import {Gpu} from "../gpu/gpu";
 import {Hdd} from "../hdd/hdd";
 import {Motherboard} from "../motherboard/motherboard";

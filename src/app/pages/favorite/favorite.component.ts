@@ -3,6 +3,7 @@ import {Product} from "../../shared/model/product/product";
 import {tap} from "rxjs";
 import {Router} from "@angular/router";
 import {ProductService} from "../../shared/model/product/product.service";
+import {getProductUrl} from "../products/products.component";
 
 @Component({
   selector: 'app-favorite',
@@ -12,7 +13,7 @@ import {ProductService} from "../../shared/model/product/product.service";
 export class FavoriteComponent {
   products: Product[] = [];
 
-  displayedColumns = ['name', 'description', 'price', 'delete']
+  displayedColumns = ['name', 'price', 'delete']
   isLoading = false;
 
   constructor(private router: Router, private productService: ProductService) {
@@ -37,4 +38,6 @@ export class FavoriteComponent {
   redirectToCart() {
     this.router.navigate(['../cart']);
   }
+
+  protected readonly getProductUrl = getProductUrl;
 }

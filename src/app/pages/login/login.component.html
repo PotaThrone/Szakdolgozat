@@ -8,12 +8,12 @@
     <h1>Bejelentkezés</h1>
     <form [formGroup]="form">
       <mat-form-field>
-        <mat-label for="email">Email:</mat-label>
+        <mat-label>Email:</mat-label>
         <input matInput type="text" formControlName="email"/>
       </mat-form-field>
       <br>
       <mat-form-field>
-        <mat-label for="password">Jelszó:</mat-label>
+        <mat-label>Jelszó:</mat-label>
         <input matInput type="password" formControlName="password"/>
       </mat-form-field>
       <mat-error *ngIf="form.hasError('accountInvalid')">Hibás email vagy jelszó!</mat-error>

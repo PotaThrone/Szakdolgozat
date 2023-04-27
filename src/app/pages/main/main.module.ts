@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterModule} from "@angular/router";
 import {MainComponent} from "./main.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ReactiveFormsModule} from "@angular/forms";
-import {MatFormFieldModule, MatLabel} from "@angular/material/form-field";
+import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {StarRatingModule} from "../../shared/util/star-rating/star-rating.module";
@@ -29,5 +29,9 @@ import {MatButtonModule} from "@angular/material/button";
     LineBreakModule,
     MatButtonModule,
   ],
+  exports: [
+    MainComponent
+  ]
 })
-export class MainModule { }
+export class MainModule {
+}

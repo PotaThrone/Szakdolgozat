@@ -6,6 +6,7 @@ import {map, take} from "rxjs";
 import {Game} from "../../shared/model/game/game";
 import {GameService} from "../../shared/model/game/game.service";
 import {CartService} from "../cart/cart.service";
+import {getProductUrl, showProductType} from "../products/products.component";
 
 @Component({
   selector: 'app-pc-builder',
@@ -16,7 +17,7 @@ export class PcBuilderComponent {
   pcComponents: Product[] = [];
   pc!: Pc;
   products = new EventEmitter<Product[]>;
-  displayedColumns = ['name', 'price', 'description', 'delete'];
+  displayedColumns = ['productType','name', 'price',  'delete'];
   isLoading = false;
   validPc = false;
   canPcRunGame = false;
@@ -144,7 +145,7 @@ export class PcBuilderComponent {
       this.errorMessageGame = '';
       if(this.pc.gpu!.clock < game.requirements.gpuClock){
         this.canPcRunGame = false;
-        this.errorMessageGame += 'Nincs elég gyors a videókártya!\n';
+        this.errorMessageGame += 'Nem elég gyors a videókártya!\n';
       }
       if(this.pc.hdd!.size < game.requirements.hddSpace){
         this.canPcRunGame = false;
@@ -210,4 +211,6 @@ export class PcBuilderComponent {
   //     this.productService.addProductToCart(this.pc.hdd!, ProductType.HDD).pipe(take(1))).subscribe(
   //     ([isLoading]) => this.isLoading = isLoading);
   // }
+  protected readonly getProductUrl = getProductUrl;
+  protected readonly showProductType = showProductType;
 }

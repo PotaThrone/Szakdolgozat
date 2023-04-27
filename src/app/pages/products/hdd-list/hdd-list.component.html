@@ -25,11 +25,11 @@
       Méret: {{hdd.size}} GB <br>
     </mat-card-content>
   </a>
-  <mat-card-actions [hidden]="userRole === 0">
+  <mat-card-actions class="mat-actions" [hidden]="userRole === 0">
     <button mat-button (click)="openCart(hdd)">Kosárba</button>
     <button mat-button (click)="addToFavorites(hdd)">Kedvenc</button>
   </mat-card-actions>
-  <mat-card-actions [hidden]="userRole < 2" >
+  <mat-card-actions class="mat-actions" [hidden]="userRole < 2" >
     <button mat-button (click)="delete(hdd)"><mat-icon style="color: red;">delete</mat-icon></button>
     <button mat-button (click)="openHddEdit(hdd)"><mat-icon style="color: blue;">edit</mat-icon></button>
   </mat-card-actions>

@@ -7,34 +7,30 @@
   <table mat-table [dataSource]="products">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Termék neve</th>
-      <td mat-cell *matCellDef="let element">{{element.brand}}</td>
+      <td mat-cell *matCellDef="let element"><a [href]="getProductUrl(element)">{{element.brand}}</a></td>
     </ng-container>
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef>Ár</th>
       <td mat-cell *matCellDef="let element">{{element.price}} Ft</td>
     </ng-container>
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef>Termék leírás</th>
-      <td mat-cell *matCellDef="let element">{{element.description}}</td>
-    </ng-container>
     <ng-container matColumnDef="count">
       <th mat-header-cell *matHeaderCellDef>Darabszám</th>
       <td mat-cell *matCellDef="let element">{{element.count}}</td>
     </ng-container>
-    <ng-container matColumnDef="delete">
+    <ng-container  matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <button class="action-button" style="background-color: red;" mat-raised-button (click)="removeFromCart(element.id)"><mat-icon>remove</mat-icon></button>
+      <td class="actions" mat-cell *matCellDef="let element">
+        <button class="action-button" style="background-color: red; margin-bottom: 5px" mat-raised-button (click)="removeFromCart(element.id)"><mat-icon>remove</mat-icon></button>
         <button class="action-button" style="background-color: green;" mat-raised-button (click)="addToCart(element.id)"><mat-icon>add</mat-icon></button>
       </td>
     </ng-container>
     <ng-container matColumnDef="total">
-      <td mat-footer-cell *matFooterCellDef colspan="4">{{getTotalPrice()}} Ft</td>
+      <td mat-footer-cell *matFooterCellDef colspan="4"><strong>Összesen:</strong> {{getTotalPrice()}} Ft</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    <tr mat-footer-row *matFooterRowDef="['total']"></tr>
+    <tr mat-footer-row style="border-bottom: 1px solid #ddd;" *matFooterRowDef="['total']"></tr>
   </table>
   <button [disabled]="emptyCart" color="primary" mat-raised-button (click)="openPayingModal(template)">Fizetés</button>
 </div>
@@ -47,7 +43,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <mat-stepper [linear]="true" #stepper>
+    <mat-stepper [linear]="true">
       <mat-step [stepControl]="deliveryAddress">
         <form [formGroup]="deliveryAddress">
           <ng-template matStepLabel>Szállítási adatok</ng-template>
@@ -94,7 +90,7 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="paymentInfo" label="Fizetési mód">
-        <strong>Összeg: {{getTotalPrice()}}</strong>
+        <strong>Összeg: {{getTotalPrice()}} Ft</strong>
         <form [formGroup]="paymentInfo">
           <mat-radio-group [(ngModel)]="showBankCard"
                            formControlName="payingWithCard">

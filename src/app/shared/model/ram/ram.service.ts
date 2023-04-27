@@ -18,10 +18,6 @@ export class RamService {
     return this.afs.collection<Ram>(this.collectionName).valueChanges();
   }
 
-  getById(id: string) {
-    return this.afs.collection<Ram>(this.collectionName).doc(id).valueChanges();
-  }
-
   update(ram: Ram) {
     return this.afs.collection<Ram>(this.collectionName).doc(ram.id).set(ram);
   }

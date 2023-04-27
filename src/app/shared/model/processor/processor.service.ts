@@ -18,10 +18,6 @@ export class ProcessorService {
     return this.afs.collection<Processor>(this.collectionName).valueChanges();
   }
 
-  getById(id: string) {
-    return this.afs.collection<Processor>(this.collectionName).doc(id).valueChanges();
-  }
-
   update(processor: Processor) {
     return this.afs.collection<Processor>(this.collectionName).doc(processor.id).set(processor);
   }

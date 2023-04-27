@@ -25,14 +25,6 @@ export class ForumService {
     this.afs.collection<LastId>(this.collectionName).doc('lastId').update(lastIdObj);
   }
 
-  getById(id: string) {
-    return this.afs.collection<Forum>(this.collectionName).doc(id).valueChanges();
-  }
-
-  update(forum: Forum) {
-    return this.afs.collection<Forum>(this.collectionName).doc(forum.id).set(forum);
-  }
-
   delete(id: string) {
     return this.afs.collection<Forum>(this.collectionName).doc(id).delete();
   }

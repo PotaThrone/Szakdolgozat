@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {PcBuilderComponent} from "./pc-builder.component";
 import {MatTableModule} from "@angular/material/table";
@@ -33,4 +33,5 @@ const routes: Routes = [
     MatIconModule,
   ]
 })
-export class PcBuilderModule { }
+export class PcBuilderModule {
+}

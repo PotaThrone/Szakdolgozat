@@ -26,11 +26,11 @@
       Memória: {{gpu.memory}} GB <br>
     </mat-card-content>
   </a>
-  <mat-card-actions  [hidden]="userRole === 0">
+  <mat-card-actions class="mat-actions" [hidden]="userRole === 0">
     <button mat-button (click)="openCart(gpu)">Kosárba</button>
     <button mat-button (click)="addToFavorites(gpu)">Kedvenc</button><br>
   </mat-card-actions>
-  <mat-card-actions  [hidden]="userRole < 2" >
+  <mat-card-actions class="mat-actions" [hidden]="userRole < 2" >
     <button mat-button (click)="delete(gpu)"><mat-icon style="color: red;">delete</mat-icon></button>
     <button mat-button (click)="openGpuEdit(gpu)"><mat-icon style="color: blue;">edit</mat-icon></button>
   </mat-card-actions>

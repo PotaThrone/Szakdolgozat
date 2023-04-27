@@ -14,6 +14,7 @@ import {
   onlyNumbersValidatorExpireDate
 } from "../../shared/util/validators";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
+import {getProductUrl} from "../products/products.component";
 
 @Component({
   selector: 'app-cart',
@@ -22,10 +23,9 @@ import {AngularFireStorage} from "@angular/fire/compat/storage";
 })
 export class CartComponent implements OnInit {
   showBankCard = false;
-  loggedInUser?: firebase.default.User | null;
   modalRef?: BsModalRef;
   products: Product[] = [];
-  displayedColumns = ['name', 'description', 'count', 'price', 'delete']
+  displayedColumns = ['name', 'count', 'price', 'delete']
   bankCardNumbers: string = '';
   expireDate: string = '';
   isLoading = false;
@@ -78,7 +78,8 @@ export class CartComponent implements OnInit {
   }
 
   openPayingModal(template: TemplateRef<any>) {
-    if (this.loggedInUser) {
+    let user = this.authService.getLoggedInUser();
+    if (user) {
       this.modalRef = this.modalService.show(template, {class: 'modal-xl'});
     } else {
       this.router.navigateByUrl('/login');
@@ -150,5 +151,7 @@ export class CartComponent implements OnInit {
       this.emptyCart = true;
     }
   }
+
+  protected readonly getProductUrl = getProductUrl;
 }
 

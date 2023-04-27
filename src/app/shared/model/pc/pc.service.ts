@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {Pc} from "./pc";
-import {Product, Products} from "../product/product";
 import {AuthService} from "../../auth/auth.service";
-import {finalize, map, Subject, take} from "rxjs";
 
 
 @Injectable({
@@ -13,10 +11,6 @@ export class PcService {
   collectionName = 'PC';
 
   constructor(private afs: AngularFirestore, private authService: AuthService) {
-  }
-
-  getAll() {
-    return this.afs.collection<Pc>(this.collectionName).valueChanges();
   }
 
   createEmptyPc(){

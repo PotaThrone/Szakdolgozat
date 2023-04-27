@@ -1,5 +1,4 @@
-import {AbstractControl, ValidatorFn, Validators} from "@angular/forms";
-import {collectionSnapshots} from "@angular/fire/firestore";
+import {AbstractControl, ValidatorFn} from "@angular/forms";
 
 export function onlyNumbersValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {

@@ -4,7 +4,7 @@ import {Category} from "./category";
 
 
 @Component({
-  selector: 'app-categories',
+  selector: 'app-sub-header',
   templateUrl: './sub-header.component.html',
   styleUrls: ['./sub-header.component.scss']
 })

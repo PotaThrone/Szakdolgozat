@@ -14,10 +14,6 @@ export class ProductService {
   constructor(private afs: AngularFirestore, private authService: AuthService, private snackBar: MatSnackBar) {
   }
 
-  create(product: Product) {
-    return this.afs.collection<Product>(this.collectionName).doc(product.id).set(product);
-  }
-
   update(product: Product, collectionName: string) {
     return this.afs.collection<any>(collectionName).doc(product.id).update(product);
   }

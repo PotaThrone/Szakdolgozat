@@ -6,26 +6,26 @@ import {UserService} from "../../shared/model/user/user.service";
 import {Router} from "@angular/router";
 import {tap} from "rxjs";
 import {PcService} from "../../shared/model/pc/pc.service";
+import {MatOptionSelectionChange} from "@angular/material/core";
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent{
+  isAdmin = false;
   form: FormGroup;
   hide = true;
   userList :User[] = [];
   isLoading = false;
-
   constructor(private fb: FormBuilder, private authService: AuthService, private userService: UserService, private router: Router,
               private pcService: PcService) {
     this.userService.getAll().pipe(
       tap(users => this.userList = users),
     ).subscribe();
     this.form = fb.group({
-      email: new FormControl(null,[Validators.required,
-        Validators.pattern('^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$')]),
+      email: new FormControl(null,[Validators.required]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
       rePassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
       lastName: new FormControl(null, [Validators.required]),
@@ -35,7 +35,12 @@ export class RegisterComponent {
 
   checkEmail(group: FormGroup){
     let email = group.get('email')?.value;
-    let user = this.userList.find(user => user.email === email);
+    let user;
+    if(this.isAdmin){
+      user = this.userList.find(user => user.email === 'admin@' + email);
+    }else{
+      user = this.userList.find(user => user.email === email);
+    }
     if(user) {
       return group.get('email')?.setErrors({accountTaken: true});
     }
@@ -49,7 +54,7 @@ export class RegisterComponent {
 
   register() {
     this.isLoading = true;
-    this.authService.signup(this.form.get('email')?.value, this.form.get('password')?.value).then(cred => {
+    this.authService.signup(this.isAdmin ? 'admin@' + this.form.get('email')?.value : this.form.get('email')?.value, this.form.get('password')?.value).then(cred => {
       const user: User = {
         uid: cred?.user?.uid as string,
         email: this.form.get('email')?.value,
@@ -66,5 +71,23 @@ export class RegisterComponent {
 
   goBack() {
     this.router.navigateByUrl('/login');
+  }
+
+  optionSelected(event: MatOptionSelectionChange, role: string) {
+    if(event.isUserInput){
+      this.isAdmin = role === 'admin';
+      const emailControl = this.form.get('email');
+      if(this.isAdmin){
+        emailControl?.clearValidators();
+        emailControl?.setErrors(null);
+        emailControl?.setValidators([Validators.required, Validators.pattern(/([\w-]+\.)+[\w-]{2,4}$/)]);
+        emailControl?.updateValueAndValidity();
+      }else{
+        emailControl?.clearValidators();
+        emailControl?.setErrors(null);
+        emailControl?.setValidators([Validators.required, Validators.pattern(/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/)]);
+        emailControl?.updateValueAndValidity();
+      }
+    }
   }
 }

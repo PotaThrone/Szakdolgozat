@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Gpu} from "../../shared/model/gpu/gpu";
 import {CollectionName, Product, ProductType} from "../../shared/model/product/product";
-import {map, take} from "rxjs";
+import {take} from "rxjs";
 import {ProductService} from "../../shared/model/product/product.service";
 import {Hdd} from "../../shared/model/hdd/hdd";
 import {Ram} from "../../shared/model/ram/ram";
@@ -13,6 +13,7 @@ import {FormGroup} from "@angular/forms";
 import {AuthService} from "../../shared/auth/auth.service";
 import {Comment} from "../../shared/model/user/user";
 import {AuthGuard} from "../../shared/auth/auth.guard";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-products',
@@ -29,8 +30,9 @@ export class ProductsComponent implements OnInit {
   selectedProcessor?: Processor;
   selectedMotherboard?: Motherboard;
   isLoading = false;
+
   constructor(private route: ActivatedRoute, private productService: ProductService, private cartService: CartService, private authService: AuthService,
-              public authGuard: AuthGuard) {
+              public authGuard: AuthGuard, private snackBar: MatSnackBar) {
 
   }
 
@@ -86,7 +88,7 @@ export class ProductsComponent implements OnInit {
   }
 
   openCart(selectedProduct: Product | undefined, productType: string) {
-    if(selectedProduct){
+    if (selectedProduct) {
       this.isLoading = true;
       this.cartService.openCart(selectedProduct, productType).subscribe(isLoading => this.isLoading = isLoading);
     }
@@ -101,58 +103,63 @@ export class ProductsComponent implements OnInit {
     }
     switch (productType) {
       case ProductType.HDD:
-        if(this.selectedHdd){
+        if (this.selectedHdd) {
           this.productService.update({
             ...this.selectedHdd,
             rating: this.selectedHdd.rating == 0 ? this.commentForm.value.rating : (this.selectedHdd.rating + this.commentForm.value.rating) / 2,
             comments: [
               ...this.selectedHdd.comments ?? [],
               comment
-            ]}, CollectionName.HDD).finally(() => this.isLoading = false);
+            ]
+          }, CollectionName.HDD).finally(() => this.isLoading = false);
         }
         break;
       case ProductType.GPU:
-        if(this.selectedGpu){
+        if (this.selectedGpu) {
           this.productService.update({
             ...this.selectedGpu,
             rating: this.selectedGpu.rating == 0 ? this.commentForm.value.rating : (this.selectedGpu.rating + this.commentForm.value.rating) / 2,
             comments: [
-            ...this.selectedGpu.comments ?? [],
-            comment
-          ]}, CollectionName.GPU).finally(() => this.isLoading = false);
+              ...this.selectedGpu.comments ?? [],
+              comment
+            ]
+          }, CollectionName.GPU).finally(() => this.isLoading = false);
         }
         break;
       case ProductType.RAM:
-        if(this.selectedRam){
+        if (this.selectedRam) {
           this.productService.update({
             ...this.selectedRam,
             rating: this.selectedRam.rating == 0 ? this.commentForm.value.rating : (this.selectedRam.rating + this.commentForm.value.rating) / 2,
             comments: [
               ...this.selectedRam.comments ?? [],
               comment
-            ]}, CollectionName.RAM).finally(() => this.isLoading = false);
+            ]
+          }, CollectionName.RAM).finally(() => this.isLoading = false);
         }
         break;
       case ProductType.PROCESSOR:
-        if(this.selectedProcessor){
+        if (this.selectedProcessor) {
           this.productService.update({
             ...this.selectedProcessor,
             rating: this.selectedProcessor.rating == 0 ? this.commentForm.value.rating : (this.selectedProcessor.rating + this.commentForm.value.rating) / 2,
             comments: [
               ...this.selectedProcessor.comments ?? [],
               comment
-            ]}, CollectionName.PROCESSOR).finally(() => this.isLoading = false);
+            ]
+          }, CollectionName.PROCESSOR).finally(() => this.isLoading = false);
         }
         break;
       case ProductType.MOTHERBOARD:
-        if(this.selectedMotherboard){
+        if (this.selectedMotherboard) {
           this.productService.update({
             ...this.selectedMotherboard,
             rating: this.selectedMotherboard.rating == 0 ? this.commentForm.value.rating : (this.selectedMotherboard.rating + this.commentForm.value.rating) / 2,
             comments: [
               ...this.selectedMotherboard.comments ?? [],
               comment
-            ]}, CollectionName.MOTHERBOARD).finally(() => this.isLoading = false);
+            ]
+          }, CollectionName.MOTHERBOARD).finally(() => this.isLoading = false);
         }
         break;
     }
@@ -164,9 +171,14 @@ export class ProductsComponent implements OnInit {
   }
 
   addToPc(selectedProduct: Product | undefined, productType: string) {
-    if(selectedProduct){
+    if (selectedProduct) {
       this.isLoading = true;
-      this.productService.addProductToPc(selectedProduct, productType).subscribe(isLoading => this.isLoading = isLoading);
+      this.productService.addProductToPc(selectedProduct, productType).subscribe(isLoading => {
+        this.snackBar.open(selectedProduct.brand + ' a gépbe helyezve!', 'OK', {
+          duration: 2000
+        });
+        this.isLoading = isLoading;
+      });
     }
   }
 
@@ -174,35 +186,77 @@ export class ProductsComponent implements OnInit {
     this.isLoading = true;
     switch (productType) {
       case ProductType.HDD:
-        if(this.selectedHdd){
-          this.selectedHdd.comments?.splice(index,1);
+        if (this.selectedHdd) {
+          this.selectedHdd.comments?.splice(index, 1);
           this.productService.update({...this.selectedHdd}, CollectionName.HDD).finally(() => this.isLoading = false);
         }
         break;
       case ProductType.GPU:
-        if(this.selectedGpu){
-          this.selectedGpu.comments?.splice(index,1);
+        if (this.selectedGpu) {
+          this.selectedGpu.comments?.splice(index, 1);
           this.productService.update({...this.selectedGpu}, CollectionName.GPU).finally(() => this.isLoading = false);
         }
         break;
       case ProductType.PROCESSOR:
-        if(this.selectedProcessor){
-          this.selectedProcessor.comments?.splice(index,1);
+        if (this.selectedProcessor) {
+          this.selectedProcessor.comments?.splice(index, 1);
           this.productService.update({...this.selectedProcessor}, CollectionName.PROCESSOR).finally(() => this.isLoading = false);
         }
         break;
       case ProductType.MOTHERBOARD:
-        if(this.selectedMotherboard){
-          this.selectedMotherboard.comments?.splice(index,1);
+        if (this.selectedMotherboard) {
+          this.selectedMotherboard.comments?.splice(index, 1);
           this.productService.update({...this.selectedMotherboard}, CollectionName.MOTHERBOARD).finally(() => this.isLoading = false);
         }
         break;
       case ProductType.RAM:
-        if(this.selectedRam){
-          this.selectedRam.comments?.splice(index,1);
+        if (this.selectedRam) {
+          this.selectedRam.comments?.splice(index, 1);
           this.productService.update({...this.selectedRam}, CollectionName.RAM).finally(() => this.isLoading = false);
         }
         break;
     }
   }
+}
+
+export function getProductUrl(product: Product): string {
+  let productType = '';
+  let id = '';
+  if (product.id.includes(ProductType.GPU)) {
+    productType = ProductType.GPU;
+    id = product.id.substring(ProductType.GPU.length);
+  }
+  if (product.id.includes(ProductType.HDD)) {
+    productType = ProductType.HDD;
+    id = product.id.substring(ProductType.HDD.length);
+  }
+  if (product.id.includes(ProductType.PROCESSOR)) {
+    productType = ProductType.PROCESSOR;
+    id = product.id.substring(ProductType.PROCESSOR.length);
+  }
+  if (product.id.includes(ProductType.MOTHERBOARD)) {
+    productType = ProductType.MOTHERBOARD;
+    id = product.id.substring(ProductType.MOTHERBOARD.length);
+  }
+  if (product.id.includes(ProductType.RAM)) {
+    productType = ProductType.RAM;
+    id = product.id.substring(ProductType.RAM.length);
+  }
+  return `../products?product=${productType}${id}`;
+}
+
+export function showProductType(product: Product): string {
+  if (product.id.includes(ProductType.GPU)) {
+    return 'Videókártya';
+  }
+  if (product.id.includes(ProductType.MOTHERBOARD)) {
+    return 'Alaplap';
+  }
+  if (product.id.includes(ProductType.PROCESSOR)) {
+    return 'Processzor';
+  }
+  if (product.id.includes(ProductType.HDD)) {
+    return 'Merevlemez';
+  }
+  return 'RAM'
 }

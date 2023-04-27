@@ -19,14 +19,10 @@ import {HddEditComponent} from './hdd-edit/hdd-edit.component';
 import {MotherboardEditComponent} from './motherboard-edit/motherboard-edit.component';
 import {ProcessorEditComponent} from './processor-edit/processor-edit.component';
 import {RamEditComponent} from './ram-edit/ram-edit.component';
-import {StarRatingComponent} from "../../shared/util/star-rating/star-rating.component";
 import {ProductCommentComponent} from "../../shared/util/product-comment/product-comment.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatSelectModule} from "@angular/material/select";
-import {AppModule} from "../../app.module";
-import {MainModule} from "../main/main.module";
 import {StarRatingModule} from "../../shared/util/star-rating/star-rating.module";
-import {LineBreakPipe} from "../../shared/util/line-break.pipe";
 import {LineBreakModule} from "../../shared/util/line-break.module";
 
 const routes: Routes = [

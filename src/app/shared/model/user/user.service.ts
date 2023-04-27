@@ -21,11 +21,4 @@ export class UserService {
     return this.afs.collection<User>(this.collectionName).doc(id).valueChanges();
   }
 
-  update(user: User) {
-    return this.afs.collection<User>(this.collectionName).doc(user.uid).set(user);
-  }
-
-  delete(id: string) {
-    return this.afs.collection<User>(this.collectionName).doc(id).delete();
-  }
 }

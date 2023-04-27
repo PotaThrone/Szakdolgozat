@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body {
-  height: 100%;
+  font-family: 'Helvetica Neue', sans-serif;
+  color: #333;
+  background-color: #f2f2f2;
 }
 
 body {
@@ -23,9 +25,14 @@ body {
 
 .product-items {
   float: left;
-  margin: 15px 15px 0 15px;
-  width: 300px;
   max-height: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  width: calc(33.33% - 20px);
+  margin: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  overflow: hidden;
 
   mat-card-actions{
     display: flex;
@@ -39,8 +46,12 @@ body {
   }
 }
 
+.product-items:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
 .selected-product {
-  margin: 0 auto;
+  margin: 0 auto 15px;
   width: 100%;
   justify-content: center;
   display: flex;
@@ -48,6 +59,7 @@ body {
   mat-card{
     margin-top: 30px;
     min-width: 1000px;
+    box-shadow: 0 4px 8px 0 rgba(0.4, 0.4, 0.4, 0.4);
   }
 
   button{
@@ -63,6 +75,7 @@ body {
 
   button {
     background-color: #01f329;
+    margin-bottom: 10px;
   }
 }
 
@@ -143,6 +156,7 @@ body {
   padding: 15px;
   border: 1px solid black;
   border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0.4, 0.4, 0.4, 0.4);
 
   textarea{
     width: 100%;
@@ -181,3 +195,25 @@ body {
 ::ng-deep .cdk-overlay-container {
   z-index: 9999;
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.mat-actions{
+  button:hover{
+    background-color: #bdbbbb;
+  }
+}
+

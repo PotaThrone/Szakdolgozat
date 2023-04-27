@@ -7,12 +7,17 @@ mat-form-field {
 .sub-header-container{
   display: flex;
   align-items: center;
-  float:left;
-  width: 100%;
   flex-direction: row;
   background-color: greenyellow;
+  border-bottom: 1px solid #000000;
+  border-top: 1px solid #000000;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+
 
   a{
     height: 70px;
+  }
+  a:hover{
+    background-color: #90d027;
   }
 }

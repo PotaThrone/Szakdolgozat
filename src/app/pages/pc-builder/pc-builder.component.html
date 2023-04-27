@@ -5,32 +5,32 @@
 </div>
 <div class="container">
   <table mat-table [dataSource]="products">
+    <ng-container matColumnDef="productType">
+      <th mat-header-cell *matHeaderCellDef>Termék típusa</th>
+      <td mat-cell *matCellDef="let element;">{{showProductType(element)}}</td>
+    </ng-container>
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Termék neve</th>
-      <td mat-cell *matCellDef="let element">{{element.brand}}</td>
+      <td mat-cell *matCellDef="let element"><a [href]="getProductUrl(element)">{{element.brand}}</a></td>
     </ng-container>
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef>Ár</th>
       <td mat-cell *matCellDef="let element">{{element.price}} Ft</td>
     </ng-container>
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef>Termék leírás</th>
-      <td mat-cell *matCellDef="let element">{{element.description}}</td>
-    </ng-container>
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <button color="primary" style="margin-right: 15px;" [disabled]="!validPc" mat-raised-button (click)="addToCart(element)">Kosárba rak</button>
+      <td class="actions" mat-cell *matCellDef="let element">
+        <button color="primary" [disabled]="!validPc" mat-raised-button (click)="addToCart(element)">Kosárba rak</button>
         <button color="primary" mat-raised-button (click)="removeFromPc(element)">Eltávolítás</button>
       </td>
     </ng-container>
     <ng-container matColumnDef="total">
-      <td mat-footer-cell *matFooterCellDef colspan="4">{{getTotalPrice()}} Ft</td>
+      <td mat-footer-cell *matFooterCellDef colspan="4"><strong>Összesen: </strong>{{getTotalPrice()}} Ft</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    <tr mat-footer-row *matFooterRowDef="['total']"></tr>
+    <tr mat-footer-row style="border-bottom: 1px solid #ddd;" *matFooterRowDef="['total']"></tr>
   </table>
   <button class="buttons"  color="primary" mat-raised-button (click)="checkPc()">Gép ellenőrzése</button>
   <mat-icon style="color:red;" *ngIf="!validPc">error</mat-icon><mat-icon  style="color:green;" *ngIf="validPc">check_circle</mat-icon><br>
