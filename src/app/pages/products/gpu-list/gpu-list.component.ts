@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {ProductType} from "../../../shared/model/product/product";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {map} from "rxjs";
+import {Role} from "../../../shared/model/user/user";
 
 @Component({
   selector: 'app-gpu-list',
@@ -75,4 +76,6 @@ export class GpuListComponent implements OnInit{
       this.filteredGpus = this.gpus.filter(gpu => gpu.brand.toLowerCase().includes(searchTerm.toLowerCase()));
     });
   }
+
+  protected readonly Role = Role;
 }

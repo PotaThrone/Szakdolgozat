@@ -28,11 +28,11 @@
       Foglalat: {{ram.slot}} <br>
     </mat-card-content>
   </a>
-  <mat-card-actions class="mat-actions" [hidden]="userRole === 0">
+  <mat-card-actions class="mat-actions" [hidden]="userRole === Role.GUEST">
     <button mat-button (click)="openCart(ram)">Kosárba</button>
     <button mat-button (click)="addToFavorites(ram)">Kedvenc</button>
   </mat-card-actions>
-  <mat-card-actions class="mat-actions" [hidden]="userRole < 2" >
+  <mat-card-actions class="mat-actions" [hidden]="userRole < Role.ADMIN" >
     <button mat-button (click)="delete(ram)"><mat-icon style="color: red;">delete</mat-icon></button>
     <button mat-button (click)="openRamEdit(ram)"><mat-icon style="color: blue;">edit</mat-icon></button>
   </mat-card-actions>

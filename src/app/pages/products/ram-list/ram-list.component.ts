@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {RamEditComponent} from "../ram-edit/ram-edit.component";
 import {ProductType} from "../../../shared/model/product/product";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {Role} from "../../../shared/model/user/user";
 
 @Component({
   selector: 'app-ram-list',
@@ -74,4 +75,6 @@ export class RamListComponent implements OnInit{
       this.filteredRams = this.rams.filter(ram => ram.brand.toLowerCase().includes(searchTerm.toLowerCase()));
     });
   }
+
+    protected readonly Role = Role;
 }

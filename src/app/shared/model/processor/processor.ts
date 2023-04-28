@@ -2,7 +2,7 @@ import {Product} from "../product/product";
 
 export interface Processor extends Product{
   id: string;
-  chipset: string;
+  chipset: Chipset;
   clockSpeed: number;
   core: number;
 }

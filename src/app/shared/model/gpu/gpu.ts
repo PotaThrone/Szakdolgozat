@@ -4,7 +4,7 @@ export interface Gpu extends Product{
   id: string;
   clock: number;
   memory: number;
-  slot: string;
+  slot: GpuSlot;
 }
 
 export enum GpuSlot{

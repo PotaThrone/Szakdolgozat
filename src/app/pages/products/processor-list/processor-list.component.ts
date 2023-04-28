@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {ProcessorEditComponent} from "../processor-edit/processor-edit.component";
 import {ProductType} from "../../../shared/model/product/product";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {Role} from "../../../shared/model/user/user";
 
 @Component({
   selector: 'app-processor-list',
@@ -74,4 +75,6 @@ export class ProcessorListComponent implements OnInit{
       this.filteredProcessors = this.processors.filter(processor => processor.brand.toLowerCase().includes(searchTerm.toLowerCase()));
     });
   }
+
+    protected readonly Role = Role;
 }

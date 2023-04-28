@@ -123,7 +123,7 @@
           </div>
           <div>
             <button mat-button matStepperPrevious>Vissza</button>
-            <button [disabled]="emptyCart" (click)="clearCart()" mat-button matStepperNext>Tovább</button>
+            <button [disabled]="emptyCart || paymentInfo.invalid" (click)="clearCart()"  mat-button matStepperNext>Tovább</button>
             <mat-error *ngIf="emptyCart">Üres a kosarad!</mat-error>
           </div>
         </form>

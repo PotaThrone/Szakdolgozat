@@ -3,7 +3,7 @@ import {Product} from "../product/product";
 export interface Ram extends Product{
   id: string;
   memorySize: number;
-  slot: string;
+  slot: RamSlot;
   speed: number;
 }
 

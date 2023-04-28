@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {HddEditComponent} from "../hdd-edit/hdd-edit.component";
 import {ProductType} from "../../../shared/model/product/product";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {Role} from "../../../shared/model/user/user";
 
 @Component({
   selector: 'app-hdd-list',
@@ -75,4 +76,6 @@ export class HddListComponent implements OnInit{
       this.filteredHdds = this.hdds.filter(hdd => hdd.brand.toLowerCase().includes(searchTerm.toLowerCase()));
     });
   }
+
+  protected readonly Role = Role;
 }

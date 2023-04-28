@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {MotherboardEditComponent} from "../motherboard-edit/motherboard-edit.component";
 import {ProductType} from "../../../shared/model/product/product";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {Role} from "../../../shared/model/user/user";
 
 @Component({
   selector: 'app-motherboard-list',
@@ -75,4 +76,6 @@ export class MotherboardListComponent implements OnInit{
       this.filteredMotherboards = this.motherboards.filter(motherboard => motherboard.brand.toLowerCase().includes(searchTerm.toLowerCase()));
     });
   }
+
+  protected readonly Role = Role;
 }
