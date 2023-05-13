@@ -85,7 +85,7 @@ export class RegisterComponent{
       }else{
         emailControl?.clearValidators();
         emailControl?.setErrors(null);
-        emailControl?.setValidators([Validators.required, Validators.pattern(/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/)]);
+        emailControl?.setValidators([Validators.required, Validators.pattern(/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/)]);
         emailControl?.updateValueAndValidity();
       }
     }
